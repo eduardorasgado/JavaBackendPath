@@ -1,5 +1,7 @@
 package com.eduardorasgado.junit5application.examples.models;
 
+import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -13,7 +15,12 @@ public class Account {
     }
 
     public void withdraw(BigDecimal amount) {
-        setBalance(scaleAmount(getBalance().subtract(amount)));
+        BigDecimal toWithdraw = getBalance().subtract(amount);
+
+        if (toWithdraw.compareTo(BigDecimal.ZERO) < 0)
+            throw new NotEnoughBalanceException("Not enough money to withdraw");
+
+        setBalance(scaleAmount(toWithdraw));
     }
 
     public void deposit(BigDecimal amount) {
@@ -23,6 +30,7 @@ public class Account {
     private BigDecimal scaleAmount(BigDecimal amount) {
         return amount.setScale(5, RoundingMode.FLOOR);
     }
+
     public String getPerson() {
         return person;
     }
@@ -43,6 +51,7 @@ public class Account {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Account account = (Account) o;
         return getPerson().equals(account.getPerson()) && getBalance().equals(account.getBalance());
     }

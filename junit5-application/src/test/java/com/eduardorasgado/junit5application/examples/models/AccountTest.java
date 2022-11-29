@@ -1,5 +1,6 @@
 package com.eduardorasgado.junit5application.examples.models;
 
+import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -37,6 +38,13 @@ class AccountTest {
         BigDecimal actual = account.getBalance();
 
         assertEquals(expected, actual, "withdraw money from account");
+    }
+
+    @Test
+    void testNotEnoughBalanceToWithdraw() {
+        Account account = new Account("Andy", new BigDecimal("1000.1234"));
+
+        assertThrows(NotEnoughBalanceException.class, () -> account.withdraw(new BigDecimal(1200)));
     }
 
     @Test
