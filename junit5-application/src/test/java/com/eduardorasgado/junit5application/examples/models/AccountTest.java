@@ -1,6 +1,7 @@
 package com.eduardorasgado.junit5application.examples.models;
 
 import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -12,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AccountTest {
 
     @Test
+    @DisplayName("Account person name test")
     void testPerson() {
         Account account = new Account("Andy", new BigDecimal("1000.1234"));
 
@@ -23,6 +25,7 @@ class AccountTest {
     }
 
     @Test
+    @DisplayName("Account Balance Testing")
     void testBalance() {
         Account account = new Account("Andy", new BigDecimal("1000.1234"));
 
@@ -32,6 +35,7 @@ class AccountTest {
     }
 
     @Test
+    @DisplayName("User withdraws money from account")
     void testWithdraw() {
         Account account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
         account.withdraw(new BigDecimal(125.20));
@@ -39,25 +43,27 @@ class AccountTest {
         BigDecimal expected = new BigDecimal("11125.25008");
         BigDecimal actual = account.getBalance();
 
-        assertEquals(expected, actual, "withdraw money from account");
+        assertEquals(expected, actual, () -> "withdraw money from account");
     }
 
     @Test
+    @DisplayName("User withdraws but not enough money into account")
     void testNotEnoughBalanceToWithdraw() {
         Account account = new Account("Andy", new BigDecimal("1000.1234"));
 
         Exception exception = assertThrows(
                 NotEnoughBalanceException.class,
                 () -> account.withdraw(new BigDecimal(1200)),
-                "Throwing exception when user does not have enough money to withdraw");
+                () -> "Throwing exception when user does not have enough money to withdraw");
 
         String expected = "Not enough money to withdraw";
         String actual = exception.getMessage();
 
-        assertEquals(expected, actual, "Message for not having enough money to withdraw is correct one");
+        assertEquals(expected, actual, () -> "Message for not having enough money to withdraw is correct one");
     }
 
     @Test
+    @DisplayName("User deposits money into account")
     void testDeposit() {
         Account account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
         account.deposit(new BigDecimal(125.78));
@@ -65,18 +71,20 @@ class AccountTest {
         BigDecimal expected = new BigDecimal("11376.23009");
         BigDecimal actual = account.getBalance();
 
-        assertEquals(expected, actual, "deposit money to account");
+        assertEquals(expected, actual, () -> "deposit money to account");
     }
 
     @Test
-    void testReference() {
+    @DisplayName("Comparing accounts with same data test")
+    void testComparingTwoAccountsWithSameData() {
         Account account = new Account("John Doe", new BigDecimal("8900.9997"));
         Account account2 = new Account("John Doe", new BigDecimal("8900.9997"));
 
-        assertEquals(account, account2, "Objects compared by value");
+        assertEquals(account, account2, () -> "Objects compared by value");
     }
 
     @Test
+    @DisplayName("Transferring money from one account to another account")
     void testTransferMoneyBetweenAccounts() {
         Account originAccount = new Account("John Doe", new BigDecimal("8900.50"));
         Account destinationAccount = new Account("Mark Twain", new BigDecimal("2560"));
@@ -86,12 +94,13 @@ class AccountTest {
         bank.transfer(originAccount, destinationAccount, new BigDecimal(500));
 
         assertTrue(originAccount.getBalance().compareTo(new BigDecimal("8400.50000")) == 0,
-                "Origin account new balance after transferring money");
+                () -> "Origin account new balance after transferring money");
         assertTrue(destinationAccount.getBalance().compareTo(new BigDecimal(3060)) == 0,
-                "Destination account new balance after receiving money");
+                () -> "Destination account new balance after receiving money");
     }
 
     @Test
+    @DisplayName("Adding multiple accounts to a bank")
     void testAddingBankAccounts() {
         List<Account> accounts = new ArrayList<>();
         Account originAccount = new Account("John Doe", new BigDecimal("8900.50"));
@@ -103,7 +112,7 @@ class AccountTest {
         bank.addAccount(destinationAccount);
 
         assertAll(
-                () -> assertEquals(2, bank.getAccountsCount(), "Accounts should be added to bank correctly"),
+                () -> assertEquals(2, bank.getAccountsCount(), () -> "Accounts should be added to bank correctly"),
                 () -> {
                     assertAll("Every Account's bank should not be null",
                             () -> assertNotNull(originAccount.getBank()),
@@ -122,7 +131,7 @@ class AccountTest {
                                     .findFirst()
                                     .orElseGet(() -> new Account("", BigDecimal.ZERO))
                                     .getPerson(),
-                            "Certain person was added to bank account list"
+                            () -> "Certain person was added to bank account list"
                     );
                 }
         );
