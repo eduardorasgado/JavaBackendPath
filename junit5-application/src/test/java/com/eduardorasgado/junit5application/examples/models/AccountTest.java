@@ -102,24 +102,29 @@ class AccountTest {
         bank.addAccount(originAccount);
         bank.addAccount(destinationAccount);
 
-        assertEquals(2, bank.getAccountsCount(), "Accounts should be added to bank correctly");
-
-        assertAll("Every Account's bank should not be null",
-                () -> assertNotNull(originAccount.getBank()),
-                () -> assertNotNull(destinationAccount.getBank()));
-
-        assertAll("Every account's bank should match the bank they were added to",
-                () -> assertEquals(bank.getName(), originAccount.getBank().getName()),
-                () -> assertEquals(bank.getName(), destinationAccount.getBank().getName()));
-
-        String expectedName = "Mark Twain";
-        assertEquals(expectedName,
-                bank.getAccounts().stream()
-                        .filter(account -> account.getPerson().equals(expectedName))
-                        .findFirst()
-                        .orElseGet(() -> new Account("", BigDecimal.ZERO))
-                        .getPerson(),
-                "Certain person was added to bank account list"
-                );
+        assertAll(
+                () -> assertEquals(2, bank.getAccountsCount(), "Accounts should be added to bank correctly"),
+                () -> {
+                    assertAll("Every Account's bank should not be null",
+                            () -> assertNotNull(originAccount.getBank()),
+                            () -> assertNotNull(destinationAccount.getBank()));
+                },
+                () -> {
+                    assertAll("Every account's bank should match the bank they were added to",
+                            () -> assertEquals(bank.getName(), originAccount.getBank().getName()),
+                            () -> assertEquals(bank.getName(), destinationAccount.getBank().getName()));
+                },
+                () -> {
+                    String expectedName = "Mark Twain";
+                    assertEquals(expectedName,
+                            bank.getAccounts().stream()
+                                    .filter(account -> account.getPerson().equals(expectedName))
+                                    .findFirst()
+                                    .orElseGet(() -> new Account("", BigDecimal.ZERO))
+                                    .getPerson(),
+                            "Certain person was added to bank account list"
+                    );
+                }
+        );
     }
 }
