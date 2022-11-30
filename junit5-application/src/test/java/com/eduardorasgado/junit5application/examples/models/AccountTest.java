@@ -26,6 +26,7 @@ class AccountTest {
     static void exitAccountClassTest() {
         System.out.println("---------Exiting ACCOUNT test suite--------------");
     }
+
     @BeforeEach
     void initAccountMethodTest() {
         System.out.println("--------starting unit test-------");
@@ -196,5 +197,54 @@ class AccountTest {
     @DisplayName("JAVA 11 exclusive test")
     void testJavaJdk11Only() {
         System.out.println("This test method will be executed only over Java 11 JDK");
+    }
+
+    @Test
+    @DisabledOnJre(JRE.JAVA_8)
+    @DisplayName("Every JRE but JAVA 8")
+    void testJavaJdk8Excluded() {
+        System.out.println("This test method will be executed for every jre but Java 8 JDK");
+    }
+
+    @Test
+    @DisplayName("Displaying every system property test")
+    void testSystemPropertiesPrinting() {
+        System.getProperties().forEach((propKey, propValue) -> System.out.println(propKey + ": " + propValue));
+    }
+
+    @Test
+    @EnabledIfSystemProperties(
+            {
+                    @EnabledIfSystemProperty(named = "user.country", matches = "MX"),
+                    @EnabledIfSystemProperty(named = "user.language", matches = "es")
+            })
+    @DisplayName("Exclusive for MX zone test")
+    void testExclusiveForMXZone() {
+        System.out.println(System.getProperty("user.country"));
+        System.out.println(System.getProperty("user.language"));
+        System.out.println(System.getProperty("file.encoding"));
+    }
+
+    @Test
+    @EnabledIfSystemProperties(
+            {
+                    @EnabledIfSystemProperty(named = "user.country", matches = "US"),
+                    @EnabledIfSystemProperty(named = "user.language", matches = "en")
+            })
+    @DisplayName("Exclusive for US zone test")
+    void testExclusiveForUSZone() {
+        System.out.println(System.getProperty("file.encoding"));
+        System.out.println(System.getProperty("user.country"));
+        System.out.println(System.getProperty("user.language"));
+    }
+
+    @Test
+    @DisabledIfSystemProperty(named = "file.encoding", matches = "UTF-8")
+    @DisplayName("Exclusive for non UTF 8 test")
+    void testExclusiveForNonUTF8Encodings() {
+        StringBuffer buf = new StringBuffer();
+        buf.append("This test is exclusive for non UTF 8 encodings, current encoding is: ");
+        buf.append(System.getProperty("file.encoding"));
+        System.out.println(buf);
     }
 }
