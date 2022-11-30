@@ -247,4 +247,49 @@ class AccountTest {
         buf.append(System.getProperty("file.encoding"));
         System.out.println(buf);
     }
+
+    @Test
+    @EnabledIfSystemProperty(named = "ENV", matches = "dev")
+    @DisplayName("Developer mode active only test")
+    void testDevModeOnly() {
+        System.out.println("This test will be executed only on DEV MODE");
+    }
+
+    @Test
+    @DisplayName("Showing all the environment variables test")
+    void testEnvironmentVariablesPrinting() {
+        System.out.println("-----------ENVIRONMENT VARIABLES-----------------");
+        System.getenv().forEach((key, value) -> System.out.println(key + ": " + value));
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariables(
+            {
+                    @EnabledIfEnvironmentVariable(named = "HOMEDRIVE", matches = "C:"),
+                    // regex way to scape file separator: \\\\
+                    @EnabledIfEnvironmentVariable(named = "DriverData", matches = "C:\\\\Windows\\\\System32\\\\Drivers\\\\DriverData")
+            })
+    void testHomeDriveAndDriverDataAreCorrectEnviromentVariables() {
+        System.out.println(System.getenv("HOMEDRIVE"));
+        System.out.println(System.getenv("DriverData"));
+    }
+
+    @Test
+    // regex: greater or equals to 8
+    @EnabledIfEnvironmentVariable(named = "NUMBER_OF_PROCESSORS", matches = "^([8-9]|[1-9][0-9])$")
+    void testNumberOfProcessorsMatchesMinimumRequired() {
+        System.out.println("Processors matches the minimum required: " + System.getenv("NUMBER_OF_PROCESSORS"));
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "ENVIRONMENT", matches = "DEVELOPMENT")
+    void testDevEnvironmentVariable() {
+        System.out.println("ENVIRONMENT env variable is presented: " + System.getenv("ENVIRONMENT"));
+    }
+
+    @Test
+    @DisabledIfEnvironmentVariable(named = "ENVIRONMENT", matches = "PROD")
+    void testProdEnvironmentVariableExcluded() {
+        System.out.println("ENVIRONMENT env variable is not PROD, It is: " + System.getenv("ENVIRONMENT"));
+    }
 }
