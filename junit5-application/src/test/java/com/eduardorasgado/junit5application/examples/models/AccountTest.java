@@ -1,8 +1,7 @@
 package com.eduardorasgado.junit5application.examples.models;
 
 import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -10,13 +9,36 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// This annotation is the default so it is not required, but it is here for showing that
+// it is also possible to have a per class LifeCycle(not recommended for unit testing)
+@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class AccountTest {
+
+    Account account;
+
+    @BeforeAll
+    static void initAccountClassTest() {
+        System.out.println("---------Initializing ACCOUNT test suite---------");
+    }
+
+    @AfterAll
+    static void exitAccountClassTest() {
+        System.out.println("---------Exiting ACCOUNT test suite--------------");
+    }
+    @BeforeEach
+    void initAccountMethodTest() {
+        System.out.println("--------starting unit test-------");
+        account = new Account("Andy", new BigDecimal("1000.1234"));
+    }
+
+    @AfterEach
+    void exitAccountMethodTest() {
+        System.out.println("--------leaving unit test------");
+    }
 
     @Test
     @DisplayName("Account person name test")
     void testPerson() {
-        Account account = new Account("Andy", new BigDecimal("1000.1234"));
-
         String expected = "Andy";
         String actual = account.getPerson();
 
@@ -27,8 +49,6 @@ class AccountTest {
     @Test
     @DisplayName("Account Balance Testing")
     void testBalance() {
-        Account account = new Account("Andy", new BigDecimal("1000.1234"));
-
         assertNotNull(account.getBalance());
         assertEquals(1000.1234, account.getBalance().doubleValue(), "Expect balance");
         assertFalse(account.getBalance().compareTo(BigDecimal.ZERO) < 0);
@@ -37,7 +57,7 @@ class AccountTest {
     @Test
     @DisplayName("User withdraws money from account")
     void testWithdraw() {
-        Account account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
+        account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
         account.withdraw(new BigDecimal(125.20));
 
         BigDecimal expected = new BigDecimal("11125.25008");
@@ -49,8 +69,6 @@ class AccountTest {
     @Test
     @DisplayName("User withdraws but not enough money into account")
     void testNotEnoughBalanceToWithdraw() {
-        Account account = new Account("Andy", new BigDecimal("1000.1234"));
-
         Exception exception = assertThrows(
                 NotEnoughBalanceException.class,
                 () -> account.withdraw(new BigDecimal(1200)),
@@ -65,7 +83,7 @@ class AccountTest {
     @Test
     @DisplayName("User deposits money into account")
     void testDeposit() {
-        Account account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
+        account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
         account.deposit(new BigDecimal(125.78));
 
         BigDecimal expected = new BigDecimal("11376.23009");
@@ -77,10 +95,17 @@ class AccountTest {
     @Test
     @DisplayName("Comparing accounts with same data test")
     void testComparingTwoAccountsWithSameData() {
-        Account account = new Account("John Doe", new BigDecimal("8900.9997"));
+        account = new Account("John Doe", new BigDecimal("8900.9997"));
         Account account2 = new Account("John Doe", new BigDecimal("8900.9997"));
 
         assertEquals(account, account2, () -> "Objects compared by value");
+    }
+
+    @Test
+    @DisplayName("Triggering test failure")
+    @Disabled
+    void testToBeDisabled() {
+        fail();
     }
 
     @Test
