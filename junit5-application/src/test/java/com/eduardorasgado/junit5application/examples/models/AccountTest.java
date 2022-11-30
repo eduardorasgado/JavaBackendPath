@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assumptions.*;
 
-// This annotation is the default so it is not required, but it is here for showing that
+// This annotation is the default, so it is not required, but it is here for showing that
 // it is also possible to have a per class LifeCycle(not recommended for unit testing)
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
 class AccountTest {
@@ -291,5 +292,43 @@ class AccountTest {
     @DisabledIfEnvironmentVariable(named = "ENVIRONMENT", matches = "PROD")
     void testProdEnvironmentVariableExcluded() {
         System.out.println("ENVIRONMENT env variable is not PROD, It is: " + System.getenv("ENVIRONMENT"));
+    }
+
+    @Test
+    @DisplayName("ASSUMPTION TEST: Account Balance Testing on QA env [system properties]")
+    void testBalanceOnQASystemProperty() {
+        boolean isQaEnv = "qa".equals(System.getProperty("ENV"));
+
+        // ASSUMPTIONS
+        // is this is not true then this unit test gets disabled at this very moment
+        assumeTrue(isQaEnv);
+
+        assertNotNull(account.getBalance());
+        assertEquals(1000.1234, account.getBalance().doubleValue(), "Expect balance");
+        assertFalse(account.getBalance().compareTo(BigDecimal.ZERO) < 0);
+    }
+
+    @Test
+    @DisplayName("ASSUMPTION TEST: Account Balance Testing on DEV/QA env [system properties] partial version")
+    void testBalanceOnQAAndDevSystemProperties() {
+        boolean isQaEnv = "qa".equals(System.getProperty("ENV"));
+        boolean isDevEnv = "dev".equals(System.getProperty("ENV"));
+
+        // if assuming first param is false then the code inside will not be executed
+        // This static method does not stop or disable the full method, it lets the code to keep running
+        assumingThat(isQaEnv, () -> {
+            System.out.println("Asserting for QA env");
+            assertNotNull(account.getBalance());
+        });
+
+        assumingThat(isDevEnv, () -> {
+            System.out.println("Asserting for dev env");
+            // if the content inside the assumption fails then the whole method will fail
+            //fail();
+            assertEquals(1000.1234, account.getBalance().doubleValue(), "Expect balance");
+        });
+
+        System.out.println("Asserting the rest of the method");
+        assertFalse(account.getBalance().compareTo(BigDecimal.ZERO) < 0);
     }
 }
