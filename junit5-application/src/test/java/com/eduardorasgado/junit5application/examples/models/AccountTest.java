@@ -2,6 +2,7 @@ package com.eduardorasgado.junit5application.examples.models;
 
 import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.condition.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -160,5 +161,40 @@ class AccountTest {
                     );
                 }
         );
+    }
+
+    @Test
+    @EnabledOnOs(OS.WINDOWS)
+    @DisplayName("[Windows OS] exclusive test")
+    void testWindowsOsOnly() {
+        System.out.println("This test method will exclusively executed on WINDOWS");
+    }
+
+    @Test
+    @EnabledOnOs({OS.MAC, OS.LINUX})
+    @DisplayName("MAC/Linux exclusive test")
+    void testMacAndLinuxOsOnly() {
+        System.out.println("This test method will exclusively executed on LUNIX AND MAC");
+    }
+
+    @Test
+    @DisabledOnOs(OS.WINDOWS)
+    @DisplayName("Every OS but Windows test")
+    void testWindowsExcluded() {
+        System.out.println("This test method will be executed in every operating system but Windows");
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_8)
+    @DisplayName("JAVA 8 exclusive test")
+    void testJavaJdk8Only() {
+        System.out.println("This test method will be executed only over Java 8 JDK");
+    }
+
+    @Test
+    @EnabledOnJre(JRE.JAVA_11)
+    @DisplayName("JAVA 11 exclusive test")
+    void testJavaJdk11Only() {
+        System.out.println("This test method will be executed only over Java 11 JDK");
     }
 }
