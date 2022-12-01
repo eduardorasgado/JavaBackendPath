@@ -3,10 +3,13 @@ package com.eduardorasgado.junit5application.examples.models;
 import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalanceException;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -177,6 +180,26 @@ class AccountTest {
                         );
                     }
             );
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"100", "200", "300", "500", "900", "1001"})
+        @DisplayName("PARAMETERIZED TEST: Consecutive withdraws")
+        void testConsecutiveWithdraws(String amount) {
+            boolean amountGreaterThanBalance = account.getBalance().compareTo(new BigDecimal(amount)) >= 0;
+
+            assumingThat(amountGreaterThanBalance, () -> {
+                account.withdraw(new BigDecimal(amount));
+
+                assertTrue(account.getBalance().compareTo(BigDecimal.ZERO) >= 0,
+                        () -> "Final balance after withdraw should be greater than zero and not the same as it used to be");
+            });
+
+            assumingThat(!amountGreaterThanBalance, () -> {
+                assertThrows(NotEnoughBalanceException.class, () -> {
+                    account.withdraw(new BigDecimal(amount));
+                }, () -> "Not enough money to withdraw error should be thrown");
+            });
         }
     }
 
@@ -364,5 +387,24 @@ class AccountTest {
             System.out.println("Asserting the rest of the method");
             assertFalse(account.getBalance().compareTo(BigDecimal.ZERO) < 0);
         }
+    }
+
+    @RepeatedTest(value= 14, name = "Coin toss #{currentRepetition} out of {totalRepetitions}")
+    @DisplayName("Tossing a coin test")
+    void testTossCoin(RepetitionInfo repInfo) {
+        int halfRep = repInfo.getTotalRepetitions() / 2;
+
+        if(repInfo.getCurrentRepetition() <= halfRep)  {
+            StringBuffer buf = new StringBuffer("Within the first ");
+            buf.append(halfRep);
+            buf.append(" repetitions");
+
+            System.out.println(buf);
+        }
+
+        Random randGenerator = new Random();
+        int generated = randGenerator.nextInt(2);
+
+        System.out.println(generated);
     }
 }
