@@ -182,7 +182,7 @@ class AccountTest {
             );
         }
 
-        @ParameterizedTest
+        @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
         @ValueSource(strings = {"100", "200", "300", "500", "900", "1001"})
         @DisplayName("PARAMETERIZED TEST: Consecutive withdraws")
         void testConsecutiveWithdraws(String amount) {
