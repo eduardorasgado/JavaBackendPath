@@ -4,6 +4,8 @@ import com.eduardorasgado.junit5application.examples.exceptions.NotEnoughBalance
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
@@ -193,6 +195,45 @@ class AccountTest {
 
                 assertTrue(account.getBalance().compareTo(BigDecimal.ZERO) >= 0,
                         () -> "Final balance after withdraw should be greater than zero and not the same as it used to be");
+            });
+
+            assumingThat(!amountGreaterThanBalance, () -> {
+                assertThrows(NotEnoughBalanceException.class, () -> {
+                    account.withdraw(new BigDecimal(amount));
+                }, () -> "Not enough money to withdraw error should be thrown");
+            });
+        }
+
+        @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
+        @CsvSource({"100,900.1234", "200,800.1234", "300,700.1234", "500,500.1234", "900,100.1234", "1001,-1.1234"})
+        @DisplayName("PARAMETERIZED TEST: User repeatedly withdraws money from account [CSV Source]")
+        void testConsecutiveIncrementalWithdrawsCSVSource(String amount, String expected) {
+            boolean amountGreaterThanBalance = account.getBalance().compareTo(new BigDecimal(amount)) >= 0;
+
+            assumingThat(amountGreaterThanBalance, () -> {
+                account.withdraw(new BigDecimal(amount));
+
+                assertEquals(0, account.getBalance().compareTo(new BigDecimal(expected)));
+            });
+
+            assumingThat(!amountGreaterThanBalance, () -> {
+                assertThrows(NotEnoughBalanceException.class, () -> {
+                    account.withdraw(new BigDecimal(amount));
+                }, () -> "Not enough money to withdraw error should be thrown");
+            });
+        }
+
+        @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
+        @CsvFileSource(resources = "/csv-files/consecutiveIncrementalWithdraws.csv")
+        @DisplayName("PARAMETERIZED TEST: User repeatedly withdraws money from account [CSV File]")
+        void testConsecutiveIncrementalWithdrawsCSVFile(String amount, String expected) {
+            boolean amountGreaterThanBalance = account.getBalance().compareTo(new BigDecimal(amount)) >= 0;
+
+            assumingThat(amountGreaterThanBalance, () -> {
+                account.withdraw(new BigDecimal(amount));
+
+                assertEquals(0, account.getBalance().compareTo(new BigDecimal(expected)),
+                        () -> "After withdraw balance: " + expected + " is expected");
             });
 
             assumingThat(!amountGreaterThanBalance, () -> {
