@@ -6,12 +6,11 @@ import org.junit.jupiter.api.condition.*;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -242,6 +241,47 @@ class AccountTest {
                 }, () -> "Not enough money to withdraw error should be thrown");
             });
         }
+
+    }
+
+    // In this case, even when this test is part of the BankAndAccountsRelationTest class, we cannot use MethodSource
+    // within an inner class because they required a static method in the method source annotation of the test
+    // and class member inner classes does not support static methods.
+    @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
+    @MethodSource("getIncrementalWidthdrawsData")
+    @DisplayName("PARAMETERIZED TEST: User repeatedly withdraws money from account [CSV Method Source]")
+    void testConsecutiveIncrementalWithdrawsMethodSource(Map.Entry<String, String> data) {
+        String amount = data.getKey();
+        String expected = data.getValue();
+
+        boolean amountGreaterThanBalance = account.getBalance().compareTo(new BigDecimal(amount)) >= 0;
+
+        assumingThat(amountGreaterThanBalance, () -> {
+            account.withdraw(new BigDecimal(amount));
+
+            assertEquals(0, account.getBalance().compareTo(new BigDecimal(expected)),
+                    () -> "After withdraw balance: " + expected + " is expected");
+        });
+
+        assumingThat(!amountGreaterThanBalance, () -> {
+            assertThrows(NotEnoughBalanceException.class, () -> {
+                account.withdraw(new BigDecimal(amount));
+            }, () -> "Not enough money to withdraw error should be thrown");
+        });
+    }
+
+    // method used in the testConsecutiveIncrementalWithdrawsMethodSource parameterized test
+    private static ArrayList<Map.Entry<String, String>> getIncrementalWidthdrawsData() {
+        return new ArrayList<>() {
+            {
+                add(new AbstractMap.SimpleEntry<>("100","900.1234"));
+                add(new AbstractMap.SimpleEntry<>("200","800.1234"));
+                add(new AbstractMap.SimpleEntry<>("300","700.1234"));
+                add(new AbstractMap.SimpleEntry<>("500","500.1234"));
+                add(new AbstractMap.SimpleEntry<>("900","100.1234"));
+                add(new AbstractMap.SimpleEntry<>("1001","-1.1234"));
+            }
+        };
     }
 
     @Nested
