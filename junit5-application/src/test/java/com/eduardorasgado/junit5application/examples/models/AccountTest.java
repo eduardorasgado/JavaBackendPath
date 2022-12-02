@@ -77,6 +77,7 @@ class AccountTest {
         }
     }
 
+    @Tag("operations")
     @Nested
     @DisplayName("[Account Operations Tests]")
     class AccountOperationsTest {
@@ -119,6 +120,7 @@ class AccountTest {
         }
     }
 
+    @Tag("error")
     @Test
     @DisplayName("Triggering test failure")
     @Disabled
@@ -126,6 +128,8 @@ class AccountTest {
         fail();
     }
 
+    @Tag("bank")
+    @Tag("operations")
     @Nested
     @DisplayName("[Bank and Accounts Relation Tests]")
     class BankAndAccountsRelationTest {
@@ -182,7 +186,12 @@ class AccountTest {
                     }
             );
         }
+    }
 
+    @Tag("parameterized")
+    @Nested
+    @DisplayName("[Bank and Accounts Relation Parameterized Tests]")
+    class BankAndAccountsRelationParameterizedTest {
         @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
         @ValueSource(strings = {"100", "200", "300", "500", "900", "1001"})
         @DisplayName("PARAMETERIZED TEST: Consecutive withdraws")
@@ -241,12 +250,12 @@ class AccountTest {
                 }, () -> "Not enough money to withdraw error should be thrown");
             });
         }
-
     }
 
     // In this case, even when this test is part of the BankAndAccountsRelationTest class, we cannot use MethodSource
     // within an inner class because they required a static method in the method source annotation of the test
     // and class member inner classes does not support static methods.
+    @Tag("parameterized")
     @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
     @MethodSource("getIncrementalWidthdrawsData")
     @DisplayName("PARAMETERIZED TEST: User repeatedly withdraws money from account [CSV Method Source]")
@@ -284,6 +293,8 @@ class AccountTest {
         };
     }
 
+
+    @Tag("env")
     @Nested
     @DisplayName("[Operating System Tests]")
     class OperatingSystemTest {
@@ -310,6 +321,7 @@ class AccountTest {
         }
     }
 
+    @Tag("env")
     @Nested
     @DisplayName("[Java Version Related Tests]")
     class JavaVersionTest {
@@ -336,6 +348,7 @@ class AccountTest {
         }
     }
 
+    @Tag("env")
     @Nested
     @DisplayName("[Environment Variables Related Tests]")
     class EnvironmentVariablesTest {
@@ -378,6 +391,7 @@ class AccountTest {
         }
     }
 
+    @Tag("env")
     @Nested
     @DisplayName("[System Properties Related Tests]")
     class SystemPropertiesTest {
