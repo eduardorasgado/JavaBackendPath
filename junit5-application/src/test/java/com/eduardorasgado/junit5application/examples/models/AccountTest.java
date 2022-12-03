@@ -10,7 +10,9 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
@@ -508,7 +510,7 @@ class AccountTest {
     }
 
     @RepeatedTest(value= 14, name = "Coin toss #{currentRepetition} out of {totalRepetitions}")
-    @DisplayName("Tossing a coin test")
+    @DisplayName("[Repeated test] Tossing a coin test")
     void testTossCoin(RepetitionInfo repInfo) {
         int halfRep = repInfo.getTotalRepetitions() / 2;
 
@@ -524,5 +526,40 @@ class AccountTest {
         int generated = randGenerator.nextInt(2);
 
         System.out.println(generated);
+    }
+
+    @Nested
+    @DisplayName("[Timeout Related tests]")
+    class TimeoutTest {
+
+        @Test
+        @DisplayName("Tossing a coin test [timeout]")
+        @Timeout(value=4000, unit = TimeUnit.MILLISECONDS)
+        void testTossCoinTimeOut() throws InterruptedException {
+            Random randGenerator = new Random();
+            int generated = randGenerator.nextInt(2);
+
+            for (int i = 0; i < 10; i++) {
+                System.out.println(i + 1);
+                Thread.sleep(1000);
+            }
+            // TimeUnit.SECONDS.sleep(10);
+
+            System.out.println(generated);
+        }
+
+        @Test
+        @DisplayName("Tossing a coin test [Assertion timeout test]")
+        void testTimeoutAssertion(TestInfo testInfo, TestReporter testReporter) {
+            // in this case, using assertTimeout as a programatic timeout
+            // does not prevent the code to keep going on execution after the desire time.
+            // after the code finishes, the assertion shows time exceeded by the lambda
+            assertTimeout(Duration.ofSeconds(3), () -> {
+                for (int i = 0; i < 4; i++) {
+                    System.out.println("count: " + (i + 1));
+                    Thread.sleep(1000);
+                }
+            });
+        }
     }
 }
