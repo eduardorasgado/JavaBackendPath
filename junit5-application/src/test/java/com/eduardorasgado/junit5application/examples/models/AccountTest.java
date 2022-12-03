@@ -528,6 +528,7 @@ class AccountTest {
         System.out.println(generated);
     }
 
+    @Tag("timeout")
     @Nested
     @DisplayName("[Timeout Related tests]")
     class TimeoutTest {
