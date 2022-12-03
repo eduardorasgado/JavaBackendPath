@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assumptions.*;
@@ -34,8 +36,10 @@ class AccountTest {
     }
 
     @BeforeEach
-    void initAccountMethodTest() {
-        System.out.println("--------starting unit test-------");
+    void initAccountMethodTest(TestInfo testInfo, TestReporter testReporter) {
+        // junit logging system
+        testReporter.publishEntry(buildTestHeader(testInfo));
+
         account = new Account("Andy", new BigDecimal("1000.1234"));
     }
 
@@ -44,11 +48,27 @@ class AccountTest {
         System.out.println("--------leaving unit test------");
     }
 
+    private String buildTestHeader(TestInfo testInfo) {
+        StringBuffer buf = new StringBuffer("Executing [");
+        buf.append(testInfo.getDisplayName());
+        buf.append(" ] | tags: ");
+
+        String[] tags = testInfo.getTags().toArray(new String[0]);
+        for (int i = 0; i < tags.length; i++) {
+            buf.append(tags[i]);
+            buf.append(i < tags.length - 1 ? "," : "");
+        }
+
+        return buf.toString();
+    }
+
     // We can use either BeforeEach and AfterEach hooks on Nested test classes but we can not use neither BeforeAll
     // nor AfterAll hooks over them.
+    @Tag("account")
     @Nested
     @DisplayName("[Account Attributes Tests]")
     class AccountAttributesTest {
+
         @Test
         @DisplayName("Account person name test")
         void testPerson() {
@@ -81,6 +101,7 @@ class AccountTest {
     @Nested
     @DisplayName("[Account Operations Tests]")
     class AccountOperationsTest {
+
         @Test
         @DisplayName("User withdraws money from account")
         void testWithdraw() {
@@ -110,6 +131,7 @@ class AccountTest {
         @Test
         @DisplayName("User deposits money into account")
         void testDeposit() {
+
             account = new Account("Andy Ruiz", new BigDecimal("11250.45009"));
             account.deposit(new BigDecimal(125.78));
 
@@ -192,6 +214,7 @@ class AccountTest {
     @Nested
     @DisplayName("[Bank and Accounts Relation Parameterized Tests]")
     class BankAndAccountsRelationParameterizedTest {
+
         @ParameterizedTest(name = "Test #{index} was executed with value: {0}")
         @ValueSource(strings = {"100", "200", "300", "500", "900", "1001"})
         @DisplayName("PARAMETERIZED TEST: Consecutive withdraws")
