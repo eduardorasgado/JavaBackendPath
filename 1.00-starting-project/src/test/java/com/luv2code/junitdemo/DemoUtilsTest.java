@@ -95,7 +95,7 @@ class DemoUtilsTest {
     @Test
     @Order(1)
     void testTimeout() {
-        assertTimeoutPreemptively(Duration.ofSeconds(3), () -> demoUtils.checkTimeout(), "Method should execute in 3 secs");
+        assertTimeoutPreemptively(Duration.ofSeconds(1), () -> demoUtils.checkTimeout(), "Method should execute in 3 secs");
     }
 
    /* @Test
