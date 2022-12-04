@@ -52,6 +52,16 @@ public class ConditionalTest {
 
     @Test
     @EnabledForJreRange(max = JRE.JAVA_8)
-    void testForJavaMax8() {
+    void testForJavaRangeMax8() {
+    }
+
+    @Test
+    @EnabledIfEnvironmentVariable(named = "EDUARDO_ENV", matches = "DEV")
+    void testOnlyForDevEnvironment() {
+    }
+
+    @Test
+    @EnabledIfSystemProperty(named = "EDUARDO_SYS_PROP", matches = "CI_CD_DEPLOY")
+    void testOnlyForSystemProperty() {
     }
 }
