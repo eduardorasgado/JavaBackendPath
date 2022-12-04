@@ -4,6 +4,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayNameGeneration(ReplaceCamelCase.class)
 class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -15,6 +16,27 @@ class DemoUtilsTest {
         demoUtils = new DemoUtils();
     }
 
+    @Test
+    //@DisplayName("Equals and not equals")
+    void testEqualsAndNotEquals(TestReporter testReporter) {
+        testReporter.publishEntry("Running test: testEqualsAndNotEquals");
+
+        assertEquals(6, demoUtils.add(2, 4), "2 + 4 must be 6");
+        assertNotEquals(6, demoUtils.add(1, 9), "1+ 9 must not be 6");
+    }
+
+    @Test
+    //@DisplayName("Null and not null")
+    void testNullAndNotNull(TestReporter testReporter) {
+        testReporter.publishEntry("Running test: testNullAndNotNull");
+
+        String str1 = null;
+        String str2 = "eduardo";
+
+        assertNull(demoUtils.checkNull(str1), "Object should be null");
+        assertNotNull(demoUtils.checkNull(str2), "Object should not be null");
+    }
+/*
     @AfterEach
     void tearDownAfterEach(TestReporter testReporter) {
         testReporter.publishEntry("@AfterEach executes before the execution of each test method");
@@ -28,24 +50,5 @@ class DemoUtilsTest {
     @AfterAll
     static void tearDownAfterAll() {
         System.out.println("@AfterAll executes only once after all test methods execution n the class");
-    }
-
-    @Test
-    void testEqualsAndNotEquals(TestReporter testReporter) {
-        testReporter.publishEntry("Running test: testEqualsAndNotEquals");
-
-        assertEquals(6, demoUtils.add(2, 4), "2 + 4 must be 6");
-        assertNotEquals(6, demoUtils.add(1, 9), "1+ 9 must not be 6");
-    }
-
-    @Test
-    void testNullAndNotNull(TestReporter testReporter) {
-        testReporter.publishEntry("Running test: testNullAndNotNull");
-
-        String str1 = null;
-        String str2 = "eduardo";
-
-        assertNull(demoUtils.checkNull(str1), "Object should be null");
-        assertNotNull(demoUtils.checkNull(str2), "Object should not be null");
-    }
+    }*/
 }
