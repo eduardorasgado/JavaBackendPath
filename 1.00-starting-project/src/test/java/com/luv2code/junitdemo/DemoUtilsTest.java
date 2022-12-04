@@ -98,6 +98,11 @@ class DemoUtilsTest {
         assertTimeoutPreemptively(Duration.ofSeconds(3), () -> demoUtils.checkTimeout(), "Method should execute in 3 secs");
     }
 
+   /* @Test
+    void testMultiplyByZero() {
+        assertEquals(0, demoUtils.multiply(4, 0), "Multiplying by zero should return zero");
+    }*/
+    
     /*
     @AfterEach
     void tearDownAfterEach(TestReporter testReporter) {
