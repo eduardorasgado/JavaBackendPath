@@ -1,9 +1,9 @@
 package com.luv2code.junitdemo;
 
+import com.luv2code.junitdemo.test.ReplaceCamelCase;
 import org.junit.jupiter.api.*;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
