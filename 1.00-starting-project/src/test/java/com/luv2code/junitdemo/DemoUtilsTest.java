@@ -9,6 +9,9 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayNameGeneration(ReplaceCamelCase.class)
+// the lowest value has the higher priority
+//@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@TestMethodOrder(MethodOrderer.DisplayName.class)
 class DemoUtilsTest {
 
     DemoUtils demoUtils;
@@ -31,6 +34,7 @@ class DemoUtilsTest {
 
     @Test
     //@DisplayName("Null and not null")
+    @Order(-1)
     void testNullAndNotNull(TestReporter testReporter) {
         testReporter.publishEntry("Running test: testNullAndNotNull");
 
@@ -59,6 +63,7 @@ class DemoUtilsTest {
     }
 
     @Test
+    @Order(4)
     void testArrayEquals() {
         String[] stringArray = {"A", "B", "C"};
 
@@ -73,6 +78,7 @@ class DemoUtilsTest {
     }
 
     @Test
+    @Order(2)
     void testLinesMatch() {
         List<String> expectedIterable = List.of("luv", "\\d+", "code");
 
@@ -80,12 +86,14 @@ class DemoUtilsTest {
     }
 
     @Test
+    @Order(3)
     void testThrowsAndDoesNotThrow() {
         assertThrows(Exception.class, () -> demoUtils.throwException(-1), "Should throw exception");
         assertDoesNotThrow(() -> demoUtils.throwException(5), "Should not throw exception");
     }
 
     @Test
+    @Order(1)
     void testTimeout() {
         assertTimeoutPreemptively(Duration.ofSeconds(3), () -> demoUtils.checkTimeout(), "Method should execute in 3 secs");
     }
