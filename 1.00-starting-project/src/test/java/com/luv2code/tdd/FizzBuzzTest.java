@@ -1,6 +1,8 @@
 package com.luv2code.tdd;
 
 import org.junit.jupiter.api.*;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -42,5 +44,32 @@ class FizzBuzzTest {
         String expected = "7";
 
         assertEquals(expected, FizzBuzz.compute(7), "Should return 7");
+    }
+
+    @DisplayName("Compute values from small data file")
+    @ParameterizedTest(name = "value: {0}, expected: {1}")
+    @CsvFileSource(resources = "/small-test-data.csv")
+    @Order(5)
+    void testFizzBuzzComputeFromSmallDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value), "Should return " + expected);
+    }
+
+    @DisplayName("Compute values from medium data file")
+    @ParameterizedTest(name = "value: {0}, expected: {1}")
+    @CsvFileSource(resources = "/medium-test-data.csv")
+    @Order(6)
+    void testFizzBuzzComputeFromMediumDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value), "Should return " + expected);
+    }
+
+    @DisplayName("Compute values from large data file")
+    @ParameterizedTest(name = "value: {0}, expected: {1}")
+    @CsvFileSource(resources = "/large-test-data.csv")
+    @Order(7)
+    void testFizzBuzzComputeFromLargeDataFile(int value, String expected) {
+
+        assertEquals(expected, FizzBuzz.compute(value), "Should return " + expected);
     }
 }
