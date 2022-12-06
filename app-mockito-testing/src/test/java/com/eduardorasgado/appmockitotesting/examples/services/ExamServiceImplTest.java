@@ -10,12 +10,11 @@ import org.junit.jupiter.api.Test;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ExamServiceImplTest {
 
-    private ExamRepository repository;
+    private ExamRepository examRepository;
 
     private QuestionRepository questionRepository;
     private ExamService examService;
@@ -23,16 +22,16 @@ class ExamServiceImplTest {
     @BeforeEach
     void setUp() {
         //ExamRepository repository = new ExamRepositoryImpl();
-        repository = mock(ExamRepository.class);
+        examRepository = mock(ExamRepository.class);
         questionRepository = mock(QuestionRepository.class);
 
-        examService = new ExamServiceImpl(repository, questionRepository);
+        examService = new ExamServiceImpl(examRepository, questionRepository);
     }
 
     @DisplayName("Find exam by name")
     @Test
-    void findExamByName() {
-        when(repository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+    void testFindExamByName() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
 
         Optional<Exam> exam = examService.findByName("Math");
         Exam expectedExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX);
@@ -46,8 +45,8 @@ class ExamServiceImplTest {
 
     @DisplayName("Find exam by name when empty list is retrieved")
     @Test
-    void findExamByNameWhenEmptyListIsReturned() {
-        when(repository.findAll()).thenReturn(ExamServiceTestingData.EMPTY_EXAM_LIST);
+    void testFindExamByNameWhenEmptyListIsReturned() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EMPTY_EXAM_LIST);
 
         Optional<Exam> exam = examService.findByName("Math");
 
@@ -56,11 +55,13 @@ class ExamServiceImplTest {
 
     @DisplayName("Find exam questions by exam name")
     @Test
-    void findExamQuestionsByExamName() {
+    void testFindExamQuestionsByExamName() {
         Exam mathExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX);
 
-        when(repository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        //when(questionRepository.findByExamId(ArgumentMatchers.anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
         when(questionRepository.findByExamId(mathExam.getId())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
 
         Exam examFound = examService.findByNameWithQuestions(mathExam.getName());
 
@@ -69,5 +70,20 @@ class ExamServiceImplTest {
                 () -> "exam found questions should contains 'Differential Equations'");
         assertEquals(4, examFound.getQuestions().size(),
                 () -> "Exam found questions are waiting for 4 items, received different size");
+    }
+
+    @DisplayName("Verify exam questions by exam name")
+    @Test
+    void testVerifyExamQuestionsByExamName() {
+        Exam mathExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX);
+
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(mathExam.getId())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        Exam examFound = examService.findByNameWithQuestions(mathExam.getName());
+
+        assertNotNull(examFound.getQuestions(), () -> "Exam found questions should not be null");
+        verify(examRepository, times(1)).findAll();
+        verify(questionRepository, times(1)).findByExamId(mathExam.getId());
     }
 }
