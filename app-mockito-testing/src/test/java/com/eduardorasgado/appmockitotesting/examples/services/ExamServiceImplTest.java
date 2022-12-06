@@ -67,5 +67,7 @@ class ExamServiceImplTest {
         assertNotNull(examFound.getQuestions(), () -> "Exam found questions should not be null");
         assertTrue(examFound.getQuestions().contains("Differential Equations"),
                 () -> "exam found questions should contains 'Differential Equations'");
+        assertEquals(4, examFound.getQuestions().size(),
+                () -> "Exam found questions are waiting for 4 items, received different size");
     }
 }
