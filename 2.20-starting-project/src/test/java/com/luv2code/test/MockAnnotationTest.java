@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.ApplicationContext;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -73,4 +75,28 @@ public class MockAnnotationTest {
 
         assertNotNull(applicationService.checkNull(student.getStudentGrades().getMathGradeResults()), "Object should not be null");
     }
+
+    @DisplayName("Throw runtime error")
+    @Test
+    void throwRuntimeError() {
+        CollegeStudent nullStudent = (CollegeStudent) context.getBean("collegeStudent");
+
+        doThrow(new NullPointerException()).when(applicationDao).checkNull(nullStudent);
+
+        assertThrows(NullPointerException.class, () -> applicationService.checkNull(nullStudent));
+        verify(applicationDao, times(1)).checkNull(nullStudent);
+     }
+
+     @DisplayName("Multiple stubbing")
+    @Test
+    public void stubbingConsecutiveCalls() {
+        CollegeStudent nullStudent = (CollegeStudent) context.getBean("collegeStudent");
+
+        when(applicationDao.checkNull(nullStudent))
+                .thenThrow(new NullPointerException())
+                .thenReturn("Do not throw exception second time");
+
+        assertThrows(NullPointerException.class, () -> applicationService.checkNull(nullStudent));
+        assertEquals("Do not throw exception second time", applicationService.checkNull(nullStudent));
+     }
 }
