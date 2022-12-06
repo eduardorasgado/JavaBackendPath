@@ -3,30 +3,53 @@ package com.eduardorasgado.appmockitotesting.examples.services;
 import com.eduardorasgado.appmockitotesting.examples.models.Exam;
 import com.eduardorasgado.appmockitotesting.examples.repositories.ExamRepository;
 import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+// to enable mockito annotations in order to be able to inject dependencies
+@ExtendWith(MockitoExtension.class)
 class ExamServiceImplTest {
 
+    @Mock
     private ExamRepository examRepository;
 
+    @Mock
     private QuestionRepository questionRepository;
-    private ExamService examService;
 
+    // without injecting it using mockito annotations, we are able to use the interface as dependency inversion principle states
+    //private ExamService examService;
+
+    // by using inject mocks annotation, now we have to use an implementation to inject mocks
+    @InjectMocks
+    private ExamServiceImpl examService;
+
+
+    /*
     @BeforeEach
     void setUp() {
         //ExamRepository repository = new ExamRepositoryImpl();
-        examRepository = mock(ExamRepository.class);
-        questionRepository = mock(QuestionRepository.class);
 
-        examService = new ExamServiceImpl(examRepository, questionRepository);
-    }
+
+        //examRepository = mock(ExamRepository.class);
+        //questionRepository = mock(QuestionRepository.class);
+
+        //examService = new ExamServiceImpl(examRepository, questionRepository);
+
+        // dependency injection mockito's way of testing services and repos
+        //MockitoAnnotations.openMocks(this);
+    }*/
 
     @DisplayName("Find exam by name")
     @Test
