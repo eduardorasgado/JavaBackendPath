@@ -13,8 +13,8 @@ public class ExamRepositoryImpl implements ExamRepository {
 
         return Collections.emptyList();
     /*    return Arrays.asList(
-                new Exam(5L, "Math"),
-                new Exam(6L, "Spanish"),
+                new Exam(5L, "Spanish"),
+                new Exam(6L, "Math"),
                 new Exam(7L, "History")
         );*/
     }

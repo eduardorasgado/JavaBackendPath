@@ -33,4 +33,8 @@ public class Exam {
     public List<String> getQuestions() {
         return questions;
     }
+
+    public void setQuestions(List<String> questions) {
+        this.questions = questions;
+    }
 }
