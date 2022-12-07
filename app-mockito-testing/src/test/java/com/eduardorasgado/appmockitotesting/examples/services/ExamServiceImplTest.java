@@ -6,13 +6,13 @@ import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionReposi
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentMatcher;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -171,7 +171,7 @@ class ExamServiceImplTest {
     void testArgumentMatchers() {
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
         when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
-        //when(questionRepository.findByExamId(null)).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+        //when(questionRepository.findByExamId(isNull())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
 
         examService.findByNameWithQuestions(
                 ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX).getName()
@@ -181,5 +181,40 @@ class ExamServiceImplTest {
         // ArgumentMatchers.argThat()
         verify(questionRepository).findByExamId(argThat(arg -> arg != null && arg.equals(6L)));
         //verify(questionRepository).findByExamId(eq(6L));
+    }
+
+    @DisplayName("Custom Argument Matchers test")
+    @Test
+    void testCustomArgumentMatchers() {
+        //when(examRepository.findAll()).thenReturn(ExamServiceTestingData.NEGATIVE_ID_EXAM_LIST);
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        examService.findByNameWithQuestions(
+                ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX).getName()
+        );
+
+        verify(examRepository).findAll();
+        verify(questionRepository).findByExamId(argThat(new MyArgMatcher()));
+    }
+
+    // custom argument matcher, not necessary to have it as inner class
+    public static class MyArgMatcher implements ArgumentMatcher<Long> {
+
+        boolean argumentNotNull = false;
+        @Override
+        public boolean matches(Long argument) {
+            argumentNotNull = argument != null;
+
+            return argumentNotNull && argument > 0;
+        }
+
+        @Override
+        public String toString() {
+            StringBuilder message = new StringBuilder("[Custom Arg Matcher Error Msg]: Argument should");
+            message.append(argumentNotNull ? " be greater than zero" : " not be null");
+
+            return message.toString();
+        }
     }
 }
