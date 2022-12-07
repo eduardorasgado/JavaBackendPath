@@ -165,4 +165,21 @@ class ExamServiceImplTest {
         verify(examRepository).findAll();
         verify(questionRepository).findByExamId(isNull());
     }
+
+    @DisplayName("Argument Matchers test")
+    @Test
+    void testArgumentMatchers() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+        //when(questionRepository.findByExamId(null)).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        examService.findByNameWithQuestions(
+                ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX).getName()
+        );
+
+        verify(examRepository).findAll();
+        // ArgumentMatchers.argThat()
+        verify(questionRepository).findByExamId(argThat(arg -> arg != null && arg.equals(6L)));
+        //verify(questionRepository).findByExamId(eq(6L));
+    }
 }
