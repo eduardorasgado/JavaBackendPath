@@ -3,12 +3,9 @@ package com.eduardorasgado.appmockitotesting.examples.services;
 import com.eduardorasgado.appmockitotesting.examples.models.Exam;
 import com.eduardorasgado.appmockitotesting.examples.repositories.ExamRepository;
 import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionRepository;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+import org.mockito.*;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
@@ -21,6 +18,7 @@ import static org.mockito.Mockito.*;
 
 // to enable mockito annotations in order to be able to inject dependencies
 @ExtendWith(MockitoExtension.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ExamServiceImplTest {
 
     @Mock
@@ -36,6 +34,8 @@ class ExamServiceImplTest {
     @InjectMocks
     private ExamServiceImpl examService;
 
+    @Captor
+    ArgumentCaptor<Long> longArgCaptor;
 
     /*
     @BeforeEach
@@ -53,6 +53,7 @@ class ExamServiceImplTest {
     }*/
 
     @DisplayName("Find exam by name")
+    @Order(1)
     @Test
     void testFindExamByName() {
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
@@ -68,6 +69,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Find exam by name when empty list is retrieved")
+    @Order(2)
     @Test
     void testFindExamByNameWhenEmptyListIsReturned() {
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EMPTY_EXAM_LIST);
@@ -78,6 +80,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Find exam questions by exam name")
+    @Order(3)
     @Test
     void testFindExamQuestionsByExamName() {
         Exam mathExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX);
@@ -97,6 +100,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Verify exam questions by exam name")
+    @Order(4)
     @Test
     void testVerifyExamQuestionsByExamName() {
         // Given
@@ -116,6 +120,7 @@ class ExamServiceImplTest {
 
     // Given when and then: Behavioral Driven Development
     @DisplayName("Assert save exam")
+    @Order(5)
     @Test
     void testSaveExam() throws CloneNotSupportedException {
         // Given
@@ -151,6 +156,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Exception Handling Test")
+    @Order(6)
     @Test
     void testExceptionHandling() {
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.ID_NULL_EXAM_LIST);
@@ -167,6 +173,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Argument Matchers test")
+    @Order(7)
     @Test
     void testArgumentMatchers() {
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
@@ -184,6 +191,7 @@ class ExamServiceImplTest {
     }
 
     @DisplayName("Custom Argument Matchers test")
+    @Order(8)
     @Test
     void testCustomArgumentMatchers() {
         //when(examRepository.findAll()).thenReturn(ExamServiceTestingData.NEGATIVE_ID_EXAM_LIST);
@@ -216,5 +224,44 @@ class ExamServiceImplTest {
 
             return message.toString();
         }
+    }
+
+    @DisplayName("Argument Captor in method test")
+    @Order(9)
+    @Test
+    void testArgumentCaptorInMethod() {
+        Exam spanishExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.SPANISH_EXAM_INDEX);
+
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(eq(spanishExam.getId()))).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        examService.findByNameWithQuestions(
+                spanishExam.getName()
+        );
+
+        verify(questionRepository).findByExamId(anyLong());
+        ArgumentCaptor<Long> captor = ArgumentCaptor.forClass(Long.class);
+        verify(questionRepository).findByExamId(captor.capture());
+
+        assertEquals(5L, captor.getValue(), () -> "expected exam id passed to question repo should be equals to 6");
+    }
+
+    @DisplayName("Annotated Argument Captor test")
+    @Order(10)
+    @Test
+    void testArgumentCaptorAnnotated() {
+        Exam spanishExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.SPANISH_EXAM_INDEX);
+
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(eq(spanishExam.getId()))).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        examService.findByNameWithQuestions(
+                spanishExam.getName()
+        );
+
+        verify(questionRepository).findByExamId(anyLong());
+        verify(questionRepository).findByExamId(longArgCaptor.capture());
+
+        assertEquals(5L, longArgCaptor.getValue(), () -> "expected exam id passed to question repo should be equals to 6");
     }
 }

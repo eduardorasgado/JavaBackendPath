@@ -8,6 +8,7 @@ import java.util.List;
 
 public class ExamServiceTestingData {
     public static int MATH_EXAM_INDEX = 1;
+    public static int SPANISH_EXAM_INDEX = 0;
     public static List<Exam> EXAM_LIST = Arrays.asList(
             new Exam(5L, "Spanish"),
             new Exam(6L, "Math"),
