@@ -1,6 +1,7 @@
 package com.eduardorasgado.appmockitotesting.examples.models;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Exam implements Cloneable {
@@ -40,6 +41,9 @@ public class Exam implements Cloneable {
 
     @Override
     public Exam clone() throws CloneNotSupportedException {
-        return new Exam(this.getId(), this.getName());
+        Exam newExam = new Exam(getId(), getName());
+        newExam.setQuestions(List.copyOf(getQuestions()));
+
+        return newExam;
     }
 }

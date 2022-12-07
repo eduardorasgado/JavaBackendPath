@@ -24,7 +24,7 @@ public class ExamServiceTestingData {
             "Differential Equations"
     );
 
-    public static final Exam PHYSICS_EXAM = new Exam(8L, "Physics");
+    public static final Exam PHYSICS_EXAM = new Exam(null, "Physics");
 
     public static List<String> PHYSICS_EXAM_QUESTIONS = Arrays.asList(
             "Kinematics",

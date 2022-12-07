@@ -8,7 +8,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.mockito.stubbing.Answer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -115,10 +117,19 @@ class ExamServiceImplTest {
         Exam newExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
         newExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
 
-        Exam toReturnExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
-        toReturnExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+        when(examRepository.save(any(Exam.class))).then(new Answer<Exam>() {
 
-        when(examRepository.save(any(Exam.class))).thenReturn(toReturnExam);
+            Long sequence = 8L;
+
+            @Override
+            public Exam answer(InvocationOnMock invocation) throws Throwable {
+                // 0 stands for the argument we are passing to examRepository.save() at when method
+                Exam toReturnExam = ((Exam) invocation.getArgument(0)).clone();
+                toReturnExam.setId(sequence++);
+
+                return toReturnExam;
+            }
+        });
 
         Exam actualExam = examService.save(newExam);
 
