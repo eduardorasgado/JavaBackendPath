@@ -99,21 +99,26 @@ class ExamServiceImplTest {
     @DisplayName("Verify exam questions by exam name")
     @Test
     void testVerifyExamQuestionsByExamName() {
+        // Given
         Exam mathExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX);
 
+        // When
         when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
         when(questionRepository.findByExamId(mathExam.getId())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
 
         Exam examFound = examService.findByNameWithQuestions(mathExam.getName());
 
+        // Then
         assertNotNull(examFound.getQuestions(), () -> "Exam found questions should not be null");
         verify(examRepository, times(1)).findAll();
         verify(questionRepository, times(1)).findByExamId(mathExam.getId());
     }
 
+    // Given when and then: Behavioral Driven Development
     @DisplayName("Assert save exam")
     @Test
     void testSaveExam() throws CloneNotSupportedException {
+        // Given
         Exam newExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
         newExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
 
@@ -131,8 +136,10 @@ class ExamServiceImplTest {
             }
         });
 
+        // when
         Exam actualExam = examService.save(newExam);
 
+        // then
         assertNotNull(actualExam.getId());
         assertEquals(8L, actualExam.getId());
         assertEquals("Physics", actualExam.getName());
@@ -141,5 +148,21 @@ class ExamServiceImplTest {
 
         verify(examRepository, times(1)).save(any(Exam.class));
         verify(questionRepository, times(1)).saveAll(anyList());
+    }
+
+    @DisplayName("Exception Handling Test")
+    @Test
+    void testExceptionHandling() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.ID_NULL_EXAM_LIST);
+        //when(questionRepository.findByExamId(isNull())).thenThrow(IllegalArgumentException.class);
+        doThrow(new IllegalArgumentException()).when(questionRepository).findByExamId(isNull());
+
+        Exception ex = assertThrows(IllegalArgumentException.class,
+                () -> examService.findByNameWithQuestions(ExamServiceTestingData.EXAM_LIST.get(2).getName()));
+
+        assertEquals(IllegalArgumentException.class, ex.getClass());
+
+        verify(examRepository).findAll();
+        verify(questionRepository).findByExamId(isNull());
     }
 }

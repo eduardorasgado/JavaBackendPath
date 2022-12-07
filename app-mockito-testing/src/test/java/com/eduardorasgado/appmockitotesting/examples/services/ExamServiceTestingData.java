@@ -15,6 +15,12 @@ public class ExamServiceTestingData {
             new Exam(7L, "History")
     );
 
+    public static List<Exam> ID_NULL_EXAM_LIST = Arrays.asList(
+            new Exam(null, "Spanish"),
+            new Exam(null, "Math"),
+            new Exam(null, "History")
+    );
+
     public static List<Exam> EMPTY_EXAM_LIST = Collections.emptyList();
 
     public static List<String> MATH_EXAM_QUESTIONS = Arrays.asList(
