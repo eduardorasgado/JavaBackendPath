@@ -3,7 +3,7 @@ package com.eduardorasgado.appmockitotesting.examples.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Exam {
+public class Exam implements Cloneable {
     private Long id;
     private String name;
     private List<String> questions;
@@ -36,5 +36,10 @@ public class Exam {
 
     public void setQuestions(List<String> questions) {
         this.questions = questions;
+    }
+
+    @Override
+    public Exam clone() throws CloneNotSupportedException {
+        return new Exam(this.getId(), this.getName());
     }
 }

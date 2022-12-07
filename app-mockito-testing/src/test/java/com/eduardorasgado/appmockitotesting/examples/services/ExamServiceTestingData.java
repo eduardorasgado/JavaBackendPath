@@ -23,4 +23,13 @@ public class ExamServiceTestingData {
             "Linear Algebra",
             "Differential Equations"
     );
+
+    public static final Exam PHYSICS_EXAM = new Exam(8L, "Physics");
+
+    public static List<String> PHYSICS_EXAM_QUESTIONS = Arrays.asList(
+            "Kinematics",
+            "Motion",
+            "Energy",
+            "Gravitation"
+    );
 }

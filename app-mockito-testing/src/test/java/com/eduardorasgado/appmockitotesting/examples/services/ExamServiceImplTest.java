@@ -3,16 +3,15 @@ package com.eduardorasgado.appmockitotesting.examples.services;
 import com.eduardorasgado.appmockitotesting.examples.models.Exam;
 import com.eduardorasgado.appmockitotesting.examples.repositories.ExamRepository;
 import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionRepository;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -108,5 +107,28 @@ class ExamServiceImplTest {
         assertNotNull(examFound.getQuestions(), () -> "Exam found questions should not be null");
         verify(examRepository, times(1)).findAll();
         verify(questionRepository, times(1)).findByExamId(mathExam.getId());
+    }
+
+    @DisplayName("Assert save exam")
+    @Test
+    void testSaveExam() throws CloneNotSupportedException {
+        Exam newExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
+        newExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+
+        Exam toReturnExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
+        toReturnExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+
+        when(examRepository.save(any(Exam.class))).thenReturn(toReturnExam);
+
+        Exam actualExam = examService.save(newExam);
+
+        assertNotNull(actualExam.getId());
+        assertEquals(8L, actualExam.getId());
+        assertEquals("Physics", actualExam.getName());
+        assertNotEquals(actualExam, newExam, () -> "exam questions lists should not reference same list object");
+        assertIterableEquals(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS, actualExam.getQuestions());
+
+        verify(examRepository, times(1)).save(any(Exam.class));
+        verify(questionRepository, times(1)).saveAll(anyList());
     }
 }
