@@ -264,4 +264,22 @@ class ExamServiceImplTest {
 
         assertEquals(5L, longArgCaptor.getValue(), () -> "expected exam id passed to question repo should be equals to 6");
     }
+
+    @DisplayName("Do throw test")
+    @Order(11)
+    @Test
+    void testDoThrow(TestReporter testReporter) throws CloneNotSupportedException {
+        Exam exam = ExamServiceTestingData.PHYSICS_EXAM.clone();
+        exam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+
+        // this is not possible because when it starts with when method it is required to get a return type
+        // different to void
+        //when(questionRepository.saveAll(anyList())).thenThrow(IllegalArgumentException.class);
+        // so for this reason we can use doThrow
+        doThrow(new IllegalArgumentException()).when(questionRepository).saveAll(anyList());
+
+        Exception ex = assertThrows(IllegalArgumentException.class, () -> examService.save(exam), () -> "IllegalArgumentException was expected");
+
+        testReporter.publishEntry("Error was thrown correctly thrown: " + ex);
+    }
 }
