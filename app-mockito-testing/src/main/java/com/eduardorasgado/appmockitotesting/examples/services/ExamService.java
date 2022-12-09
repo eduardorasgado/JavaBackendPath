@@ -9,5 +9,5 @@ public interface ExamService {
 
     Exam findByNameWithQuestions(String name);
 
-    Exam save(Exam exam);
+    Exam save(Exam exam) throws CloneNotSupportedException;
 }

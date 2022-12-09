@@ -41,6 +41,7 @@ public class ExamServiceTestingData {
             "Kinematics",
             "Motion",
             "Energy",
-            "Gravitation"
+            "Gravitation",
+            "Particles"
     );
 }

@@ -10,17 +10,18 @@ public class ExamRepositoryImpl implements ExamRepository {
 
     @Override
     public List<Exam> findAll() {
-
-        return Collections.emptyList();
-    /*    return Arrays.asList(
+        System.out.println("ExamRepositoryImpl.findAll");
+        //return Collections.emptyList();
+        return Arrays.asList(
                 new Exam(5L, "Spanish"),
                 new Exam(6L, "Math"),
                 new Exam(7L, "History")
-        );*/
+        );
     }
 
     @Override
-    public Exam save(Exam exam) {
-        return null;
+    public Exam save(Exam exam) throws CloneNotSupportedException {
+        System.out.println("ExamRepositoryImpl.save");
+        return exam.clone();
     }
 }

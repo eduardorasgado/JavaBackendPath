@@ -8,5 +8,5 @@ public interface ExamRepository {
 
     List<Exam> findAll();
 
-    Exam save(Exam exam);
+    Exam save(Exam exam) throws CloneNotSupportedException;
 }

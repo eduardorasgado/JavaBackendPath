@@ -2,7 +2,9 @@ package com.eduardorasgado.appmockitotesting.examples.services;
 
 import com.eduardorasgado.appmockitotesting.examples.models.Exam;
 import com.eduardorasgado.appmockitotesting.examples.repositories.ExamRepository;
+import com.eduardorasgado.appmockitotesting.examples.repositories.ExamRepositoryImpl;
 import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionRepository;
+import com.eduardorasgado.appmockitotesting.examples.repositories.QuestionRepositoryImpl;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
@@ -10,6 +12,7 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +28,7 @@ class ExamServiceImplTest {
     private ExamRepository examRepository;
 
     @Mock
-    private QuestionRepository questionRepository;
+    private QuestionRepositoryImpl questionRepository;
 
     // without injecting it using mockito annotations, we are able to use the interface as dependency inversion principle states
     //private ExamService examService;
@@ -35,7 +38,7 @@ class ExamServiceImplTest {
     private ExamServiceImpl examService;
 
     @Captor
-    ArgumentCaptor<Long> longArgCaptor;
+    private ArgumentCaptor<Long> longArgCaptor;
 
     /*
     @BeforeEach
@@ -278,8 +281,119 @@ class ExamServiceImplTest {
         // so for this reason we can use doThrow
         doThrow(new IllegalArgumentException()).when(questionRepository).saveAll(anyList());
 
-        Exception ex = assertThrows(IllegalArgumentException.class, () -> examService.save(exam), () -> "IllegalArgumentException was expected");
+        Exception ex = assertThrows(IllegalArgumentException.class,
+                () -> examService.save(exam), () -> "IllegalArgumentException was expected");
 
         testReporter.publishEntry("Error was thrown correctly thrown: " + ex);
+    }
+
+    @DisplayName("Do Answer test")
+    @Order(12)
+    @Test
+    void testDoAnswer() throws CloneNotSupportedException {
+        Exam exam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX).clone();
+
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        //when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+        doAnswer(invocationOnMock -> {
+            return invocationOnMock.getArgument(0) != null
+                    ? List.copyOf(ExamServiceTestingData.MATH_EXAM_QUESTIONS)
+                    : new ArrayList<>();
+        }).when(questionRepository).findByExamId(anyLong());
+
+        Exam actualExam = examService.findByNameWithQuestions(exam.getName());
+
+        assertIterableEquals(ExamServiceTestingData.MATH_EXAM_QUESTIONS, actualExam.getQuestions(),
+                () -> "actual exam questions should match expected");
+        assertEquals(exam.getId(), actualExam.getId());
+        assertEquals(exam.getName(), actualExam.getName());
+        assertEquals(4, actualExam.getQuestions().size());
+    }
+
+    @DisplayName("Do answer save exam test ")
+    @Order(13)
+    @Test
+    void testDoAnswerSaveExam() throws CloneNotSupportedException {
+        // Given
+        Exam newExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
+        newExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+
+        doAnswer(new Answer<Exam>() {
+
+            Long sequence = 8L;
+
+            @Override
+            public Exam answer(InvocationOnMock invocation) throws Throwable {
+                // 0 stands for the argument we are passing to examRepository.save() at when method
+                Exam toReturnExam = ((Exam) invocation.getArgument(0)).clone();
+                toReturnExam.setId(sequence++);
+
+                return toReturnExam;
+            }
+        }).when(examRepository).save(any(Exam.class));
+
+        // when
+        Exam actualExam = examService.save(newExam);
+
+        // then
+        assertNotNull(actualExam.getId());
+        assertEquals(8L, actualExam.getId());
+        assertEquals("Physics", actualExam.getName());
+        assertNotEquals(actualExam, newExam, () -> "exam questions lists should not reference same list object");
+        assertIterableEquals(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS, actualExam.getQuestions());
+
+        verify(examRepository).save(any(Exam.class));
+        verify(questionRepository).saveAll(anyList());
+    }
+
+    @DisplayName("Do Call Real Method test")
+    @Order(14)
+    @Test
+    void testDoCallRealMethod() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        //when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+        doCallRealMethod().when(questionRepository).findByExamId(anyLong());
+
+        Exam exam = examService.findByNameWithQuestions("Math");
+
+        assertEquals(6L, exam.getId());
+        assertEquals("Math", exam.getName());
+        assertIterableEquals(ExamServiceTestingData.MATH_EXAM_QUESTIONS, exam.getQuestions());
+    }
+
+    @DisplayName("Spies testing")
+    @Order(15)
+    @Test
+    void testSpy(TestInfo testInfo, TestReporter testReporter) throws CloneNotSupportedException {
+        testReporter.publishEntry("Evaluating " + testInfo.getTestMethod().get().getName());
+
+        // Spy requires an implemented class
+        ExamRepository examRepo = spy(ExamRepositoryImpl.class);
+        QuestionRepository questionRepo = spy(QuestionRepositoryImpl.class);
+        ExamService localExamService = new ExamServiceImpl(examRepo, questionRepo);
+
+        // if we check on the output, we will find that even when we are mocking findByExamId method, the real one
+        // has been called too, and later on when the localExamService.findByNameWithQuestions method calls the findByExamId
+        // method, the mocked one is called. To avoid this, because we dont want the original one to be executed, we will use
+        // doReturn
+        //when(questionRepo.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+        doReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS).when(questionRepo).findByExamId(anyLong());
+
+        Exam expectedExam = ExamServiceTestingData.EXAM_LIST.get(ExamServiceTestingData.MATH_EXAM_INDEX).clone();
+        expectedExam.setQuestions(List.copyOf(ExamServiceTestingData.MATH_EXAM_QUESTIONS));
+
+        Exam exam = localExamService.findByNameWithQuestions(expectedExam.getName());
+
+        assertAll(
+                () -> assertEquals(expectedExam.getId(), exam.getId(), "actual id should be " + expectedExam.getId()),
+                () -> assertEquals(expectedExam.getName(), exam.getName(), "actual name should be " + expectedExam.getName()),
+                () -> assertEquals(expectedExam.getQuestions().size(), exam.getQuestions().size(),
+                        "actual question size should be " + expectedExam.getQuestions().size()),
+                () -> assertTrue(exam.getQuestions().contains("Derivatives"),
+                        "actual exam questions should contains an element called Derivatives")
+        );
+
+        verify(examRepo).findAll();
+        verify(questionRepo).findByExamId(anyLong());
     }
 }

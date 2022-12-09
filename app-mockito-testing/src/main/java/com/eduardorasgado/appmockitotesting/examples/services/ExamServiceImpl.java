@@ -9,8 +9,8 @@ import java.util.Optional;
 
 public class ExamServiceImpl implements ExamService {
 
-    private ExamRepository examRepository;
-    private QuestionRepository questionRepository;
+    private final ExamRepository examRepository;
+    private final QuestionRepository questionRepository;
 
     public ExamServiceImpl(ExamRepository examRepository, QuestionRepository questionRepository) {
         this.examRepository = examRepository;
@@ -42,7 +42,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
-    public Exam save(Exam exam) {
+    public Exam save(Exam exam) throws CloneNotSupportedException {
         if(!exam.getQuestions().isEmpty()) {
             questionRepository.saveAll(exam.getQuestions());
         }
