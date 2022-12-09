@@ -1,0 +1,56 @@
+package com.eduardorasgado.app.models;
+
+import java.util.Objects;
+
+public class Bank {
+    private Long id;
+    private String name;
+    private int totalMoneyTransfered;
+
+    public Bank() {
+    }
+
+    public Bank(Long id, String name, int totalMoneyTransfered) {
+        this.id = id;
+        this.name = name;
+        this.totalMoneyTransfered = totalMoneyTransfered;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getTotalMoneyTransfered() {
+        return totalMoneyTransfered;
+    }
+
+    public void setTotalMoneyTransfered(int totalMoneyTransfered) {
+        this.totalMoneyTransfered = totalMoneyTransfered;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Bank bank = (Bank) o;
+        return getTotalMoneyTransfered() == bank.getTotalMoneyTransfered() && Objects.equals(getId(), bank.getId()) && Objects.equals(getName(), bank.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getName(), getTotalMoneyTransfered());
+    }
+}
