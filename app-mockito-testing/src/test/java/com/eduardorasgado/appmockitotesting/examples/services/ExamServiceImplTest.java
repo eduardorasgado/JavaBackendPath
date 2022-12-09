@@ -440,4 +440,16 @@ class ExamServiceImplTest {
         verify(questionRepository, atMost(2)).saveAll(anyList());
         verify(examRepository, atMostOnce()).save(any(Exam.class));
     }
+
+    @DisplayName("No interaction with mock test")
+    @Order(18)
+    @Test
+    void testVerifyZeroMockInteraction() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EMPTY_EXAM_LIST);
+
+        examService.findByNameWithQuestions("Spanish");
+
+        verify(questionRepository, never()).findByExamId(anyLong());
+        verifyNoInteractions(questionRepository);
+    }
 }
