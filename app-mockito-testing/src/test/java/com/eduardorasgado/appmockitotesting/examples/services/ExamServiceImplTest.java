@@ -396,4 +396,48 @@ class ExamServiceImplTest {
         verify(examRepo).findAll();
         verify(questionRepo).findByExamId(anyLong());
     }
+
+    @DisplayName("Mock invocation order test")
+    @Order(16)
+    @Test
+    void testMockInvocationOrder() {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+
+        examService.findByNameWithQuestions("Math");
+        examService.findByNameWithQuestions("Spanish");
+
+        // to test and verify mock invoking order
+        // we can either verify one single mock item or many of them
+        //InOrder inOrder = inOrder(questionRepository);
+        InOrder inOrder = inOrder(examRepository, questionRepository);
+
+        inOrder.verify(examRepository).findAll();
+        inOrder.verify(questionRepository).findByExamId(6L);
+        inOrder.verify(examRepository).findAll();
+        inOrder.verify(questionRepository).findByExamId(5L);
+    }
+
+    @DisplayName("Mock invocation: invocation times verify")
+    @Order(17)
+    @Test
+    void testMockInvocationTimes() throws CloneNotSupportedException {
+        when(examRepository.findAll()).thenReturn(ExamServiceTestingData.EXAM_LIST);
+        when(questionRepository.findByExamId(anyLong())).thenReturn(ExamServiceTestingData.MATH_EXAM_QUESTIONS);
+
+        examService.findByNameWithQuestions("Math");
+
+        verify(questionRepository, times(1)).findByExamId(6L);
+        verify(examRepository, times(1)).findAll();
+        // same as atLeast(1):
+        verify(questionRepository, atLeastOnce()).findByExamId(6L);
+
+        Exam newExam = ExamServiceTestingData.PHYSICS_EXAM.clone();
+        newExam.setQuestions(List.copyOf(ExamServiceTestingData.PHYSICS_EXAM_QUESTIONS));
+
+        examService.save(newExam);
+
+        // also we have atMostOnce
+        verify(questionRepository, atMost(2)).saveAll(anyList());
+        verify(examRepository, atMostOnce()).save(any(Exam.class));
+    }
 }
