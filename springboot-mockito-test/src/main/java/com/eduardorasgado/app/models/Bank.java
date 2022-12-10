@@ -5,15 +5,15 @@ import java.util.Objects;
 public class Bank {
     private Long id;
     private String name;
-    private int totalMoneyTransfered;
+    private int totalTransfers;
 
     public Bank() {
     }
 
-    public Bank(Long id, String name, int totalMoneyTransfered) {
+    public Bank(Long id, String name, int totalTransfers) {
         this.id = id;
         this.name = name;
-        this.totalMoneyTransfered = totalMoneyTransfered;
+        this.totalTransfers = totalTransfers;
     }
 
     public Long getId() {
@@ -32,12 +32,12 @@ public class Bank {
         this.name = name;
     }
 
-    public int getTotalMoneyTransfered() {
-        return totalMoneyTransfered;
+    public int getTotalTransfers() {
+        return totalTransfers;
     }
 
-    public void setTotalMoneyTransfered(int totalMoneyTransfered) {
-        this.totalMoneyTransfered = totalMoneyTransfered;
+    public void setTotalTransfers(int totalTransfers) {
+        this.totalTransfers = totalTransfers;
     }
 
 
@@ -46,11 +46,11 @@ public class Bank {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Bank bank = (Bank) o;
-        return getTotalMoneyTransfered() == bank.getTotalMoneyTransfered() && Objects.equals(getId(), bank.getId()) && Objects.equals(getName(), bank.getName());
+        return getTotalTransfers() == bank.getTotalTransfers() && Objects.equals(getId(), bank.getId()) && Objects.equals(getName(), bank.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getTotalMoneyTransfered());
+        return Objects.hash(getId(), getName(), getTotalTransfers());
     }
 }

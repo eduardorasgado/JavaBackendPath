@@ -27,6 +27,11 @@ class ExamServiceImplTest {
     @Mock
     private ExamRepository examRepository;
 
+
+    //@Mock
+    //private QuestionRepositoryImpl questionRepository;
+    // if we are using Mockito.doCallRealMethod() when we want the implemented original method instead of mocks, we should
+    // use the implemented class instead of the interface as seen at testDoCallRealMethod()
     @Mock
     private QuestionRepositoryImpl questionRepository;
 
