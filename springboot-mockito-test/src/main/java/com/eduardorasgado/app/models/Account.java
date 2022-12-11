@@ -5,7 +5,7 @@ import com.eduardorasgado.app.exceptions.NotEnoughMoneyException;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-public class Account {
+public class Account implements Cloneable {
     private Long id;
     private String name;
     private BigDecimal balance;
@@ -19,7 +19,7 @@ public class Account {
         this.balance = balance;
     }
 
-    public void withdraw(BigDecimal amount) {
+    public void withdraw(BigDecimal amount){
         BigDecimal newBalance = getBalance().subtract(amount);
         if(newBalance.compareTo(BigDecimal.ZERO) < 0) {
             throw new NotEnoughMoneyException("Not enough money to withdraw");
@@ -66,5 +66,10 @@ public class Account {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getBalance());
+    }
+
+    @Override
+    public Account clone() {
+        return new Account(getId(), getName(), getBalance());
     }
 }

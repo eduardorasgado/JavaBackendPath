@@ -2,7 +2,7 @@ package com.eduardorasgado.app.models;
 
 import java.util.Objects;
 
-public class Bank {
+public class Bank implements Cloneable{
     private Long id;
     private String name;
     private int totalTransfers;
@@ -52,5 +52,10 @@ public class Bank {
     @Override
     public int hashCode() {
         return Objects.hash(getId(), getName(), getTotalTransfers());
+    }
+
+    @Override
+    public Bank clone() {
+        return new Bank(getId(), getName(), getTotalTransfers());
     }
 }

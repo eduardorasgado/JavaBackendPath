@@ -1,5 +1,6 @@
 package com.eduardorasgado.app.services;
 
+import com.eduardorasgado.app.exceptions.NotEnoughMoneyException;
 import com.eduardorasgado.app.models.Account;
 import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
@@ -43,14 +44,19 @@ public class AccountService implements IAccountService {
         Account destinationAccount = accountRepository.findById(destinationAccountId);
         Bank bank = bankRepository.findById(bankId);
 
-        int totalTransfered = bank.getTotalTransfers();
-        bank.setTotalTransfers(++totalTransfered);
-        bankRepository.update(bank);
+        try {
+            originAccount.withdraw(amount);
+            accountRepository.update(originAccount);
 
-        originAccount.withdraw(amount);
-        accountRepository.update(originAccount);
+            destinationAccount.deposit(amount);
+            accountRepository.update(destinationAccount);
 
-        destinationAccount.deposit(amount);
-        accountRepository.update(destinationAccount);
+            int totalTransfered = bank.getTotalTransfers();
+            bank.setTotalTransfers(++totalTransfered);
+            bankRepository.update(bank);
+        } catch (NotEnoughMoneyException ex) {
+            System.out.println("Could not perform the money transfer, error: " + ex.getMessage());
+            throw ex;
+        }
     }
 }
