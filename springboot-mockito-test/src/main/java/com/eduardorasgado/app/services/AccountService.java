@@ -5,9 +5,11 @@ import com.eduardorasgado.app.models.Account;
 import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
 import com.eduardorasgado.app.repositories.IBankRepository;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
+@Service
 public class AccountService implements IAccountService {
 
     private IAccountRepository accountRepository;

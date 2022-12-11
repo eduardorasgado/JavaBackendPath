@@ -8,7 +8,11 @@ import com.eduardorasgado.app.repositories.IBankRepository;
 import com.eduardorasgado.app.services.AccountService;
 import com.eduardorasgado.app.services.IAccountService;
 import org.junit.jupiter.api.*;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
 
@@ -19,18 +23,31 @@ import static org.mockito.Mockito.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class SpringbootMockitoTestApplicationTests {
 
+//	@Mock
+	@MockBean
 	private IAccountRepository accountRepository;
 
+//	@Mock
+	@MockBean
 	private IBankRepository bankRepository;
 
+	// whithout mock annotation
+	//private IAccountService accountService;
+	// with mock annotation
+	//@InjectMocks
+	//private AccountService accountService;
+	// to be able to auto-wire this service, we need to annotate service class as @Service
+	// also in this case, spring does autowire your AccountService implementation automatically so we can
+	// use the abstraction/interface instead
+	@Autowired
 	private IAccountService accountService;
 
 	@BeforeEach
 	void setUp() {
-		accountRepository = mock(IAccountRepository.class);
+		/*accountRepository = mock(IAccountRepository.class);
 		bankRepository = mock(IBankRepository.class);
 
-		accountService = new AccountService(accountRepository, bankRepository);
+		accountService = new AccountService(accountRepository, bankRepository);*/
 	}
 
 	@DisplayName("Account Balance Testing")
