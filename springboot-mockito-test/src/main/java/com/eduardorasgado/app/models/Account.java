@@ -2,10 +2,16 @@ package com.eduardorasgado.app.models;
 
 import com.eduardorasgado.app.exceptions.NotEnoughMoneyException;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "accounts")
 public class Account implements Cloneable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private BigDecimal balance;
