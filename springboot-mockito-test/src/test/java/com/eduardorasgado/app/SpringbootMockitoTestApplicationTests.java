@@ -124,7 +124,7 @@ class SpringbootMockitoTestApplicationTests {
 		int totalTransfer = accountService.getTotalTransfersByBankId(1L);
 		assertEquals(0, totalTransfer, "Total transfer count should be 0");
 
-		verify(bankRepository, times(2)).findById(1L);
+		verify(bankRepository, times(1)).findById(1L);
 		verify(bankRepository, never()).save(any(Bank.class));
 
 		verify(accountRepository, times(3)).findById(1L);

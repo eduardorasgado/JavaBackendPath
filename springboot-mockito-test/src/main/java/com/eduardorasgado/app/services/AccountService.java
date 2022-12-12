@@ -44,7 +44,6 @@ public class AccountService implements IAccountService {
     public void transfer(Long originAccountId, Long destinationAccountId, Long bankId, BigDecimal amount) {
         Account originAccount = accountRepository.findById(originAccountId).orElseThrow();
         Account destinationAccount = accountRepository.findById(destinationAccountId).orElseThrow();
-        Bank bank = bankRepository.findById(bankId).orElseThrow();
 
         try {
             originAccount.withdraw(amount);
@@ -52,6 +51,8 @@ public class AccountService implements IAccountService {
 
             destinationAccount.deposit(amount);
             accountRepository.save(destinationAccount);
+
+            Bank bank = bankRepository.findById(bankId).orElseThrow();
 
             int totalTransfered = bank.getTotalTransfers();
             bank.setTotalTransfers(++totalTransfered);
