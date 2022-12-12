@@ -1,6 +1,7 @@
 package com.eduardorasgado.app;
 
 import com.eduardorasgado.app.models.Account;
+import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -95,5 +96,22 @@ public class JpaIntegrationTest {
         assertEquals("Daniel Ek", actualAccount.getName());
         assertEquals(0, actualAccount.getBalance().compareTo(new BigDecimal("5500")));
         //assertEquals(4L, actualAccount.getId());
+    }
+
+    @Test
+    @Order(7)
+    void testAccountRepository_Given_ExistingAccount_When_UpdateIsCalled_Then_SavedAccountHasUpdatedValues() {
+        // given
+        Account dummyAccount = new Account(null, "Daniel Ek", new BigDecimal("5500"));
+        Account actualAccount = accountRepository.save(dummyAccount);
+        Account savedAccount = actualAccount.clone();
+
+        // when
+        actualAccount.deposit(new BigDecimal("1000"));
+        Account updatedAccount = accountRepository.save(actualAccount);
+
+        // then
+        assertNotSame(savedAccount, updatedAccount);
+
     }
 }

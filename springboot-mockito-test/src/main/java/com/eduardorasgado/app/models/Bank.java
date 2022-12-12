@@ -10,7 +10,9 @@ public class Bank implements Cloneable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
+
     @Column(name = "total_transfers")
     private int totalTransfers;
 

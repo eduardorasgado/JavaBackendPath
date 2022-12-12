@@ -13,7 +13,10 @@ public class Account implements Cloneable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
     private String name;
+
     private BigDecimal balance;
 
     public Account() {
@@ -77,5 +80,14 @@ public class Account implements Cloneable {
     @Override
     public Account clone() {
         return new Account(getId(), getName(), getBalance());
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", balance=" + balance +
+                '}';
     }
 }
