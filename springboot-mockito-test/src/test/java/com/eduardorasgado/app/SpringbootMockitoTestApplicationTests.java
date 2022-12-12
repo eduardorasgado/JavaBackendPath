@@ -5,11 +5,8 @@ import com.eduardorasgado.app.models.Account;
 import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
 import com.eduardorasgado.app.repositories.IBankRepository;
-import com.eduardorasgado.app.services.AccountService;
 import com.eduardorasgado.app.services.IAccountService;
 import org.junit.jupiter.api.*;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -91,11 +88,11 @@ class SpringbootMockitoTestApplicationTests {
 		assertEquals(1, totalTransfer, "Total transfer count should be 1");
 
 		verify(bankRepository, times(2)).findById(1L);
-		verify(bankRepository).update(any(Bank.class));
+		verify(bankRepository).save(any(Bank.class));
 
 		verify(accountRepository, times(3)).findById(1L);
 		verify(accountRepository, times(3)).findById(2L);
-		verify(accountRepository, times(2)).update(any(Account.class));
+		verify(accountRepository, times(2)).save(any(Account.class));
 	}
 
 	@DisplayName("Account Transfer without enough money testing")
@@ -128,11 +125,11 @@ class SpringbootMockitoTestApplicationTests {
 		assertEquals(0, totalTransfer, "Total transfer count should be 0");
 
 		verify(bankRepository, times(2)).findById(1L);
-		verify(bankRepository, never()).update(any(Bank.class));
+		verify(bankRepository, never()).save(any(Bank.class));
 
 		verify(accountRepository, times(3)).findById(1L);
 		verify(accountRepository, times(3)).findById(2L);
-		verify(accountRepository, never()).update(any(Account.class));
+		verify(accountRepository, never()).save(any(Account.class));
 
 		verify(accountRepository, times(6)).findById(anyLong());
 		verify(accountRepository, never()).findAll();

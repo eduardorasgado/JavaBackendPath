@@ -1,11 +1,7 @@
 package com.eduardorasgado.app.repositories;
 
 import com.eduardorasgado.app.models.Bank;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface IBankRepository {
-    List<Bank> findAll();
-    Bank findById(Long id);
-    void update(Bank bank);
+public interface IBankRepository extends JpaRepository<Bank, Long> {
 }

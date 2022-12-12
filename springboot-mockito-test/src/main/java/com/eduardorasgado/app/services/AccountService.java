@@ -23,39 +23,39 @@ public class AccountService implements IAccountService {
 
     @Override
     public Account findById(Long id) {
-        return accountRepository.findById(id);
+        return accountRepository.findById(id).orElseThrow();
     }
 
     @Override
     public int getTotalTransfersByBankId(Long bankId) {
-        Bank bank = bankRepository.findById(bankId);
+        Bank bank = bankRepository.findById(bankId).orElseThrow();
 
         return bank.getTotalTransfers();
     }
 
     @Override
     public BigDecimal getBalanceById(Long id) {
-        Account account = accountRepository.findById(id);
+        Account account = accountRepository.findById(id).orElseThrow();
 
         return account.getBalance();
     }
 
     @Override
     public void transfer(Long originAccountId, Long destinationAccountId, Long bankId, BigDecimal amount) {
-        Account originAccount = accountRepository.findById(originAccountId);
-        Account destinationAccount = accountRepository.findById(destinationAccountId);
-        Bank bank = bankRepository.findById(bankId);
+        Account originAccount = accountRepository.findById(originAccountId).orElseThrow();
+        Account destinationAccount = accountRepository.findById(destinationAccountId).orElseThrow();
+        Bank bank = bankRepository.findById(bankId).orElseThrow();
 
         try {
             originAccount.withdraw(amount);
-            accountRepository.update(originAccount);
+            accountRepository.save(originAccount);
 
             destinationAccount.deposit(amount);
-            accountRepository.update(destinationAccount);
+            accountRepository.save(destinationAccount);
 
             int totalTransfered = bank.getTotalTransfers();
             bank.setTotalTransfers(++totalTransfered);
-            bankRepository.update(bank);
+            bankRepository.save(bank);
         } catch (NotEnoughMoneyException ex) {
             System.out.println("Could not perform the money transfer, error: " + ex.getMessage());
             throw ex;
