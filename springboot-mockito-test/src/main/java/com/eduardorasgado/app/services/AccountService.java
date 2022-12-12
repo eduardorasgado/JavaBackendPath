@@ -6,6 +6,7 @@ import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
 import com.eduardorasgado.app.repositories.IBankRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -22,11 +23,13 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Account findById(Long id) {
         return accountRepository.findById(id).orElseThrow();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getTotalTransfersByBankId(Long bankId) {
         Bank bank = bankRepository.findById(bankId).orElseThrow();
 
@@ -34,6 +37,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BigDecimal getBalanceById(Long id) {
         Account account = accountRepository.findById(id).orElseThrow();
 
@@ -41,6 +45,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    @Transactional
     public void transfer(Long originAccountId, Long destinationAccountId, Long bankId, BigDecimal amount) {
         Account originAccount = accountRepository.findById(originAccountId).orElseThrow();
         Account destinationAccount = accountRepository.findById(destinationAccountId).orElseThrow();
