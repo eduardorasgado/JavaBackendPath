@@ -112,6 +112,21 @@ public class JpaIntegrationTest {
 
         // then
         assertNotSame(savedAccount, updatedAccount);
+        assertNotNull(updatedAccount.getId());
+        assertEquals("Daniel Ek", updatedAccount.getName());
+        assertEquals(0, updatedAccount.getBalance().compareTo(new BigDecimal("6500")));
+    }
 
+    @Test
+    @Order(8)
+    void testAccountRepository_Given_ExistingAccount_When_DeleteIsCalled_Then_FindByIdReturnNullOptional() {
+        Optional<Account> optionalAccount = accountRepository.findById(2L);
+        assertTrue(optionalAccount.isPresent());
+
+        Account account = optionalAccount.get();
+        accountRepository.delete(account);
+
+        optionalAccount = accountRepository.findByName(account.getName());
+        assertThrows(NoSuchElementException.class, optionalAccount::orElseThrow);
     }
 }
