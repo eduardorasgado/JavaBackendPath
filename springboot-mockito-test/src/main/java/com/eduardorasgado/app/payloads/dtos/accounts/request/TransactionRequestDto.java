@@ -1,4 +1,4 @@
-package com.eduardorasgado.app.payloads.request;
+package com.eduardorasgado.app.payloads.dtos.accounts.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

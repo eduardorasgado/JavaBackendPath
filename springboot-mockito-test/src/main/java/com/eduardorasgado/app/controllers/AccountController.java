@@ -1,8 +1,9 @@
 package com.eduardorasgado.app.controllers;
 
 import com.eduardorasgado.app.exceptions.NotEnoughMoneyException;
-import com.eduardorasgado.app.models.Account;
-import com.eduardorasgado.app.payloads.request.TransactionRequestDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountDto;
+import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountDtoMapper;
 import com.eduardorasgado.app.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,8 @@ public class AccountController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Account detail(@PathVariable(name = "id") Long id) {
-        return accountService.findById(id);
+    public AccountDto detail(@PathVariable(name = "id") Long id) {
+        return AccountDtoMapper.map(accountService.findById(id), new AccountDto());
     }
 
     @PostMapping("/transfer")
@@ -36,7 +37,7 @@ public class AccountController {
                     transactionRequestDto.getAmount()
             );
         } catch (NotEnoughMoneyException ex) {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
 
         Map<String, Object> response = new HashMap<>();
