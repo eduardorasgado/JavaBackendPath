@@ -8,8 +8,11 @@ import com.eduardorasgado.app.payloads.mappers.accounts.response.ListAllAccounts
 import com.eduardorasgado.app.services.AccountService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -23,8 +26,8 @@ import java.time.LocalDate;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @WebMvcTest(AccountController.class)
 class AccountControllerTest {
@@ -137,7 +140,38 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[1].id").value(2L))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[1].name").value("John Finn"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[1].balance").value(new BigDecimal("2000")))
-                //.andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(responseDto)))
-                ;
+                // Matcher comes from org.hamcrest
+                .andExpect(MockMvcResultMatchers.jsonPath("$.accounts", Matchers.hasSize(2)))
+                .andExpect(MockMvcResultMatchers.content().json(objectMapper.writeValueAsString(responseDto)));
+    }
+
+    @Test
+    void testSave() throws Exception {
+        // Given
+        Account accountToSave = AccountTestData.dummyAccount1.clone();
+
+        // When
+        doAnswer(invocationOnMock -> {
+            Account account = ((Account) invocationOnMock.getArgument(0)).clone();
+            account.setId(3L);
+
+            return account;
+        }).when(accountService).save(accountToSave);
+
+        mvc.perform(MockMvcRequestBuilders
+                    .post("/api/accounts")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(objectMapper.writeValueAsString(accountToSave))
+                )
+                // Then
+                .andExpect(MockMvcResultMatchers.status().isCreated())
+                .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.account.id", Matchers.is(3)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.account.name", Matchers.is(accountToSave.getName())))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.account.balance", Matchers.is(2700)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.message", Matchers.is("Account successfully created")));
+
+        verify(accountService).save(any(Account.class));
+
     }
 }

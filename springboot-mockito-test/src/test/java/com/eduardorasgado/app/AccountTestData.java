@@ -24,4 +24,6 @@ public class AccountTestData {
     public static Optional<Bank> getNewBank() {
         return Optional.of(NU_BANK.clone());
     }
+
+    public static final Account dummyAccount1 = new Account(null, "Gary Lorenz", new BigDecimal("2700"));
 }

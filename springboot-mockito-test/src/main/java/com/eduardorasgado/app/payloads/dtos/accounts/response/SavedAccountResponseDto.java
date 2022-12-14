@@ -17,7 +17,7 @@ public class SavedAccountResponseDto {
     @Getter
     @Setter
     @NoArgsConstructor
-    public class AccountResponseDto {
+    public static class AccountResponseDto {
         private long id;
 
         private String name;
