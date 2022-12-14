@@ -1,9 +1,12 @@
 package com.eduardorasgado.app.controllers;
 
 import com.eduardorasgado.app.exceptions.NotEnoughMoneyException;
+import com.eduardorasgado.app.payloads.dtos.accounts.request.AccountToSaveRequestDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestDto;
-import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountDto;
-import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountDtoMapper;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountResponseDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.ListAllAccountsResponseDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.SavedAccountResponseDto;
+import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountResponseDtoMapper;
 import com.eduardorasgado.app.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,10 +24,22 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ListAllAccountsResponseDto listAll() {
+        return null;
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AccountDto detail(@PathVariable(name = "id") Long id) {
-        return AccountDtoMapper.map(accountService.findById(id), new AccountDto());
+    public AccountResponseDto detail(@PathVariable(name = "id") Long id) {
+        return AccountResponseDtoMapper.mapModelToDto(accountService.findById(id), new AccountResponseDto());
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public SavedAccountResponseDto save(@RequestBody AccountToSaveRequestDto accountToSaveRequestDto) {
+        return null;
     }
 
     @PostMapping("/transfer")
@@ -41,7 +56,7 @@ public class AccountController {
         }
 
         Map<String, Object> response = new HashMap<>();
-        response.put("date", LocalDate.now());
+        response.put("date", LocalDate.now().toString());
         response.put("status", "OK");
         response.put("message", "Transfer was successfully performed");
         response.put("transaction", transactionRequestDto);

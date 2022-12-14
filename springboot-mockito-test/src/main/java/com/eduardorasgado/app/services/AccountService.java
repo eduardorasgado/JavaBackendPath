@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 public class AccountService implements IAccountService {
@@ -26,6 +27,16 @@ public class AccountService implements IAccountService {
     @Transactional(readOnly = true)
     public Account findById(Long id) {
         return accountRepository.findById(id).orElseThrow();
+    }
+
+    @Override
+    public List<Account> findAll() {
+        return null;
+    }
+
+    @Override
+    public Account save(Account account) {
+        return null;
     }
 
     @Override
