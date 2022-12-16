@@ -12,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -136,6 +139,7 @@ class SpringbootMockitoTestApplicationTests {
 	}
 
 	@Test
+	@Order(4)
 	void testAssertSame() {
 		when(accountRepository.findById(1L)).thenReturn(AccountTestData.getNewAccount001());
 
@@ -149,5 +153,39 @@ class SpringbootMockitoTestApplicationTests {
 		assertEquals("Adam Smith", account2.getName());
 
 		verify(accountRepository, times(2)).findById(1L);
+	}
+
+	@Test
+	@Order(5)
+	void testFindAll() {
+		//Given
+		List<Account> accounts = Arrays.asList(
+				AccountTestData.getNewAccount001().orElseThrow(),
+				AccountTestData.getNewAccount002().orElseThrow());
+
+		when(accountRepository.findAll()).thenReturn(accounts);
+
+		List<Account> accountsFromService = accountService.findAll();
+
+		assertFalse(accountsFromService.isEmpty());
+		assertEquals(2, accountsFromService.size());
+		assertTrue(accountsFromService.contains(accountsFromService.get(1)));
+	}
+
+	@Test
+	void testSave() {
+		Account account = AccountTestData.dummyAccount1.clone();
+
+		when(accountRepository.save(any())).then(invocation -> {
+			Account accountToSave = ((Account) invocation.getArgument(0));
+			accountToSave.setId(3L);
+			return accountToSave;
+		});
+
+		Account savedAccount = accountService.save(account);
+
+		assertEquals(3L, savedAccount.getId());
+		assertEquals(account.getName(), savedAccount.getName());
+
 	}
 }
