@@ -1,7 +1,10 @@
 package com.eduardorasgado.app.controllers;
 
 import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestDto;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,8 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,17 +26,30 @@ class AccountControllerRestServiceIntegrationTest {
     @Autowired
     private WebTestClient webClient;
 
+    private ObjectMapper objectMapper;
+
+    @BeforeEach
+    void setUp() {
+        objectMapper = new ObjectMapper();
+    }
+
     @Value("${testing.integration.rest-client.url}")
     private String serviceUrl;
 
     @Test
-    void testTransfer() {
+    void testTransfer() throws JsonProcessingException {
         // Given
         TransactionRequestDto dto = new TransactionRequestDto();
         dto.setOriginAccountId(1L);
         dto.setDestinationAccountId(2L);
         dto.setBankId(1L);
         dto.setAmount(new BigDecimal(300));
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("date", LocalDate.now().toString());
+        response.put("status", "OK");
+        response.put("message", "Transfer was successfully performed");
+        response.put("transaction", dto);
 
         // When
         webClient.post().uri(serviceUrl + "/api/accounts/transfer")
@@ -49,7 +67,9 @@ class AccountControllerRestServiceIntegrationTest {
                 .jsonPath("$.message").isEqualTo("Transfer was successfully performed")
                 .jsonPath("$.transaction.originAccountId").isEqualTo(dto.getOriginAccountId())
                 .jsonPath("$.transaction.destinationAccountId").isEqualTo(dto.getDestinationAccountId())
-                .jsonPath("$.date").isEqualTo(LocalDate.now().toString());
+                .jsonPath("$.date").isEqualTo(LocalDate.now().toString())
+
+                .json(objectMapper.writeValueAsString(response));
 
     }
 }
