@@ -53,6 +53,10 @@ class AccountControllerRestServiceIntegrationTest {
 
         // When
         webClient.post().uri(serviceUrl + "/api/accounts/transfer")
+        // we can also do the next thing because our tests are on the same project than the spring boot project to test
+        // but when we have microservices or independent services separated from our testing suite it is important to refer
+        // to the full url path with port
+        //webClient.post().uri("/api/accounts/transfer")
                 .contentType(MediaType.APPLICATION_JSON)
                 // we don't need to map dto object using object mapper because web test client does it for us
                 .bodyValue(dto)
