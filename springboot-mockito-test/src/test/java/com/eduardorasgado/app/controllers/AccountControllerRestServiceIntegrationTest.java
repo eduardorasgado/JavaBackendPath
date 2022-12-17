@@ -330,8 +330,26 @@ class AccountControllerRestServiceIntegrationTest {
                 .expectStatus().isNoContent()
                 .expectBody().isEmpty();
 
+        // when calling findById without any existence, a NoSuchElementException is called and throws an 500 internal error as response
         webClient.get().uri("/api/accounts/" + idToDelete)
                 .exchange()
                 .expectStatus().is5xxServerError();
+
+        webClient.get().uri("/api/accounts")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(ListAllAccountsResponseDto.class)
+                .consumeWith(response -> {
+                    ListAllAccountsResponseDto dto = response.getResponseBody();
+                    assertNotNull(dto);
+
+                    List<ListAllAccountsResponseDto.AccountResponseDto> accounts = dto.getAccounts();
+                    assertNotNull(accounts);
+                    assertEquals(3, accounts.size());
+
+                    // lets see if the deleted element is still in the all elements list
+                    assertFalse(accounts.stream().anyMatch(account -> account.getId() == idToDelete));
+                });
     }
 }
