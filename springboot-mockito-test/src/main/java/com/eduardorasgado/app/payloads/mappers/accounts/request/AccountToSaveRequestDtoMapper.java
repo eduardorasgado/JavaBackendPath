@@ -4,9 +4,15 @@ import com.eduardorasgado.app.models.Account;
 import com.eduardorasgado.app.payloads.dtos.accounts.request.AccountToSaveRequestDto;
 
 public class AccountToSaveRequestDtoMapper {
-    public static Account mapDtoToModel(AccountToSaveRequestDto dto, Account account) {
-        account.setName(dto.getName());
-        account.setBalance(dto.getBalance());
-        return account;
+    public static Account mapDtoToModel(AccountToSaveRequestDto dto, Account model) {
+        model.setName(dto.getName());
+        model.setBalance(dto.getBalance());
+        return model;
+    }
+
+    public static AccountToSaveRequestDto mapModelToDto(Account model, AccountToSaveRequestDto dto) {
+        dto.setName(model.getName());
+        dto.setBalance(model.getBalance());
+        return dto;
     }
 }

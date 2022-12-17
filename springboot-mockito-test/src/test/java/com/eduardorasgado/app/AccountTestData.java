@@ -26,4 +26,6 @@ public class AccountTestData {
     }
 
     public static final Account dummyAccount1 = new Account(null, "Gary Lorenz", new BigDecimal("2700"));
+    public static final Account dummyAccount2 = new Account(null, "Michael Sanchez", new BigDecimal("12500"));
+
 }
