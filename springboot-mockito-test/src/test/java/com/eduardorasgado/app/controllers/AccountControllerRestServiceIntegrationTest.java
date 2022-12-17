@@ -217,12 +217,16 @@ class AccountControllerRestServiceIntegrationTest {
                     assertEquals(expectedDtoList.size(), actualDtoList.size());
 
                     assertEquals(expectedDtoList.get(0).getId(), actualDtoList.get(0).getId());
-                    assertEquals(expectedDtoList.get(0).getName(), actualDtoList.get(0).getName());
+                    //assertEquals(expectedDtoList.get(0).getName(), actualDtoList.get(0).getName());
                     assertEquals(0, expectedDtoList.get(0).getBalance().compareTo(actualDtoList.get(0).getBalance()));
 
                     assertEquals(expectedDtoList.get(1).getId(), actualDtoList.get(1).getId());
                     assertEquals(expectedDtoList.get(1).getName(), actualDtoList.get(1).getName());
                     assertEquals(0, expectedDtoList.get(1).getBalance().compareTo(actualDtoList.get(1).getBalance()));
-                });
+                })
+                //.value(actualResponseDto -> assertEquals(actualResponseDto, expectedResponseDto));
+                .isEqualTo(expectedResponseDto);
     }
+
+
 }
