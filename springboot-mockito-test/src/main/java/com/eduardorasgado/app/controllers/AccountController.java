@@ -74,7 +74,7 @@ public class AccountController {
             );
         } catch (NotEnoughMoneyException ex) {
             // this case should be handle by an exception handler class annotated with @ControllerAdvice
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
         Map<String, Object> response = new HashMap<>();
