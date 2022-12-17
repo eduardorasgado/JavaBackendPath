@@ -30,6 +30,10 @@ class AccountControllerRestTemplateTest {
     @LocalServerPort
     private int port;
 
+    private String getUri() {
+        return "http://localhost:" + port;
+    }
+
     @BeforeEach
     void setUp() {
         objectMapper = new ObjectMapper();
@@ -45,7 +49,7 @@ class AccountControllerRestTemplateTest {
         dto.setDestinationAccountId(1L);
         dto.setBankId(1L);
 
-        ResponseEntity<String> response = client.postForEntity("http://localhost:" + port +"/api/accounts/transfer", dto, String.class);
+        ResponseEntity<String> response = client.postForEntity(getUri() +"/api/accounts/transfer", dto, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
