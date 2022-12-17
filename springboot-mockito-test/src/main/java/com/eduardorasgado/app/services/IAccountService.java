@@ -12,6 +12,8 @@ public interface IAccountService {
 
     Account save(Account account);
 
+    void deleteById(Long id);
+
     int getTotalTransfersByBankId(Long bankId);
 
     BigDecimal getBalanceById(Long id);

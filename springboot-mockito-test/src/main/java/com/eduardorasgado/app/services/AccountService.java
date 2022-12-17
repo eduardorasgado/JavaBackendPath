@@ -42,6 +42,12 @@ public class AccountService implements IAccountService {
     }
 
     @Override
+    @Transactional
+    public void deleteById(Long id) {
+        accountRepository.deleteById(id);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public int getTotalTransfersByBankId(Long bankId) {
         Bank bank = bankRepository.findById(bankId).orElseThrow();

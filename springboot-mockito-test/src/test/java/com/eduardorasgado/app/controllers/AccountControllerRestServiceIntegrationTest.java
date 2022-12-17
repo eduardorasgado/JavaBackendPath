@@ -302,6 +302,36 @@ class AccountControllerRestServiceIntegrationTest {
                     assertEquals(expectedSavedDto.getName(),actualSavedDto.getName());
                     assertEquals(0, expectedSavedDto.getBalance().compareTo(actualSavedDto.getBalance()));
                 });
+    }
 
+    @Test
+    @Order(7)
+    void testDelete() {
+        Long idToDelete = 3L;
+
+        webClient.get().uri("/api/accounts")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody(ListAllAccountsResponseDto.class)
+                .consumeWith(response -> {
+                    ListAllAccountsResponseDto dto = response.getResponseBody();
+                    assertNotNull(dto);
+
+                    List<ListAllAccountsResponseDto.AccountResponseDto> accounts = dto.getAccounts();
+                    assertNotNull(accounts);
+                    assertEquals(4, accounts.size());
+
+                    assertTrue(accounts.stream().anyMatch(account -> account.getId() == idToDelete));
+                });
+
+        webClient.delete().uri("/api/accounts/" + idToDelete)
+                .exchange()
+                .expectStatus().isNoContent()
+                .expectBody().isEmpty();
+
+        webClient.get().uri("/api/accounts/" + idToDelete)
+                .exchange()
+                .expectStatus().is5xxServerError();
     }
 }

@@ -51,6 +51,12 @@ public class AccountController {
         return SavedAccountResponseDtoMapper.mapModelToDto(accountService.save(account), dto);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id) {
+        accountService.deleteById(id);
+    }
+
     @PostMapping("/transfer")
     public ResponseEntity<?> transfer(@RequestBody TransactionRequestDto transactionRequestDto) {
         try {
