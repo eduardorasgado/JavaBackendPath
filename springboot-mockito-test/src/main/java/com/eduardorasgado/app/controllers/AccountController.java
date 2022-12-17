@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -35,9 +36,14 @@ public class AccountController {
     }
 
     @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public AccountResponseDto detail(@PathVariable(name = "id") Long id) {
-        return AccountResponseDtoMapper.mapModelToDto(accountService.findById(id), new AccountResponseDto());
+    public ResponseEntity<?> detail(@PathVariable(name = "id") Long id) {
+        try {
+            return ResponseEntity.ok(
+                    AccountResponseDtoMapper.mapModelToDto(accountService.findById(id), new AccountResponseDto())
+            );
+        } catch (NoSuchElementException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
