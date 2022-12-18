@@ -1,11 +1,16 @@
 package com.eduardorasgado.app.controllers;
 
 import com.eduardorasgado.app.AccountTestData;
+import com.eduardorasgado.app.models.Account;
+import com.eduardorasgado.app.payloads.dtos.accounts.request.AccountToSaveRequestDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountResponseDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.response.ListAllAccountsResponseDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.SavedAccountResponseDto;
+import com.eduardorasgado.app.payloads.mappers.accounts.request.AccountToSaveRequestDtoMapper;
 import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountResponseDtoMapper;
 import com.eduardorasgado.app.payloads.mappers.accounts.response.ListAllAccountsResponseDtoMapper;
+import com.eduardorasgado.app.payloads.mappers.accounts.response.SavedAccountResponseDtoMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -64,6 +69,7 @@ class AccountControllerRestTemplateTest {
         expectedResponse.put("message", "Transfer was successfully performed");
         expectedResponse.put("transaction", dto);
 
+        // dto is passed as an application json content type by default
         ResponseEntity<String> response = client.postForEntity(getUri("/api/accounts/transfer"), dto, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -189,6 +195,40 @@ class AccountControllerRestTemplateTest {
                         new BigDecimal(account2.path("balance").asText())
                 )
         );
+    }
 
+    @Test
+    @Order(3)
+    void testSave() {
+        AccountToSaveRequestDto accountToSaveDto = AccountToSaveRequestDtoMapper.mapModelToDto(
+                AccountTestData.dummyAccount1, new AccountToSaveRequestDto()
+        );
+
+        ResponseEntity<SavedAccountResponseDto> response = client.postForEntity(
+                getUri("/api/accounts/"), accountToSaveDto, SavedAccountResponseDto.class
+        );
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
+
+        SavedAccountResponseDto actualSavedAccountDto = response.getBody();
+        assertNotNull(actualSavedAccountDto);
+        assertNotNull(actualSavedAccountDto.getMessage());
+        assertNotNull(actualSavedAccountDto.getAccount());
+
+        Account expectedSavedAccount = AccountTestData.dummyAccount1.clone();
+        expectedSavedAccount.setId(3L);
+        SavedAccountResponseDto expectedSavedAccountDto = new SavedAccountResponseDto();
+        expectedSavedAccountDto.setMessage("Account successfully created");
+        SavedAccountResponseDtoMapper.mapModelToDto(expectedSavedAccount, expectedSavedAccountDto);
+
+        assertEquals(expectedSavedAccountDto.getMessage(), actualSavedAccountDto.getMessage());
+
+        SavedAccountResponseDto.AccountResponseDto expectedAccountDto = expectedSavedAccountDto.getAccount();
+        SavedAccountResponseDto.AccountResponseDto actualAccountDto = actualSavedAccountDto.getAccount();
+
+        assertEquals(expectedAccountDto.getId(), actualAccountDto.getId());
+        assertEquals(expectedAccountDto.getName(), actualAccountDto.getName());
+        assertEquals(0, expectedAccountDto.getBalance().compareTo(actualAccountDto.getBalance()));
     }
 }
