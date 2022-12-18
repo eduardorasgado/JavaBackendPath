@@ -1,7 +1,10 @@
 package com.eduardorasgado.app.controllers;
 
+import com.eduardorasgado.app.AccountTestData;
 import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestDto;
+import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountResponseDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.response.ListAllAccountsResponseDto;
+import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountResponseDtoMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -33,8 +36,8 @@ class AccountControllerRestTemplateTest {
     @LocalServerPort
     private int port;
 
-    private String getUri() {
-        return "http://localhost:" + port;
+    private String getUri(String path) {
+        return "http://localhost:" + port + path;
     }
 
     @BeforeEach
@@ -43,7 +46,7 @@ class AccountControllerRestTemplateTest {
     }
 
     @Test
-    @Order(1)
+    @Order(10)
     void testTransfer() throws JsonProcessingException {
         TransactionRequestDto dto = new TransactionRequestDto();
 
@@ -58,7 +61,7 @@ class AccountControllerRestTemplateTest {
         expectedResponse.put("message", "Transfer was successfully performed");
         expectedResponse.put("transaction", dto);
 
-        ResponseEntity<String> response = client.postForEntity(getUri() +"/api/accounts/transfer", dto, String.class);
+        ResponseEntity<String> response = client.postForEntity(getUri("/api/accounts/transfer"), dto, String.class);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(MediaType.APPLICATION_JSON, response.getHeaders().getContentType());
@@ -82,5 +85,39 @@ class AccountControllerRestTemplateTest {
 
         assertEquals(objectMapper.writeValueAsString(expectedResponse), json);
         System.out.println(json);
+    }
+
+    @Test
+    @Order(1)
+    void testDetail() {
+        long idToGet = 1L;
+        ResponseEntity<AccountResponseDto> actualResponse = client.getForEntity(
+                getUri("/api/accounts/" + idToGet), AccountResponseDto.class
+        );
+
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, actualResponse.getHeaders().getContentType());
+
+
+        AccountResponseDto accountDto = actualResponse.getBody();
+        assertNotNull(accountDto);
+
+        AccountResponseDto expectedResponseDto = AccountResponseDtoMapper.mapModelToDto(
+                AccountTestData.getNewAccount001().orElseThrow(), new AccountResponseDto()
+        );
+
+        assertEquals(expectedResponseDto.getId(), accountDto.getId());
+        assertEquals(expectedResponseDto.getName(), accountDto.getName());
+        assertEquals(0, accountDto.getBalance().compareTo(expectedResponseDto.getBalance()));
+
+        assertEquals(expectedResponseDto, accountDto);
+    }
+
+    @Test
+    @Order(2)
+    void testListAll() {
+        ResponseEntity<ListAllAccountsResponseDto> actualResponse = client.getForEntity(
+                getUri("/api/accounts"), ListAllAccountsResponseDto.class
+        );
     }
 }
