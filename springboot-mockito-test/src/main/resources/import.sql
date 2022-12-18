@@ -1,5 +1,5 @@
 -- ACCOUNTS
-INSERT INTO accounts (name, balance) VALUES ('Adam Peña', 1000);
+INSERT INTO accounts (name, balance) VALUES ('Adam PeÃ±a', 1000);
 INSERT INTO accounts (name, balance) VALUES ('John Finn' , 2000);
 
 -- BANKS
