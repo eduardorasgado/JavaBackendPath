@@ -34,7 +34,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 // webEnvironment WebEnvironment.RANDOM_PORT creates a real server to test endpoints
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class AccountControllerRestServiceIntegrationTest {
 

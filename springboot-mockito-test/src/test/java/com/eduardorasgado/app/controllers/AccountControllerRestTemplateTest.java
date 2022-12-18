@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -54,7 +55,7 @@ class AccountControllerRestTemplateTest {
     }
 
     @Test
-    @Order(10)
+    @Order(3)
     void testTransfer() throws JsonProcessingException {
         TransactionRequestDto dto = new TransactionRequestDto();
 
@@ -230,5 +231,38 @@ class AccountControllerRestTemplateTest {
         assertEquals(expectedAccountDto.getId(), actualAccountDto.getId());
         assertEquals(expectedAccountDto.getName(), actualAccountDto.getName());
         assertEquals(0, expectedAccountDto.getBalance().compareTo(actualAccountDto.getBalance()));
+    }
+
+    @Test
+    @Order(4)
+    void testDelete() {
+        Long idToDelete = 2L;
+        ResponseEntity<ListAllAccountsResponseDto> actualResponse = client.getForEntity(
+                getUri("/api/accounts"), ListAllAccountsResponseDto.class
+        );
+        ListAllAccountsResponseDto listAllResponse = actualResponse.getBody();
+        assertNotNull(listAllResponse);
+        assertNotNull(listAllResponse.getAccounts());
+        assertTrue(listAllResponse.getAccounts().stream().anyMatch(account -> account.getId() == idToDelete));
+
+        //client.delete(getUri("/api/accounts/" +idToDelete));
+        //ResponseEntity<Void> deleteResponse = client.exchange(getUri("/api/accounts/2"), HttpMethod.DELETE, null, Void.class);
+        ResponseEntity<Void> deleteResponse = client.exchange(
+                getUri("/api/accounts/{id}"), HttpMethod.DELETE, null, Void.class, new HashMap<>() {
+            {
+                // same path variable name as in controller's delete method
+                put("id", 2L);
+            }
+        });
+
+        assertEquals(HttpStatus.NO_CONTENT, deleteResponse.getStatusCode());
+        assertFalse(deleteResponse.hasBody());
+
+        ResponseEntity<AccountResponseDto> getDetailResponse = client.getForEntity(
+                getUri("/api/accounts/") + idToDelete, AccountResponseDto.class
+        );
+
+        assertEquals(HttpStatus.NOT_FOUND, getDetailResponse.getStatusCode());
+        assertFalse(getDetailResponse.hasBody());
     }
 }
