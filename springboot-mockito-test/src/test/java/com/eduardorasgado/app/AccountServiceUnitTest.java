@@ -14,14 +14,18 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+/*
+	ACCOUNT SERVICE UNIT TESTING with Spring Boot
+ */
+
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class SpringbootMockitoTestApplicationTests {
+class AccountServiceUnitTest {
 
 //	@Mock
 	@MockBean
@@ -141,16 +145,18 @@ class SpringbootMockitoTestApplicationTests {
 	@Test
 	@Order(4)
 	void testAssertSame() {
-		when(accountRepository.findById(1L)).thenReturn(AccountTestData.getNewAccount001());
+		Optional<Account> expectedOptionalAccount = AccountTestData.getNewAccount001();
+		Account expectedAccount = expectedOptionalAccount.orElseThrow();
+		when(accountRepository.findById(expectedAccount.getId())).thenReturn(expectedOptionalAccount);
 
-		Account account1 = accountService.findById(1L);
-		Account  account2 = accountService.findById(1L);
+		Account account1 = accountService.findById(expectedAccount.getId());
+		Account  account2 = accountService.findById(expectedAccount.getId());
 
 		// both does same thing
 		assertSame(account1, account2);
 		assertTrue(account1 == account2);
-		assertEquals("Adam Smith", account1.getName());
-		assertEquals("Adam Smith", account2.getName());
+		assertEquals(expectedAccount.getName(), account1.getName());
+		assertEquals(expectedAccount.getName(), account2.getName());
 
 		verify(accountRepository, times(2)).findById(1L);
 	}

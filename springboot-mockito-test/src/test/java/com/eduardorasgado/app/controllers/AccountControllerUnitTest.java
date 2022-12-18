@@ -6,13 +6,10 @@ import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestD
 import com.eduardorasgado.app.payloads.dtos.accounts.response.ListAllAccountsResponseDto;
 import com.eduardorasgado.app.payloads.mappers.accounts.response.ListAllAccountsResponseDtoMapper;
 import com.eduardorasgado.app.services.AccountService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -25,12 +22,15 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+/*
+    UNIT TESTING FOR CONTROLLERS with Spring Boot
+ */
+
 @WebMvcTest(AccountController.class)
-class AccountControllerTest {
+class AccountControllerUnitTest {
 
     /*
     This is to mock http request servlet, responses
@@ -62,7 +62,7 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
                 // $. at jsonPath indicates the root of the json object
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Adam Smith"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value("Adam Peña"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.balance").value(1000));
 
         verify(accountService).findById(1L);
@@ -134,7 +134,7 @@ class AccountControllerTest {
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[0].id").value(1L))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[0].name").value("Adam Smith"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[0].name").value("Adam Peña"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[0].balance").value(new BigDecimal("1000")))
 
                 .andExpect(MockMvcResultMatchers.jsonPath("$.accounts[1].id").value(2L))

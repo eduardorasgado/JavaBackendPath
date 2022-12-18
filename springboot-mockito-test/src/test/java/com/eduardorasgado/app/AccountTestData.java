@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 public class AccountTestData {
-    private static final Account ACCOUNT_001 = new Account(1L, "Adam Smith", new BigDecimal("1000"));
+    private static final Account ACCOUNT_001 = new Account(1L, "Adam Peña", new BigDecimal("1000"));
 
     private static final Account ACCOUNT_002 = new Account(2L, "John Finn", new BigDecimal("2000"));
 

@@ -32,10 +32,15 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+    REST SERVICES INTEGRATION TESTING USING WebTestClient
+ */
+
+@Tag("WEB_CLIENT_INTEGRATION_TEST")
 // webEnvironment WebEnvironment.RANDOM_PORT creates a real server to test endpoints
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AccountControllerRestServiceIntegrationTest {
+class AccountControllerWebClientIntegrationTest {
 
     @Autowired
     private WebTestClient webClient;

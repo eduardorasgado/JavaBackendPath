@@ -1,7 +1,6 @@
 package com.eduardorasgado.app;
 
 import com.eduardorasgado.app.models.Account;
-import com.eduardorasgado.app.models.Bank;
 import com.eduardorasgado.app.repositories.IAccountRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -17,10 +16,16 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+    DATA REPOSITORIES INTEGRATION TESTING with Spring Boot
+
+    Jpa Integration testing
+ */
+
 // enabling every jpa features for testing
 @DataJpaTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class JpaIntegrationTest {
+public class AccountRepositoryJpaIntegrationTest {
 
     @Autowired
     IAccountRepository accountRepository;
@@ -28,22 +33,24 @@ public class JpaIntegrationTest {
     @Test
     @Order(1)
     void test_AccountRepository_When_FindByIdIsCalled() {
-        Optional<Account> account = accountRepository.findById(1L);
+        Account expectedAccount = AccountTestData.getNewAccount001().orElseThrow();
+        Optional<Account> account = accountRepository.findById(expectedAccount.getId());
 
         assertTrue(account.isPresent());
-        assertEquals("Adam Smith", account.orElseThrow().getName());
+        assertEquals(expectedAccount.getName(), account.orElseThrow().getName());
     }
 
     @Test
     @Order(2)
     void test_AccountRepository_When_FindByNameIsCalled() {
-        Optional<Account> optionalAccount = accountRepository.findByName(AccountTestData.getNewAccount001().orElseThrow().getName());
+        Account expectedAccount = AccountTestData.getNewAccount001().orElseThrow();
+        Optional<Account> optionalAccount = accountRepository.findByName(expectedAccount.getName());
 
         assertTrue(optionalAccount.isPresent());
 
         Account account = optionalAccount.orElseThrow();
-        assertEquals("Adam Smith", account.getName());
-        assertEquals(0, account.getBalance().compareTo(new BigDecimal("1000")));
+        assertEquals(expectedAccount.getName(), account.getName());
+        assertEquals(0, account.getBalance().compareTo(expectedAccount.getBalance()));
     }
 
     @Test

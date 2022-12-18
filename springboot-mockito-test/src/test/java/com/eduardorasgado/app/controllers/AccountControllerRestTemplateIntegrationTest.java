@@ -33,9 +33,14 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/*
+    REST SERVICES INTEGRATION TESTS USING TestRestTemplate
+ */
+
+@Tag("REST_TEMPLATE_INTEGRATION_TEST")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AccountControllerRestTemplateTest {
+class AccountControllerRestTemplateIntegrationTest {
 
     @Autowired
     private TestRestTemplate client;
