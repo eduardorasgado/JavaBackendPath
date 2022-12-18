@@ -5,6 +5,7 @@ import com.eduardorasgado.app.payloads.dtos.accounts.request.TransactionRequestD
 import com.eduardorasgado.app.payloads.dtos.accounts.response.AccountResponseDto;
 import com.eduardorasgado.app.payloads.dtos.accounts.response.ListAllAccountsResponseDto;
 import com.eduardorasgado.app.payloads.mappers.accounts.response.AccountResponseDtoMapper;
+import com.eduardorasgado.app.payloads.mappers.accounts.response.ListAllAccountsResponseDtoMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +20,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -115,9 +118,77 @@ class AccountControllerRestTemplateTest {
 
     @Test
     @Order(2)
-    void testListAll() {
+    void testListAll() throws JsonProcessingException {
+        // Given
+        ListAllAccountsResponseDto expectedResponseDto = ListAllAccountsResponseDtoMapper.mapModelToDto(Arrays.asList(
+                AccountTestData.getNewAccount001().orElseThrow(),
+                AccountTestData.getNewAccount002().orElseThrow()
+        ), new ListAllAccountsResponseDto());
+
+        // When
         ResponseEntity<ListAllAccountsResponseDto> actualResponse = client.getForEntity(
                 getUri("/api/accounts"), ListAllAccountsResponseDto.class
         );
+
+        // Then
+        assertEquals(HttpStatus.OK, actualResponse.getStatusCode());
+        assertEquals(MediaType.APPLICATION_JSON, actualResponse.getHeaders().getContentType());
+
+        ListAllAccountsResponseDto actualResponseDto = actualResponse.getBody();
+        assertNotNull(actualResponseDto);
+
+        List<ListAllAccountsResponseDto.AccountResponseDto> actualResponseDtoList = actualResponseDto.getAccounts();
+        List<ListAllAccountsResponseDto.AccountResponseDto> expectedResponseDtoList = expectedResponseDto.getAccounts();
+
+        assertEquals(2, actualResponseDtoList.size());
+
+        assertEquals(expectedResponseDtoList.get(0).getId(), actualResponseDtoList.get(0).getId());
+        assertEquals(expectedResponseDtoList.get(0).getName(), actualResponseDtoList.get(0).getName());
+        assertEquals(0, expectedResponseDtoList.get(0).getBalance().compareTo(actualResponseDtoList.get(0).getBalance()));
+
+        assertEquals(expectedResponseDtoList.get(1).getId(), actualResponseDtoList.get(1).getId());
+        assertEquals(expectedResponseDtoList.get(1).getName(), actualResponseDtoList.get(1).getName());
+        assertEquals(0, expectedResponseDtoList.get(1).getBalance().compareTo(actualResponseDtoList.get(1).getBalance()));
+
+        assertEquals(expectedResponseDto, actualResponseDto);
+
+        JsonNode json = objectMapper.readTree(objectMapper.writeValueAsString(actualResponse.getBody()));
+
+        JsonNode account1 = json.path("accounts").get(0);
+        ListAllAccountsResponseDto.AccountResponseDto expectedAccountDto1 = expectedResponseDtoList.get(0);
+
+        assertEquals(
+                expectedAccountDto1.getId(),
+                account1.path("id").asLong()
+        );
+        assertEquals(
+                expectedAccountDto1.getName(),
+                account1.path("name").asText()
+        );
+        assertEquals(
+                0,
+                expectedAccountDto1.getBalance().compareTo(
+                        new BigDecimal(account1.path("balance").asText())
+                )
+        );
+
+        JsonNode account2 = json.path("accounts").get(1);
+        ListAllAccountsResponseDto.AccountResponseDto expectedAccountDto2 = expectedResponseDtoList.get(1);
+
+        assertEquals(
+                expectedAccountDto2.getId(),
+                account2.path("id").asLong()
+        );
+        assertEquals(
+                expectedAccountDto2.getName(),
+                account2.path("name").asText()
+        );
+        assertEquals(
+                0,
+                expectedAccountDto2.getBalance().compareTo(
+                        new BigDecimal(account2.path("balance").asText())
+                )
+        );
+
     }
 }
