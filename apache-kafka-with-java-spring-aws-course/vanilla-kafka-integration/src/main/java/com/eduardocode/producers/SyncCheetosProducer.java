@@ -8,35 +8,34 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
-public class CheetosProducer {
-    private final static Logger logger = LoggerFactory.getLogger(CheetosProducer.class);
+public class SyncCheetosProducer {
+    private final static Logger logger = LoggerFactory.getLogger(SyncCheetosProducer.class);
 
     public static void main(String[] args) {
-        String mode = "[SYNC 5] ";
+        String mode = "[SYNC]";
         Properties props = new Properties();
 
         props.put("bootstrap.servers", "localhost:9092"); //kafka broker
-        props.put("acks", "1"); // 0, 1, all
+        props.put("acks", "1");
         props.put("key.serializer", StringSerializer.class);
         props.put("value.serializer", StringSerializer.class);
 
-        long startTime = System.currentTimeMillis();
-
         try(Producer<String, String> producer = new KafkaProducer<String, String>(props)) {
-            for (int i = 0; i < 100000; i++) {
+            for (int i = 0; i < 10000; i++) {
                 String index = String.valueOf(i);
 
                 producer.send(new ProducerRecord<String, String>(
                         "vanilla-topic",
                         mode + "vanilla-key-" + index,
                         "vanilla-value-" + index)
-                );
+                ).get();
             }
 
             producer.flush();
+        } catch (ExecutionException | InterruptedException e) {
+            logger.error("[MESSAGE PRODUCER INTERRUPTED]", e);
         }
-
-        logger.info("Processing time = {} ms ", System.currentTimeMillis() - startTime);
     }
 }
