@@ -1,4 +1,4 @@
-package com.eduardocode.producers;
+package com.eduardocode.kafka.producers;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -30,13 +30,13 @@ public class CheetosProducer {
         long startTime = System.currentTimeMillis();
 
         try(Producer<String, String> producer = new KafkaProducer<>(props)) {
-            for (int i = 0; i < 1000000; i++) {
+            for (int i = 0; i < 10000000; i++) {
                 String index = String.valueOf(i);
 
                 producer.send(new ProducerRecord<String, String>(
                         "vanilla-topic",
                         mode + "vanilla-key",
-                        "vanilla-value-" + index)
+                        index)
                 );
             }
 

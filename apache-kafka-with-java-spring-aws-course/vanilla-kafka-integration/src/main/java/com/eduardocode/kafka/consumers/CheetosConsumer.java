@@ -1,4 +1,4 @@
-package com.eduardocode.consumers;
+package com.eduardocode.kafka.consumers;
 
 import org.apache.kafka.clients.consumer.*;
 import org.apache.kafka.common.serialization.StringDeserializer;

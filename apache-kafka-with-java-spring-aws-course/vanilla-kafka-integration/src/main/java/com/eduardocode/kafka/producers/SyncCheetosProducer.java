@@ -1,4 +1,4 @@
-package com.eduardocode.producers;
+package com.eduardocode.kafka.producers;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
