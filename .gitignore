@@ -85,3 +85,10 @@ local.properties
 */.idea
 */coverage-report
 */unit-test-report
+
+*/*/target
+*/*/.project
+*/*/.classpath
+*/*/.idea
+*/*/coverage-report
+*/*/unit-test-report
