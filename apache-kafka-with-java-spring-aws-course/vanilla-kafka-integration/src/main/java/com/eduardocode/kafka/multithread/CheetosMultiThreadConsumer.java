@@ -8,7 +8,7 @@ import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class CheetosMultiThreadConsume {
+public class CheetosMultiThreadConsumer {
 
     private static final String VANILLA_TOPIC = "vanilla-topic";
     private static final int THREAD_POOL_SIZE = 5;

@@ -30,12 +30,14 @@ public class CheetosProducer {
         long startTime = System.currentTimeMillis();
 
         try(Producer<String, String> producer = new KafkaProducer<>(props)) {
-            for (int i = 0; i < 10000000; i++) {
+            for (int i = 0; i < 100; i++) {
                 String index = String.valueOf(i);
+
+                //logger.info("message key: {}", "vanilla-key" + Integer.parseInt(index));
 
                 producer.send(new ProducerRecord<String, String>(
                         "vanilla-topic",
-                        mode + "vanilla-key",
+                        mode + "vanilla-key" + Integer.parseInt(index),
                         index)
                 );
             }

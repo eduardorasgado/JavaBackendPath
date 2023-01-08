@@ -29,9 +29,8 @@ public class CheetosCallbackProducer {
         try(Producer<String, String> producer = new KafkaProducer<>(props)) {
             for (int i = 0; i < 10000; i++) {
                 String index = String.valueOf(i);
-
                 producer.send(
-                        new ProducerRecord<String, String>("vanilla-topic", "vanilla-key", index),
+                        new ProducerRecord<String, String>("vanilla-topic", "vanilla-key" + (Integer.parseInt(index) % 5), index),
                         new Callback() {
 
                             @Override
