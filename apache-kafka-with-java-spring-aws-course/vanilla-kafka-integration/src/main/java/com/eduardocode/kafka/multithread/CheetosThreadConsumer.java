@@ -14,7 +14,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class CheetosThreadConsumer extends Thread {
 
-    private static final Logger logger = LoggerFactory.getLogger(CheetosConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(CheetosThreadConsumer.class);
 
     // To enable thread safe feature
     private final AtomicBoolean closed = new AtomicBoolean(false);

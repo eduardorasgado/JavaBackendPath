@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class TransactionalProducer {
 
-    private final static Logger logger = LoggerFactory.getLogger(CheetosProducer.class);
+    private final static Logger logger = LoggerFactory.getLogger(TransactionalProducer.class);
 
     public static void main(String[] args) {
         Properties props = new Properties();

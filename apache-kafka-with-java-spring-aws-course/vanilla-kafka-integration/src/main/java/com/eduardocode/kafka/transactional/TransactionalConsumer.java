@@ -14,7 +14,7 @@ public class TransactionalConsumer {
 
     private static final String VANILLA_TOPIC = "vanilla-topic";
 
-    private static final Logger logger = LoggerFactory.getLogger(CheetosConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(TransactionalConsumer.class);
 
     public static void main(String[] args) {
         Properties props = new Properties();
