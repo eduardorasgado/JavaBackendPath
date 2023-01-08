@@ -10,6 +10,23 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
+/*
+--------------IDEMPOTENT PRODUCERS--------------
+
+To be able to be sure we are receiving a single value of a message instead of duplicate entries we can use the property
+
+enable.idempotence = true
+
+with this configuration we activate a unique key for every sent message and consumer wont insert any duplicates.
+
+To be able to set and having this feature working we must fulfill the next restrictions:
+max.in.flight.requests.per.connection <= 5 (default value: 5)
+retries > 0     (default value is max int supported)
+acks > all
+
+if any of these are fulfilled then we will get a ConfigException
+
+ */
 public class CheetosProducer {
     private final static Logger logger = LoggerFactory.getLogger(CheetosProducer.class);
 

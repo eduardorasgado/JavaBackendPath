@@ -15,6 +15,8 @@ import java.util.*;
 
 public class DepositProducer {
 
+    private final static Logger logger = LoggerFactory.getLogger(DepositProducer.class);
+
     public static void main(String[] args) {
         Properties props = new Properties();
 
@@ -22,20 +24,36 @@ public class DepositProducer {
         props.setProperty(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
         props.setProperty(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getCanonicalName());
 
-        props.setProperty(ProducerConfig.ACKS_CONFIG, "1");
+        props.setProperty(ProducerConfig.ACKS_CONFIG, "all");
+        props.setProperty(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "deposit-producer-id");
 
-        props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "0");
+        props.setProperty(ProducerConfig.LINGER_MS_CONFIG, "2");
 
         List<DepositEntry> data = new ArrayList<>();
         getDataList(data);
 
-
+        boolean sentSuccessfully = true;
         try(Producer<String, String> producer = new KafkaProducer<>(props)) {
-            for(DepositEntry row : data) {
-                producer.send(
-                        new ProducerRecord<String, String>("vanilla-topic", Integer.toString(row.getUser()), row.getJsonValue())
-                );
+            try {
+                producer.initTransactions();
+                producer.beginTransaction();
+
+                for(DepositEntry row : data) {
+                    producer.send(
+                            new ProducerRecord<>("vanilla-topic", Integer.toString(row.getUser()), row.getJsonValue())
+                    );
+                }
+
+                producer.commitTransaction();
+                producer.flush();
+            } catch (NullPointerException ex) {
+                logger.error("Data to be sent has a null value: " + ex);
+                sentSuccessfully = false;
+
+                producer.abortTransaction();
             }
+
+            logger.info(sentSuccessfully ? "[Success] Data was sent successfully" : "[Failed] Data was not able to be sent");
         }
     }
 
@@ -45,7 +63,7 @@ public class DepositProducer {
         data.add(new DepositEntry(1020, Action.DEPOSIT, 200, Timestamp.valueOf("2020-08-25 02:56:00.0")));
         data.add(new DepositEntry(1020, Action.WITHDRAWAL, -300, Timestamp.valueOf("2020-08-26 04:32:00.0")));
 
-        data.add(new DepositEntry(1021, Action.DEPOSIT, 200, Timestamp.valueOf("2020-08-26 16:43:00.0")));
+        data.add(new DepositEntry(1021, Action.DEPOSIT, 200, Timestamp.valueOf("2020-08-27 14:32:00.0")));
         data.add(new DepositEntry(1021, Action.DEPOSIT, 240, Timestamp.valueOf("2020-08-27 18:33:00.0")));
     }
 
