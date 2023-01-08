@@ -45,9 +45,11 @@ public class TransactionalProducer {
                             index)
                     );
 
-//                    if(i >= 90000) {
-//                        throw new Exception("Unexpected exception");
-//                    }
+                    // at the moment this Exception is thrown, transaction is not able to be commited as expected
+                    // this causes TransactionalConsumer to ignore every message was created until the moment this exception is thrown
+                    if(i >= 90000) {
+                        throw new Exception("Unexpected exception");
+                    }
                 }
 
                 producer.commitTransaction();

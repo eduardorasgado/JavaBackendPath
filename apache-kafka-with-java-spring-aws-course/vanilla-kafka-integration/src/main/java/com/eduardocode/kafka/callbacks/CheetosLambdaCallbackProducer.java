@@ -1,6 +1,5 @@
 package com.eduardocode.kafka.callbacks;
 
-import com.eduardocode.kafka.producers.CheetosProducer;
 import org.apache.kafka.clients.producer.*;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
@@ -10,9 +9,9 @@ import java.util.Properties;
 
 import static java.util.Objects.nonNull;
 
-public class CheetosCallbackProducer {
+public class CheetosLambdaCallbackProducer {
 
-    private final static Logger logger = LoggerFactory.getLogger(CheetosCallbackProducer.class);
+    private final static Logger logger = LoggerFactory.getLogger(CheetosLambdaCallbackProducer.class);
 
     public static void main(String[] args) {
         Properties props = new Properties();
@@ -32,17 +31,13 @@ public class CheetosCallbackProducer {
 
                 producer.send(
                         new ProducerRecord<String, String>("vanilla-topic", "vanilla-key", index),
-                        new Callback() {
-
-                            @Override
-                            public void onCompletion(RecordMetadata metadata, Exception exception) {
-                                if(nonNull(exception)) {
-                                    logger.info("There was an error {} ", exception.getMessage());
-                                } else {
-                                    logger.info(
-                                            "offset: {}, partition: {}, topic: {}",
-                                            metadata.offset(), metadata.partition(), metadata.topic());
-                                }
+                        (metadata,exception) -> {
+                            if(nonNull(exception)) {
+                                logger.info("There was an error {} ", exception.getMessage());
+                            } else {
+                                logger.info(
+                                        "offset: {}, partition: {}, topic: {}",
+                                        metadata.offset(), metadata.partition(), metadata.topic());
                             }
                         }
                 );
