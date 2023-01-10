@@ -17,7 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-@Import({KafkaProducerConfiguration.class})
 public class KafkaProducerConfiguration {
 
     @Value("${broker.server.path}")
