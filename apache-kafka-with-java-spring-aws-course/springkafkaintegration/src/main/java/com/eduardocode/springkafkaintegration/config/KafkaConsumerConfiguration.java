@@ -13,9 +13,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Configuration
-public class KafkaConfiguration {
+public class KafkaConsumerConfiguration {
 
-    @Value("${consumer.server.path}")
+    @Value("${broker.server.path}")
     private String consumerServerPath;
 
     @Value("${consumer.auto.commit.interval.ms.config}")

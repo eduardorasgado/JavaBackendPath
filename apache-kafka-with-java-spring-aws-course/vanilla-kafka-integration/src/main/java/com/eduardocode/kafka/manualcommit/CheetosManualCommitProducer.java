@@ -26,7 +26,7 @@ public class CheetosManualCommitProducer {
 
         try(Producer<String, String> producer = new KafkaProducer<>(props)) {
             for (int i = 0; i < 100; i++) {
-                producer.send(new ProducerRecord<>("vanilla-topic", "vanilla-manualcommit-key", String.valueOf(i)));
+                producer.send(new ProducerRecord<>("integration-topic", "vanilla-manualcommit-key", String.valueOf(i)));
             }
 
             producer.flush();
