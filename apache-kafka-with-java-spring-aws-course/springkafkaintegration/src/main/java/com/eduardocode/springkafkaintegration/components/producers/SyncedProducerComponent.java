@@ -1,6 +1,6 @@
-package com.eduardocode.springkafkaintegration.components.synced;
+package com.eduardocode.springkafkaintegration.components.producers;
 
-import com.eduardocode.springkafkaintegration.TopicWrapper;
+import com.eduardocode.springkafkaintegration.components.TopicWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +14,14 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 @Component
-public class SyncedComponent extends TopicWrapper implements CommandLineRunner {
+public class SyncedProducerComponent extends TopicWrapper implements CommandLineRunner {
 
-    private static final Logger logger = LoggerFactory.getLogger(SyncedComponent.class);
+    private static final Logger logger = LoggerFactory.getLogger(SyncedProducerComponent.class);
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public SyncedComponent(@Value(topicPropPath) String TOPIC) {
+    public SyncedProducerComponent(@Value(topicPropPath) String TOPIC) {
         super(TOPIC);
     }
 
@@ -30,7 +30,7 @@ public class SyncedComponent extends TopicWrapper implements CommandLineRunner {
         logger.info("[" + this.getClass().getSimpleName() + "] class run method is executed");
 
         try {
-            kafkaTemplate.send(TOPIC, "[SYNC COMPONENT] Sent a message").get(500, TimeUnit.MILLISECONDS);
+            kafkaTemplate.send(TOPIC, "[SYNC PRODUCER COMPONENT MESSAGE] Sent a message").get(500, TimeUnit.MILLISECONDS);
         } catch (ExecutionException | InterruptedException ex) {
             logger.error("[MESSAGE PRODUCER INTERRUPTED] ", ex);
         } catch (TimeoutException ex) {
