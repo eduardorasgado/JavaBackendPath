@@ -33,7 +33,6 @@ public class CheetosThreadConsumer extends Thread {
     public void run() {
         consumer.subscribe(List.of(TOPIC));
 
-
         try {
             while(!closed.get()) {
                 ConsumerRecords<String, String> consumerRecords = consumer.poll(Duration.ofMillis(POLLING_TIME_FRAME));

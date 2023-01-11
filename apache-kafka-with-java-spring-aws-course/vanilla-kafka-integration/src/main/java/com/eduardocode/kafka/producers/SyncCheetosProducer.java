@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 public class SyncCheetosProducer {
     private final static Logger logger = LoggerFactory.getLogger(SyncCheetosProducer.class);
@@ -36,12 +38,14 @@ public class SyncCheetosProducer {
                         "vanilla-topic",
                         mode + "vanilla-key",
                         index)
-                ).get();
+                ).get(10, TimeUnit.SECONDS);
             }
 
             producer.flush();
         } catch (ExecutionException | InterruptedException e) {
-            logger.error("[MESSAGE PRODUCER INTERRUPTED]", e);
+            logger.error("[MESSAGE PRODUCER INTERRUPTED] ", e);
+        } catch (TimeoutException ex) {
+            logger.error("[MESSAGE PRODUCER TIMEOUT] ", ex);
         }
 
         logger.info("Processing time = {} ms ", System.currentTimeMillis() - startTime);
