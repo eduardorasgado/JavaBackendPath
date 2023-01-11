@@ -44,7 +44,7 @@ public class SpringKafkaIntegrationApplication extends TopicWrapper implements C
 
     // we can run certain things on the application start by implementing CommandLineRunner
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(
                 TOPIC, "[Producer/Consumer Application] Producer is ready to send message");
 
