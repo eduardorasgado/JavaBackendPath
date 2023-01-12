@@ -12,7 +12,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-@Component
+//@Component
 public class SyncedProducerComponent extends ProducerWrapper implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(SyncedProducerComponent.class);

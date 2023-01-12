@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -15,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  For this reason I created a project named scheduled-spring-kafka-producer to be able to run this component on a new spring project
  */
 
-//@Component
+@Component
 public class ThreadProducerComponent extends ProducerWrapper implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(ThreadProducerComponent.class);
 

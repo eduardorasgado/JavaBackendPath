@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-//@Component
+@Component
 public class BatchListener extends TopicPathWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(BatchListener.class);
@@ -27,6 +27,7 @@ public class BatchListener extends TopicPathWrapper {
             logger.info("Partition: {}, Offset: {}, Key: {}, Message: {}",
                     message.partition(), message.offset(), message.key(), message.value());
         }
+
         logger.info("[BATCH LISTENER: END]");
     }
 }

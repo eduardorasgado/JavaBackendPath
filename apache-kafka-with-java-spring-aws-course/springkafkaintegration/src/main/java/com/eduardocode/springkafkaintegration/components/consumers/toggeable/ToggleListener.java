@@ -13,7 +13,7 @@ import java.util.Objects;
 
 import static java.util.Objects.nonNull;
 
-@Component
+//@Component
 public class ToggleListener extends TopicPathWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(ToggleListener.class);
@@ -32,10 +32,12 @@ public class ToggleListener extends TopicPathWrapper {
         if(nonNull(message)) {
             if(message.toUpperCase().equals(TOGGLE_ON)) {
                 logger.info("[TOGGLE LISTENER] BATCH LISTENER > TURNED ON");
+
                 Objects.requireNonNull(listenerRegistry.getListenerContainer(listenerId)).start();
             }
             else if (message.toUpperCase().equals(TOGGLE_OFF)) {
                 logger.info("[TOGGLE LISTENER] BATCH LISTENER > TURNED OFF");
+
                 Objects.requireNonNull(listenerRegistry.getListenerContainer(listenerId)).stop();
             }
         }

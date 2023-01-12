@@ -14,7 +14,7 @@ import org.springframework.util.concurrent.ListenableFuture;
 
 import static java.util.Objects.nonNull;
 
-@Component
+//@Component
 public class WithCallbackProducerComponent extends ProducerWrapper implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(WithCallbackProducerComponent.class);

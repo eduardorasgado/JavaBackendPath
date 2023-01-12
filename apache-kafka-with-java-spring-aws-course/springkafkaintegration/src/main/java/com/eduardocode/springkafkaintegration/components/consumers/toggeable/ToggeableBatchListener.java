@@ -14,7 +14,7 @@ import java.util.List;
 * id and autoStartup arguments in the @KafkaListener annotation are helping to create a toggeable listener
 * KafkaListenerEndpointRegistry in the ToggleListener class is the responsible to start and stop this listener
  */
-@Component
+//@Component
 public class ToggeableBatchListener extends TopicPathWrapper {
 
     private static final Logger logger = LoggerFactory.getLogger(ToggeableBatchListener.class);
@@ -36,6 +36,7 @@ public class ToggeableBatchListener extends TopicPathWrapper {
             logger.info("Partition: {}, Offset: {}, Key: {}, Message: {}",
                     message.partition(), message.offset(), message.key(), message.value());
         }
+
         logger.info("[BATCH LISTENER: END]");
     }
 }

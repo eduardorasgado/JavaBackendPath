@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class BatchProducerComponent extends ProducerWrapper implements CommandLineRunner {
 
     private static final Logger logger = LoggerFactory.getLogger(BatchProducerComponent.class);
