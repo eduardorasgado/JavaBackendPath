@@ -58,7 +58,7 @@ public class KafkaConsumerConfiguration {
         listenerContainerFactory.setConsumerFactory(consumerFactory());
 
         listenerContainerFactory.setBatchListener(true);
-        listenerContainerFactory.setConcurrency(3);
+        listenerContainerFactory.setConcurrency(3); // thread pool of 3 elements
 
         return listenerContainerFactory;
     }
