@@ -14,8 +14,10 @@ public class ScheduledProducerComponent extends ProducerWrapper {
 
     private long count = 0;
 
-    @Scheduled(fixedDelay = 1000, initialDelay = 500)
+    @Scheduled(fixedDelay = 1000, initialDelay = 100)
     public void run() {
-        kafkaTemplate.send(TOPIC, String.format("batch-key-%d", count), String.format("Sample message %d", count++));
+        for (int i = 0; i < 12; i++) {
+            kafkaTemplate.send(TOPIC, String.format("batch-key-%d", count), String.format("Sample message %d", count++));
+        }
     }
 }

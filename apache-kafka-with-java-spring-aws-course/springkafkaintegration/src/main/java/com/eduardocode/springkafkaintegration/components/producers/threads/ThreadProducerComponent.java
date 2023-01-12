@@ -28,6 +28,8 @@ public class ThreadProducerComponent extends ProducerWrapper implements CommandL
     });
     public static long count = 0;
 
+    public final int BATCH_SIZE = 10;
+
     public ThreadProducerComponent(@Value(topicPropPath) String TOPIC) {
         super(TOPIC);
     }
@@ -35,10 +37,12 @@ public class ThreadProducerComponent extends ProducerWrapper implements CommandL
     @Override
     public void run(String... args) {
         logger.info("[THREAD PRODUCER COMPONENT] is now running.");
-        String BASE_KEY = "batch-key";
+        String BASE_KEY = "batch-key-";
 
         executorService.scheduleAtFixedRate(() -> {
-            kafkaTemplate.send(TOPIC, BASE_KEY, String.format("Sample message %d", count++));
+            for (int i = 0; i < BATCH_SIZE; i++) {
+                kafkaTemplate.send(TOPIC, BASE_KEY + count, String.format("Sample message %d", count++));
+            }
         },0, 500, TimeUnit.MILLISECONDS);
     }
 }
