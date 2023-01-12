@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
  For this reason I created a project named scheduled-spring-kafka-producer to be able to run this component on a new spring project
  */
 
-@Component
+//@Component
 public class ThreadProducerComponent extends ProducerWrapper implements CommandLineRunner {
     private static final Logger logger = LoggerFactory.getLogger(ThreadProducerComponent.class);
 
@@ -39,6 +39,6 @@ public class ThreadProducerComponent extends ProducerWrapper implements CommandL
 
         executorService.scheduleAtFixedRate(() -> {
             kafkaTemplate.send(TOPIC, BASE_KEY, String.format("Sample message %d", count++));
-        },0, 100, TimeUnit.MILLISECONDS);
+        },0, 500, TimeUnit.MILLISECONDS);
     }
 }
