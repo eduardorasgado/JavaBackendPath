@@ -1,6 +1,7 @@
 package com.eduardocode.springkafkaintegration.components.consumers;
 
 import com.eduardocode.springkafkaintegration.components.TopicPathWrapper;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -18,12 +19,13 @@ public class BatchListener extends TopicPathWrapper {
      * max.poll.records: Define maximum amount of registers returned by the pool method
      */
     @KafkaListener(topics = {topicPropPath}, groupId = "integration-batch-group", containerFactory = "batchListenerFactory",
-            properties = { "max.poll.interval.ms:4000", "max.poll.records: 10"})
-    public void listen(List<String> messages) {
+            properties = {"max.poll.interval.ms:4000", "max.poll.records:10"})
+    public void listen(List<ConsumerRecord<String, String>> messages) {
         logger.info("[BATCH LISTENER: START] Messages received: ");
 
-        for (String message : messages) {
-            logger.info(message);
+        for (ConsumerRecord<String, String> message : messages) {
+            logger.info("Partition: {}, Offset: {}, Key: {}, Message: {}",
+                    message.partition(), message.offset(), message.key(), message.value());
         }
         logger.info("[BATCH LISTENER: END]");
     }

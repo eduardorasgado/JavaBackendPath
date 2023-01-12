@@ -20,9 +20,11 @@ public class BatchProducerComponent extends ProducerWrapper implements CommandLi
     @Override
     public void run(String... args) {
         logger.info("[BATCH PRODUCER COMPONENT] Started.");
+        String BASE_KEY = "batch-key-";
 
         for (int i = 0; i < 100; i++) {
-            kafkaTemplate.send(TOPIC, String.format("Sample message %d", i));
+
+            kafkaTemplate.send(TOPIC, BASE_KEY + String.valueOf(i), String.format("Sample message %d", i));
         }
     }
 }

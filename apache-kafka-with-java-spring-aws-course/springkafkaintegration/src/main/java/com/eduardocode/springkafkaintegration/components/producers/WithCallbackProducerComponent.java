@@ -24,7 +24,7 @@ public class WithCallbackProducerComponent extends ProducerWrapper implements Co
     }
 
     // we can run certain things on the application start by implementing CommandLineRunner
-    @Override
+    //@Override
     public void run(String... args) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(
                 TOPIC, "[CALLBACK PRODUCER COMPONENT MESSAGE] Producer is ready to send message");

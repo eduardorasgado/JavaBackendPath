@@ -1,4 +1,4 @@
-package com.eduardocode.springkafkaintegration.config;
+package com.eduardocode.app.configs;
 
 
 import org.apache.kafka.clients.producer.ProducerConfig;
