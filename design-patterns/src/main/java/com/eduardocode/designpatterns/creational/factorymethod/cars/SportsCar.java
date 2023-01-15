@@ -8,9 +8,13 @@ public class SportsCar extends Car {
         super(model, year, color);
     }
 
+    public SportsCar() {
+
+    }
+
     @Override
     public void drive() {
-        System.out.println("Speeding down the highway in my" + color + " " + model + " sports car.");
+        System.out.println("Speeding down the highway in my " + color + " " + model + " sports car.");
     }
 
     @Override
