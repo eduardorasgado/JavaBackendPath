@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.creational.abstractfactory.GUIFactory;
+package com.eduardocode.designpatterns.creational.abstractfactory.guifactory;
 
 public class App {
     private Button button;
