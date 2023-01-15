@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.creational.singleton.simple;
+package com.eduardocode.designpatterns.creational.singleton.nonthreadsafe.simple;
 
 public class Singleton {
     private static Singleton instance;

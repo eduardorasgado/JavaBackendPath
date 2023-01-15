@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.creational.singleton.randomgenerator;
+package com.eduardocode.designpatterns.creational.singleton.nonthreadsafe.randomgenerator;
 
 import java.util.Random;
 
