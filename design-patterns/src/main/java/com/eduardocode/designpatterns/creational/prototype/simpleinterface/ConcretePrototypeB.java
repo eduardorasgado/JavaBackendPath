@@ -1,6 +1,6 @@
 package com.eduardocode.designpatterns.creational.prototype.simpleinterface;
 
-public class ConcretePrototypeB implements Prototype<Integer> {
+public class ConcretePrototypeB implements PropertyHolder<Integer> {
     private int property;
     public ConcretePrototypeB(int property) {
         this.property = property;
@@ -15,7 +15,7 @@ public class ConcretePrototypeB implements Prototype<Integer> {
     }
 
     @Override
-    public Prototype<Integer> clone() {
+    public PropertyHolder<Integer> clone() {
         return new ConcretePrototypeB(property);
     }
 }

@@ -1,6 +1,6 @@
 package com.eduardocode.designpatterns.creational.prototype.simpleinterface;
 
-public class ConcretePrototypeA implements Prototype<String> {
+public class ConcretePrototypeA implements PropertyHolder<String> {
     private String property;
     public ConcretePrototypeA(String property) {
         this.property = property;
@@ -15,7 +15,7 @@ public class ConcretePrototypeA implements Prototype<String> {
     }
 
     @Override
-    public Prototype<String> clone() {
+    public PropertyHolder<String> clone() {
         return new ConcretePrototypeA(property);
     }
 }
