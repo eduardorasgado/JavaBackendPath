@@ -9,6 +9,5 @@ public class BankDemo {
         boolean eligible = mortgage.isEligible(customer, 125000);
 
         System.out.println(customer.getName() + " has been " + (eligible ? "Approved" : "Rejected"));
-
     }
 }
