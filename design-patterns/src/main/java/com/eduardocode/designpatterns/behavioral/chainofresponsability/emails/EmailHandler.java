@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.behavioral.emails;
+package com.eduardocode.designpatterns.behavioral.chainofresponsability.emails;
 
 public abstract class EmailHandler {
     private final EmailHandler next;

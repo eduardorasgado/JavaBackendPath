@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.behavioral.requesthandler;
+package com.eduardocode.designpatterns.behavioral.chainofresponsability.requesthandler;
 
 public class ConcreteHandler2 extends RequestHandler {
     private final String TYPE = "Type2";

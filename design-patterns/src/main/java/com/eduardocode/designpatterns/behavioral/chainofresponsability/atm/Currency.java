@@ -1,4 +1,4 @@
-package com.eduardocode.designpatterns.behavioral.atm;
+package com.eduardocode.designpatterns.behavioral.chainofresponsability.atm;
 
 public class Currency {
     private int amount;
