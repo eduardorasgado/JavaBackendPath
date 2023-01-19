@@ -22,6 +22,7 @@ public class Light {
         RAISE,
         LOWER;
     }
+
     public void turnOn() {
         System.out.println("Light is ON");
     }
