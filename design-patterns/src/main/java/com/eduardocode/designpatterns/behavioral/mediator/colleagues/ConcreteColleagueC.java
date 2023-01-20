@@ -1,6 +1,10 @@
 package com.eduardocode.designpatterns.behavioral.mediator.colleagues;
 
 public class ConcreteColleagueC extends Colleague {
+
+    public ConcreteColleagueC() {
+    }
+
     public ConcreteColleagueC(Mediator mediator) {
         super(mediator);
     }

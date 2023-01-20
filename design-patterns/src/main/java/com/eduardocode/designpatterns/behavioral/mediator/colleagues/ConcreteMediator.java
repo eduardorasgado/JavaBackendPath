@@ -23,6 +23,7 @@ public class ConcreteMediator implements Mediator {
     public void setColleague(Colleague colleague) {
         if(!colleagues.contains(colleague)) {
             colleagues.add(colleague);
+            colleague.setMediator(this);
         }
     }
 }
