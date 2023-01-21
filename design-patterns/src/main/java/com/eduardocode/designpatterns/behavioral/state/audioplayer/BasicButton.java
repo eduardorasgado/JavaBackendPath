@@ -1,10 +1,10 @@
 package com.eduardocode.designpatterns.behavioral.state.audioplayer;
 
-public class Button {
+public class BasicButton {
+    protected Runnable onClickRunnable;
     private final String name;
-    private Runnable onClickRunnable;
 
-    public Button(String name) {
+    public BasicButton(String name) {
         this.name = name;
     }
 

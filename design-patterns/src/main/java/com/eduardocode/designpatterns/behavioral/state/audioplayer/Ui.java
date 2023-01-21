@@ -1,22 +1,26 @@
 package com.eduardocode.designpatterns.behavioral.state.audioplayer;
 
 public class Ui {
-    public Button lockButton;
-    public Button playButton;
-    public Button nextButton;
-    public Button prevButton;
+    public BasicButton lockButton;
+    public BasicButton playButton;
+    public AdvancedButton nextButton;
+    public AdvancedButton prevButton;
 
-    public Ui(Button lockButton, Button playButton, Button nextButton, Button prevButton) {
+    public Ui(BasicButton lockButton, BasicButton playButton, AdvancedButton nextButton, AdvancedButton prevButton) {
         this.lockButton = lockButton;
         this.playButton = playButton;
         this.nextButton = nextButton;
         this.prevButton = prevButton;
     }
 
-    public void init(State state) {
+    public void update(State state) {
         lockButton.onClick(state::clickLock);
         playButton.onClick(state::clickPlay);
-        playButton.onClick(state::clickNext);
-        playButton.onClick(state::clickPrevious);
+
+        nextButton.onClick(state::clickNext);
+        prevButton.onClick(state::clickPrevious);
+        nextButton.onDoubleClick(state::clickNext);
+        prevButton.onDoubleClick(state::clickPrevious);
+
     }
 }

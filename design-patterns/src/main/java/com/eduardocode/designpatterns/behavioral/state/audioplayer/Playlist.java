@@ -30,4 +30,26 @@ public class Playlist {
         }
         return null;
     }
+
+    public Song prev() {
+        currentSongIndex = (((currentSongIndex - 1) < 0) ? content.size() : currentSongIndex) - 1;
+        return get(currentSongIndex);
+    }
+
+    public static void main(String[] args) {
+        int currentSongIndex = 2;
+        System.out.println(currentSongIndex);
+
+        currentSongIndex = ((currentSongIndex - 1) < 0) ? 5 : (currentSongIndex - 1);
+        System.out.println(currentSongIndex);
+
+        currentSongIndex = ((currentSongIndex - 1) < 0) ? 5 : (currentSongIndex - 1);
+        System.out.println(currentSongIndex);
+
+        currentSongIndex = ((currentSongIndex - 1) < 0) ? 5 : (currentSongIndex - 1);
+        System.out.println(currentSongIndex);
+
+        currentSongIndex = ((currentSongIndex - 1) < 0) ? 5 : (currentSongIndex - 1);
+        System.out.println(currentSongIndex);
+    }
 }
