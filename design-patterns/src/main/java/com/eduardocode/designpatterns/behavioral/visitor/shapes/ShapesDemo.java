@@ -15,13 +15,18 @@ public class ShapesDemo {
 
         ShapeApplication app = new ShapeApplication();
 
-        ExportVisitor xmlExportVisitor = new XMLExportVisitor();
-        app.setExporter(xmlExportVisitor);
-
         app.addShape(circle);
         app.addShape(rectangle);
         app.addShape(compoundShape);
 
+        ExportVisitor xmlExportVisitor = new XMLExportVisitor();
+        app.setExporter(xmlExportVisitor);
+        app.exportAll();
+
+        System.out.println();
+
+        ExportVisitor jsonExportVisitor = new JsonExportVisitor();
+        app.setExporter(jsonExportVisitor);
         app.exportAll();
     }
 }
