@@ -57,7 +57,7 @@ public class LinkedListDemo {
         linkedList2.printList();
     }
 
-    public static void appendAndRemoving() {
+    public static void appendAndRemovingLast() {
         LinkedList linkedList = new LinkedList();
 
         linkedList.append(5);

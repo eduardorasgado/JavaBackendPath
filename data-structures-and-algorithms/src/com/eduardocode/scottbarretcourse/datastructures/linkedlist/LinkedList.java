@@ -32,28 +32,26 @@ public class LinkedList {
         if(head == null) {
             return null;
         }
-        else {
-            Node temp = head;
+        Node temp = head;
 
-            if(length == 1) {
-                empty();
-            }
-            else {
-                Node previousTemp = head;
-
-                while (temp.next != null) {
-                    previousTemp = temp;
-                    temp = temp.next;
-                }
-
-                tail = previousTemp;
-                tail.next = null;
-
-                --length;
-            }
-
-            return temp;
+        if(length == 1) {
+            empty();
         }
+        else {
+            Node previousTemp = head;
+
+            while (temp.next != null) {
+                previousTemp = temp;
+                temp = temp.next;
+            }
+
+            tail = previousTemp;
+            tail.next = null;
+
+            --length;
+        }
+
+        return temp;
     }
 
     public void prepend(int value) {
@@ -72,17 +70,15 @@ public class LinkedList {
         if(head == null) {
             return null;
         }
-        else {
-            Node temp = head;
-            head = temp.next;
-            temp.next = null;
-            --length;
+        Node temp = head;
+        head = temp.next;
+        temp.next = null;
+        --length;
 
-            if(head == null) {
-                tail = null;
-            }
-            return temp;
+        if(head == null) {
+            tail = null;
         }
+        return temp;
     }
 
     public void printList() {
