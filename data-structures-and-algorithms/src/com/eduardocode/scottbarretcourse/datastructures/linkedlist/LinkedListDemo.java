@@ -3,8 +3,31 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        removeFirst();
+        get();
     }
+
+    public static void get() {
+        LinkedList linkedList = new LinkedList();
+
+        linkedList.append(5);
+        linkedList.append(4);
+        linkedList.append(8);
+        linkedList.append(20);
+        linkedList.append(22);
+
+        System.out.println("[1] getting index 0: " + linkedList.get(0));
+        System.out.println("[1] getting index 2: " + linkedList.get(2));
+        System.out.println("[1] getting index 4: " + linkedList.get(4));
+
+        LinkedList linkedList2 = new LinkedList();
+        linkedList2.append(4);
+        System.out.println("[2] getting index 0: " + linkedList2.get(0));
+        System.out.println("[2] getting index 1: " + linkedList2.get(1));
+
+        LinkedList linkedList3 = new LinkedList();
+        System.out.println("[3] getting index 0: " + linkedList3.get(0));
+    }
+
 
     public static void removeFirst() {
         LinkedList linkedList = new LinkedList();

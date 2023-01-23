@@ -81,6 +81,22 @@ public class LinkedList {
         return temp;
     }
 
+    public Node get(int index) {
+        if(index >= length) {
+            return null;
+        }
+
+        int count = 0;
+        Node temp = head;
+
+        while (count != index) {
+            temp = temp.next;
+            ++count;
+        }
+
+        return temp;
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 
