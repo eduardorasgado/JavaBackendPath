@@ -94,6 +94,33 @@ public class LinkedList {
         return temp;
     }
 
+    public boolean set(int index, int value) {
+        if(index < 0 || (length > 0 && index >= length)) {
+            return false;
+        }
+
+        if (head == null || length == 1 || index == 0) {
+            prepend(value);
+        }
+        else {
+            Node newNode = new Node(value);
+            Node temp = head;
+            Node prevTemp = head;
+
+            for (int i = 0; i < index; i++) {
+                prevTemp = temp;
+                temp = temp.next;
+            }
+
+            newNode.next = temp;
+            prevTemp.next = newNode;
+
+            ++length;
+        }
+
+        return true;
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 

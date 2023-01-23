@@ -3,7 +3,45 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        get();
+        set();
+    }
+
+    public static void set() {
+        LinkedList linkedList = new LinkedList();
+
+        linkedList.append(5);
+        linkedList.append(4);
+        linkedList.append(8);
+        linkedList.append(18);
+        linkedList.append(1);
+        linkedList.printList();
+
+        System.out.println("[1] set value: 3 at index 2: " + linkedList.set(2, 3));
+        linkedList.printList();
+        System.out.println("[1] set value: 11 at index 0: " + linkedList.set(0, 11));
+        linkedList.printList();
+        System.out.println("[1] set value: 22 at index 6: " + linkedList.set(6, 22));
+        linkedList.printList();
+        System.out.println("[1] set value: 100 at index 8: " + linkedList.set(8, 100));
+        linkedList.printList();
+
+        System.out.println();
+
+        LinkedList linkedList2 = new LinkedList();
+        linkedList2.append(4);
+        linkedList2.printList();
+
+        System.out.println("[2] set value: 1 at index 0: " + linkedList2.set(0, 1));
+        linkedList2.printList();
+        System.out.println("[2] set value: 10 at index 1: " + linkedList2.set(1, 10));
+        linkedList2.printList();
+
+        System.out.println();
+
+        LinkedList linkedList3 = new LinkedList();
+        linkedList3.printList();
+        System.out.println("[3] set value: 99 at index 0: " + linkedList3.set(0, 99));
+        linkedList3.printList();
     }
 
     public static void get() {
