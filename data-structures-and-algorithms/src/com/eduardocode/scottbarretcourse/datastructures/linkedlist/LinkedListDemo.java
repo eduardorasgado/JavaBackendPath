@@ -26,6 +26,9 @@ public class LinkedListDemo {
         System.out.println("Last removed: " + node.value);
         linkedList.printList();
 
+        System.out.println("Last removed: " + linkedList.removeLast());
+        linkedList.printList();
+
         System.out.println();
         linkedList.append(2);
         linkedList.append(6);

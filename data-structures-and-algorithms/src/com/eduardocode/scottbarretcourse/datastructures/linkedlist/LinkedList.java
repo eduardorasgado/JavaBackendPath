@@ -29,14 +29,17 @@ public class LinkedList {
     }
 
     public Node removeLast() {
-        if(head != null) {
+        if(head == null) {
+            return null;
+        }
+        else {
             Node temp = head;
+
             if(length == 1) {
                 empty();
             }
             else {
                 Node previousTemp = head;
-                temp = head.next;
 
                 while (temp.next != null) {
                     previousTemp = temp;
@@ -45,11 +48,11 @@ public class LinkedList {
 
                 tail = previousTemp;
                 tail.next = null;
+
                 --length;
             }
+
             return temp;
-        } else {
-            throw new NoSuchElementException();
         }
     }
 
