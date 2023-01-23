@@ -3,7 +3,28 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        prepend();
+        removeFirst();
+    }
+
+    public static void removeFirst() {
+        LinkedList linkedList = new LinkedList();
+
+        linkedList.append(5);
+        linkedList.append(4);
+        linkedList.append(8);
+
+        System.out.println("First removed: " + linkedList.removeFirst().value);
+        linkedList.printList();
+        System.out.println("First removed: " + linkedList.removeFirst().value);
+        linkedList.printList();
+        System.out.println("First removed: " + linkedList.removeFirst().value);
+        linkedList.printList();
+        System.out.println("First removed: " + linkedList.removeFirst());
+        linkedList.printList();
+
+        linkedList.append(0);
+        linkedList.append(1);
+        linkedList.printList();
     }
 
     public static void prepend() {

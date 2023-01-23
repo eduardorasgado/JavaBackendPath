@@ -68,6 +68,24 @@ public class LinkedList {
         }
     }
 
+    public Node removeFirst() {
+        if(head == null) {
+            return null;
+        }
+        else {
+            Node temp = head;
+            head = temp.next;
+
+            if(head == null) {
+                empty();
+            }
+            else {
+                --length;
+            }
+            return temp;
+        }
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 
