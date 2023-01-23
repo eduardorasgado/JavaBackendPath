@@ -92,6 +92,17 @@ public class LinkedList {
         return temp;
     }
 
+    public boolean set(int index, int value) {
+        Node temp = get(index);
+
+        if(temp == null) {
+            return false;
+        }
+
+        temp.value = value;
+        return true;
+    }
+
     public boolean insert(int index, int value) {
         if(index < 0 || (length > 0 && index >= length)) {
             return false;
