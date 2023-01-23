@@ -1,5 +1,7 @@
 package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 
+import java.util.NoSuchElementException;
+
 public class LinkedList {
     private Node head;
     private Node tail;
@@ -10,6 +12,47 @@ public class LinkedList {
         length = 1;
     }
 
+    public LinkedList() {
+
+    }
+
+    public void append(int value) {
+        Node newNode = new Node(value);
+
+        if(head == null) {
+            tail = head = newNode;
+        } else {
+            tail.next = newNode;
+            tail = newNode;
+        }
+        ++length;
+    }
+
+    public Node removeLast() {
+        if(head != null) {
+            Node temp = head;
+            if(length == 1) {
+                empty();
+            }
+            else {
+                Node previousTemp = head;
+                temp = head.next;
+
+                while (temp.next != null) {
+                    previousTemp = temp;
+                    temp = temp.next;
+                }
+
+                tail = previousTemp;
+                tail.next = null;
+                --length;
+            }
+            return temp;
+        } else {
+            throw new NoSuchElementException();
+        }
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 
@@ -18,6 +61,12 @@ public class LinkedList {
             System.out.println(currNode);
             currNode = currNode.next;
         }
+    }
+
+    public void empty() {
+        head = null;
+        tail = null;
+        length = 0;
     }
 
     public Node getHead() {
@@ -32,7 +81,7 @@ public class LinkedList {
         return length;
     }
 
-    private class Node {
+    class Node {
         public int value;
         public Node next;
 
