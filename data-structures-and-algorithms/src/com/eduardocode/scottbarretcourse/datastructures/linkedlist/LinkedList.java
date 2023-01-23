@@ -56,6 +56,18 @@ public class LinkedList {
         }
     }
 
+    public void prepend(int value) {
+        if(head == null) {
+            append(value);
+        }
+        else {
+            Node newNode = new Node(value);
+            newNode.next = head;
+            head = newNode;
+            ++length;
+        }
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 
