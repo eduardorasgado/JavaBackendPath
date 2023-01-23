@@ -80,6 +80,7 @@ public class LinkedList {
                 empty();
             }
             else {
+                temp.next = null;
                 --length;
             }
             return temp;

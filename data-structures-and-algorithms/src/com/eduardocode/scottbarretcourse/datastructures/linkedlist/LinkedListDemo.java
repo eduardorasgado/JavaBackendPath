@@ -13,7 +13,10 @@ public class LinkedListDemo {
         linkedList.append(4);
         linkedList.append(8);
 
-        System.out.println("First removed: " + linkedList.removeFirst().value);
+        LinkedList.Node removedNode = linkedList.removeFirst();
+        System.out.println("First removed: " + removedNode.value);
+        System.out.println("removed node next ref: " + removedNode.next); //checking if removed node still has a reference to next node
+
         linkedList.printList();
         System.out.println("First removed: " + linkedList.removeFirst().value);
         linkedList.printList();
