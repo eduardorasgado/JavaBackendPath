@@ -82,7 +82,7 @@ public class LinkedList {
     }
 
     public Node get(int index) {
-        if(index >= length) {
+        if(index < 0 || index >= length) {
             return null;
         }
 

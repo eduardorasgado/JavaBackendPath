@@ -19,6 +19,9 @@ public class LinkedListDemo {
         System.out.println("[1] getting index 2: " + linkedList.get(2));
         System.out.println("[1] getting index 4: " + linkedList.get(4));
 
+        System.out.println("[1] getting index 6: " + linkedList.get(6));
+        System.out.println("[1] getting index -1: " + linkedList.get(-1));
+
         LinkedList linkedList2 = new LinkedList();
         linkedList2.append(4);
         System.out.println("[2] getting index 0: " + linkedList2.get(0));
