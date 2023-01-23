@@ -104,25 +104,22 @@ public class LinkedList {
     }
 
     public boolean insert(int index, int value) {
-        if(index < 0 || (length > 0 && index >= length)) {
+        if(index < 0 || index > length) {
             return false;
         }
 
-        if (head == null || length == 1 || index == 0) {
+        if (index == 0) {
             prepend(value);
+        }
+        else if(index == length) {
+            append(value);
         }
         else {
             Node newNode = new Node(value);
-            Node temp = head;
-            Node prevTemp = head;
-
-            for (int i = 0; i < index; i++) {
-                prevTemp = temp;
-                temp = temp.next;
-            }
-
-            newNode.next = temp;
-            prevTemp.next = newNode;
+            Node prevToNewNode = get(index - 1);
+            
+            newNode.next = prevToNewNode.next;
+            prevToNewNode.next = newNode;
 
             ++length;
         }

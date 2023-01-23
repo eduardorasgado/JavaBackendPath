@@ -3,7 +3,7 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        set();
+        insert();
     }
 
     public static void insert() {
