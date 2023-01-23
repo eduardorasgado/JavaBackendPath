@@ -3,10 +3,10 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        set();
+        insert();
     }
 
-    public static void set() {
+    public static void insert() {
         LinkedList linkedList = new LinkedList();
 
         linkedList.append(5);
@@ -16,13 +16,13 @@ public class LinkedListDemo {
         linkedList.append(1);
         linkedList.printList();
 
-        System.out.println("[1] set value: 3 at index 2: " + linkedList.set(2, 3));
+        System.out.println("[1] set value: 3 at index 2: " + linkedList.insert(2, 3));
         linkedList.printList();
-        System.out.println("[1] set value: 11 at index 0: " + linkedList.set(0, 11));
+        System.out.println("[1] set value: 11 at index 0: " + linkedList.insert(0, 11));
         linkedList.printList();
-        System.out.println("[1] set value: 22 at index 6: " + linkedList.set(6, 22));
+        System.out.println("[1] set value: 22 at index 6: " + linkedList.insert(6, 22));
         linkedList.printList();
-        System.out.println("[1] set value: 100 at index 8: " + linkedList.set(8, 100));
+        System.out.println("[1] set value: 100 at index 8: " + linkedList.insert(8, 100));
         linkedList.printList();
 
         System.out.println();
@@ -31,16 +31,16 @@ public class LinkedListDemo {
         linkedList2.append(4);
         linkedList2.printList();
 
-        System.out.println("[2] set value: 1 at index 0: " + linkedList2.set(0, 1));
+        System.out.println("[2] set value: 1 at index 0: " + linkedList2.insert(0, 1));
         linkedList2.printList();
-        System.out.println("[2] set value: 10 at index 1: " + linkedList2.set(1, 10));
+        System.out.println("[2] set value: 10 at index 1: " + linkedList2.insert(1, 10));
         linkedList2.printList();
 
         System.out.println();
 
         LinkedList linkedList3 = new LinkedList();
         linkedList3.printList();
-        System.out.println("[3] set value: 99 at index 0: " + linkedList3.set(0, 99));
+        System.out.println("[3] set value: 99 at index 0: " + linkedList3.insert(0, 99));
         linkedList3.printList();
     }
 

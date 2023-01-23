@@ -1,7 +1,5 @@
 package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 
-import java.util.NoSuchElementException;
-
 public class LinkedList {
     private Node head;
     private Node tail;
@@ -94,7 +92,7 @@ public class LinkedList {
         return temp;
     }
 
-    public boolean set(int index, int value) {
+    public boolean insert(int index, int value) {
         if(index < 0 || (length > 0 && index >= length)) {
             return false;
         }
