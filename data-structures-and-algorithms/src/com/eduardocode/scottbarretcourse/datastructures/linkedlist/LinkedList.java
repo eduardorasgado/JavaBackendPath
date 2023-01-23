@@ -75,13 +75,11 @@ public class LinkedList {
         else {
             Node temp = head;
             head = temp.next;
+            temp.next = null;
+            --length;
 
             if(head == null) {
-                empty();
-            }
-            else {
-                temp.next = null;
-                --length;
+                tail = null;
             }
             return temp;
         }
