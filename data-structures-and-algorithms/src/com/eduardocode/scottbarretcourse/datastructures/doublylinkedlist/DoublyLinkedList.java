@@ -16,14 +16,43 @@ public class DoublyLinkedList {
 
     public void append(int value) {
         Node newNode = new Node(value);
+
         if(head == null){
             head = tail = newNode;
-        } else {
+        }
+        else {
             newNode.prev = tail;
             tail.next = newNode;
             tail = newNode;
         }
+
         ++length;
+    }
+
+    public Node removeLast() {
+        if(head == null) {
+            return null;
+        }
+        Node toRemove = head;
+        if(length == 1) {
+            empty();
+        }
+        else {
+            toRemove = tail;
+            tail = toRemove.prev;
+            tail.next = null;
+
+            toRemove.prev = null;
+            --length;
+        }
+
+        return toRemove;
+    }
+
+    public void empty() {
+        head = null;
+        tail = null;
+        length = 0;
     }
 
     public Node getHead() {
