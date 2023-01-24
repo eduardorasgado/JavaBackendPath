@@ -14,6 +14,18 @@ public class DoublyLinkedList {
         ++length;
     }
 
+    public void append(int value) {
+        Node newNode = new Node(value);
+        if(head == null){
+            head = tail = newNode;
+        } else {
+            newNode.prev = tail;
+            tail.next = newNode;
+            tail = newNode;
+        }
+        ++length;
+    }
+
     public Node getHead() {
         return head;
     }
@@ -32,6 +44,7 @@ public class DoublyLinkedList {
             System.out.print(temp.value + " ");
             temp = temp.next;
         }
+        System.out.println();
     }
 
     class Node {
