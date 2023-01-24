@@ -33,16 +33,16 @@ public class DoublyLinkedList {
         if(head == null) {
             return null;
         }
-        Node toRemove = head;
+        Node toRemove = tail;
         if(length == 1) {
             empty();
         }
         else {
-            toRemove = tail;
             tail = toRemove.prev;
-            tail.next = null;
 
+            tail.next = null;
             toRemove.prev = null;
+
             --length;
         }
 
