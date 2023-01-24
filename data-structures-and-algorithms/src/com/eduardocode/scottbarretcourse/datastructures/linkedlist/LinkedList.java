@@ -149,6 +149,24 @@ public class LinkedList {
         }
     }
 
+    public void reverse() {
+        if(head != null && length > 1) {
+            Node prev = null;
+            Node curr = head;
+            Node next;
+
+            while(curr != null) {
+                next = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = next;
+            }
+
+            tail = head;
+            head = prev;
+        }
+    }
+
     public void printList() {
         System.out.println("Linked list: ");
 

@@ -3,7 +3,34 @@ package com.eduardocode.scottbarretcourse.datastructures.linkedlist;
 public class LinkedListDemo {
 
     public static void main(String[] args) {
-        remove();
+        reverse();
+    }
+
+    public static void reverse() {
+        LinkedList linkedList = new LinkedList();
+
+        linkedList.append(5);
+        linkedList.append(4);
+        linkedList.append(8);
+        linkedList.append(18);
+        linkedList.append(1);
+        linkedList.reverse();
+        linkedList.printList();
+
+        LinkedList linkedList2 = new LinkedList();
+        linkedList2.append(5);
+        linkedList2.reverse();
+        linkedList2.printList();
+
+        LinkedList linkedList3 = new LinkedList();
+        linkedList3.append(5);
+        linkedList3.append(4);
+        linkedList3.reverse();
+        linkedList3.printList();
+
+        LinkedList linkedList4 = new LinkedList();
+        linkedList4.reverse();
+        linkedList4.printList();
     }
 
     public static void remove() {
