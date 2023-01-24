@@ -117,7 +117,7 @@ public class LinkedList {
         else {
             Node newNode = new Node(value);
             Node prevToNewNode = get(index - 1);
-            
+
             newNode.next = prevToNewNode.next;
             prevToNewNode.next = newNode;
 
@@ -125,6 +125,28 @@ public class LinkedList {
         }
 
         return true;
+    }
+
+    public Node remove(int index) {
+        if(index < 0 || index >= length) {
+            return null;
+        }
+        if(index == 0) {
+            return removeFirst();
+        }
+        else if(index == length - 1) {
+            return removeLast();
+        }
+        else {
+            Node prevToRemove = get(index - 1);
+            Node toRemove = prevToRemove.next;
+
+            prevToRemove.next = toRemove.next;
+            toRemove.next = null;
+            --length;
+
+            return toRemove;
+        }
     }
 
     public void printList() {
