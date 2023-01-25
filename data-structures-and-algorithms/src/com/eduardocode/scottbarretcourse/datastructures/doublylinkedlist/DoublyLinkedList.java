@@ -108,22 +108,10 @@ public class DoublyLinkedList {
     }
 
     public boolean set(int index, int value) {
-        if(index < 0 || index >= length) {
+        Node temp = get(index);
+
+        if(temp == null) {
             return false;
-        }
-
-        Node temp = head;
-        if(index < length / 2) {
-            for (int i = 0; i < index; i++) {
-                temp = temp.next;
-            }
-        }
-        else {
-            temp = tail;
-
-            for (int i = length - 1; i > index; i--) {
-                temp = temp.prev;
-            }
         }
 
         temp.value = value;
