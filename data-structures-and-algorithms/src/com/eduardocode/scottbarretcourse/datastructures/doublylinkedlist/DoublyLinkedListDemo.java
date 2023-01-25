@@ -17,10 +17,11 @@ public class DoublyLinkedListDemo {
         dll.append(20);
         dll.append(22);
         dll.append(11);
+        dll.append(9);
 
         System.out.println("[1] getting index 0: " + dll.get(0));
         System.out.println("[1] getting index 2: " + dll.get(2));
-        System.out.println("[1] getting index 2: " + dll.get(3));
+        System.out.println("[1] getting index 3: " + dll.get(3));
         System.out.println("[1] getting index 4: " + dll.get(4));
         System.out.println("[1] getting index 5: " + dll.get(5));
 

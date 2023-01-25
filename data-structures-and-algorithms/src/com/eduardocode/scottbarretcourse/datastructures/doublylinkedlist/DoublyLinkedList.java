@@ -89,18 +89,18 @@ public class DoublyLinkedList {
         }
 
         Node temp;
-        if(index > length / 2) {
-            temp = tail;
-
-            for (int i = length - 1; i > index; i--) {
-                temp = temp.prev;
+        if(index < length / 2) {
+            temp = head;
+            System.out.println("head");
+            for (int i = 0; i < index; i++) {
+                temp = temp.next;
             }
         }
         else {
-            temp = head;
-
-            for (int i = 0; i < index; i++) {
-                temp = temp.next;
+            temp = tail;
+            System.out.println("tail");
+            for (int i = length - 1; i > index; i--) {
+                temp = temp.prev;
             }
         }
 
