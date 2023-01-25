@@ -3,7 +3,28 @@ package com.eduardocode.scottbarretcourse.datastructures.doublylinkedlist;
 public class DoublyLinkedListDemo {
 
     public static void main(String[] args) {
-        prepend();
+        removeFirst();
+    }
+
+    private static void removeFirst() {
+        DoublyLinkedList dll = new DoublyLinkedList();
+
+        dll.append(1);
+        dll.append(5);
+        dll.append(0);
+        dll.append(7);
+        dll.printList();
+
+        System.out.println("removing first: " + dll.removeFirst().value);
+        dll.printList();
+        System.out.println("removing first: " + dll.removeFirst().value);
+        dll.printList();
+        System.out.println("removing first: " + dll.removeFirst().value);
+        dll.printList();
+        System.out.println("removing first: " + dll.removeFirst().value);
+        dll.printList();
+        System.out.println("removing first: " + dll.removeFirst());
+        dll.printList();
     }
 
     private static void prepend() {
