@@ -1,9 +1,39 @@
 package com.eduardocode.scottbarretcourse.datastructures.doublylinkedlist;
 
+import com.eduardocode.scottbarretcourse.datastructures.linkedlist.LinkedList;
+
 public class DoublyLinkedListDemo {
 
     public static void main(String[] args) {
-        removeFirst();
+        get();
+    }
+
+    public static void get() {
+        DoublyLinkedList dll = new DoublyLinkedList();
+
+        dll.append(5);
+        dll.append(4);
+        dll.append(8);
+        dll.append(20);
+        dll.append(22);
+        dll.append(11);
+
+        System.out.println("[1] getting index 0: " + dll.get(0));
+        System.out.println("[1] getting index 2: " + dll.get(2));
+        System.out.println("[1] getting index 2: " + dll.get(3));
+        System.out.println("[1] getting index 4: " + dll.get(4));
+        System.out.println("[1] getting index 5: " + dll.get(5));
+
+        System.out.println("[1] getting index 6: " + dll.get(6));
+        System.out.println("[1] getting index -1: " + dll.get(-1));
+
+        LinkedList dll2 = new LinkedList();
+        dll2.append(4);
+        System.out.println("[2] getting index 0: " + dll2.get(0));
+        System.out.println("[2] getting index 1: " + dll2.get(1));
+
+        LinkedList dll3 = new LinkedList();
+        System.out.println("[3] getting index 0: " + dll3.get(0));
     }
 
     private static void removeFirst() {

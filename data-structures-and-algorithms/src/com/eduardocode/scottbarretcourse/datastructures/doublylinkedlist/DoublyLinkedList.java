@@ -33,6 +33,7 @@ public class DoublyLinkedList {
         if(head == null) {
             return null;
         }
+
         Node toRemove = tail;
         if(length == 1) {
             empty();
@@ -51,6 +52,7 @@ public class DoublyLinkedList {
 
     public void prepend(int value) {
         Node newNode = new Node(value);
+
         if(head == null) {
             head = tail = newNode;
         } else {
@@ -58,6 +60,7 @@ public class DoublyLinkedList {
             newNode.next = head;
             head = newNode;
         }
+
         ++length;
     }
 
@@ -65,6 +68,7 @@ public class DoublyLinkedList {
         if(head == null) {
             return null;
         }
+
         Node toRemove = head;
         if(length == 1) {
             empty();
@@ -75,7 +79,32 @@ public class DoublyLinkedList {
 
             --length;
         }
+
         return toRemove;
+    }
+
+    public Node get(int index) {
+        if(index < 0 || index >= length) {
+            return null;
+        }
+
+        Node temp;
+        if(index > length / 2) {
+            temp = tail;
+
+            for (int i = length - 1; i > index; i--) {
+                temp = temp.prev;
+            }
+        }
+        else {
+            temp = head;
+
+            for (int i = 0; i < index; i++) {
+                temp = temp.next;
+            }
+        }
+
+        return  temp;
     }
 
     public void empty() {
