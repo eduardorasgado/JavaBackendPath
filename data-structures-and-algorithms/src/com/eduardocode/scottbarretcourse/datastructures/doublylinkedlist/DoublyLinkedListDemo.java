@@ -5,7 +5,38 @@ import com.eduardocode.scottbarretcourse.datastructures.linkedlist.LinkedList;
 public class DoublyLinkedListDemo {
 
     public static void main(String[] args) {
-        insert();
+        remove();
+    }
+
+    public static void remove() {
+        DoublyLinkedList dll = new DoublyLinkedList();
+
+        dll.append(5);
+        dll.append(4);
+        dll.append(8);
+        dll.append(18);
+        dll.append(1);
+        dll.printList();
+
+        System.out.println("[1] remove index 0: " + dll.remove(0).value);
+        dll.printList();
+        System.out.println("[1] remove index 3: " + dll.remove(3).value);
+        dll.printList();
+        System.out.println("[1] remove index 3: " + dll.remove(3));
+        dll.printList();
+
+        System.out.println("[1] remove index 1: " + dll.remove(1).value);
+        dll.printList();
+
+        System.out.println();
+
+        DoublyLinkedList dll2 = new DoublyLinkedList();
+        dll2.append(15);
+        System.out.println("[1] remove index 0: " + dll2.remove(0).value);
+        dll2.printList();
+
+        System.out.println("[1] remove index 0: " + dll2.remove(0));
+        dll2.printList();
     }
 
     public static void insert() {
