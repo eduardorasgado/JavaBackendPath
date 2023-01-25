@@ -5,7 +5,45 @@ import com.eduardocode.scottbarretcourse.datastructures.linkedlist.LinkedList;
 public class DoublyLinkedListDemo {
 
     public static void main(String[] args) {
-        get();
+        set();
+    }
+
+    public static void set() {
+        DoublyLinkedList dll = new DoublyLinkedList();
+
+        dll.append(5);
+        dll.append(4);
+        dll.append(8);
+        dll.append(18);
+        dll.append(1);
+        dll.printList();
+
+        System.out.println("[1] set value: 3 at index 2: " + dll.set(2, 3));
+        dll.printList();
+        System.out.println("[1] set value: 11 at index 0: " + dll.set(0, 11));
+        dll.printList();
+        System.out.println("[1] set value: 22 at index 4: " + dll.set(4, 22));
+        dll.printList();
+        System.out.println("[1] set value: 100 at index 8: " + dll.set(8, 100));
+        dll.printList();
+
+        System.out.println();
+
+        LinkedList dll2 = new LinkedList();
+        dll2.append(4);
+        dll2.printList();
+
+        System.out.println("[2] set value: 1 at index 0: " + dll2.set(0, 1));
+        dll2.printList();
+        System.out.println("[2] set value: 10 at index 1: " + dll2.set(1, 10));
+        dll2.printList();
+
+        System.out.println();
+
+        LinkedList linkedList3 = new LinkedList();
+        linkedList3.printList();
+        System.out.println("[3] set value: 99 at index 0: " + linkedList3.set(0, 99));
+        linkedList3.printList();
     }
 
     public static void get() {
