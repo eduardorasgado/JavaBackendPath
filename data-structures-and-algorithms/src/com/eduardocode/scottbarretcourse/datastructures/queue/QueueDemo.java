@@ -20,5 +20,10 @@ public class QueueDemo {
         queue.print();
         System.out.println("dequeue: " + queue.dequeue());
         queue.print();
+
+        queue.enque(15);
+        queue.print();
+        queue.enque(14);
+        queue.print();
     }
 }
