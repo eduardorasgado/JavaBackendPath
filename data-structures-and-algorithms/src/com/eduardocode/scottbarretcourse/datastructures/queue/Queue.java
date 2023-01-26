@@ -34,7 +34,8 @@ public class Queue {
         if(length == 1) {
             first = null;
             last = null;
-        } else {
+        }
+        else {
             first = first.next;
             temp.next = null;
         }
