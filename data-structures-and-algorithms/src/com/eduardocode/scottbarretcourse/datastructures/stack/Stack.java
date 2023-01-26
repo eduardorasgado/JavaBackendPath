@@ -24,6 +24,7 @@ public class Stack {
 
         Node toPop = top;
         top = toPop.next;
+        toPop.next = null;
         --height;
 
         return toPop;
@@ -59,6 +60,7 @@ public class Stack {
         public String toString() {
             return "Node{" +
                     "value=" + value +
+                    "next: " + next +
                     '}';
         }
     }
