@@ -5,6 +5,13 @@ public class Queue {
     private Node last;
     private int length;
 
+    public Queue() {}
+
+    public Queue(int value) {
+        first = last = new Node(value);
+        ++length;
+    }
+
     public void enque(int value) {
         Node newNode = new Node(value);
 
