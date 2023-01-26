@@ -52,6 +52,17 @@ public class Queue {
         System.out.println();
     }
 
+    public Node getFirst() {
+        return first;
+    }
+
+    public Node getLast() {
+        return last;
+    }
+
+    public int getLength() {
+        return length;
+    }
 
     private class Node {
         public int value;
