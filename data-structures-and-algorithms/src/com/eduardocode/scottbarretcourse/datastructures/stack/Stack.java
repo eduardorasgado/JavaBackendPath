@@ -48,9 +48,9 @@ public class Stack {
         return height;
     }
 
-    class Node {
-        int value;
-        Node next;
+    public class Node {
+        public int value;
+        public Node next;
 
         public Node(int value) {
             this.value = value;
