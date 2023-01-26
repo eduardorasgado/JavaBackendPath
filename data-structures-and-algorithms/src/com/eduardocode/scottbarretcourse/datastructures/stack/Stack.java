@@ -17,6 +17,17 @@ public class Stack {
         top = newNode;
         ++height;
     }
+    public Node pop() {
+        if(height == 0) {
+            return null;
+        }
+
+        Node toPop = top;
+        top = toPop.next;
+        --height;
+
+        return toPop;
+    }
 
     public void printStack() {
         System.out.println("stack: ");
