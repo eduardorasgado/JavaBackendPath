@@ -12,7 +12,7 @@ public class Queue {
         ++length;
     }
 
-    public void enque(int value) {
+    public void enqueue(int value) {
         Node newNode = new Node(value);
 
         if(length == 0) {

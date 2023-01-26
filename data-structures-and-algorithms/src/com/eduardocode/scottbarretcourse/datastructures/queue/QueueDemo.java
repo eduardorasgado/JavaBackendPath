@@ -5,25 +5,25 @@ public class QueueDemo {
     public static void main(String[] args) {
         Queue queue = new Queue();
 
-        queue.enque(6);
+        queue.enqueue(6);
         queue.print();
-        queue.enque(5);
+        queue.enqueue(5);
         queue.print();
-        queue.enque(4);
-        queue.print();
-
-        System.out.println("dequeue: " + queue.dequeue());
-        queue.print();
-        System.out.println("dequeue: " + queue.dequeue());
-        queue.print();
-        System.out.println("dequeue: " + queue.dequeue());
-        queue.print();
-        System.out.println("dequeue: " + queue.dequeue());
+        queue.enqueue(4);
         queue.print();
 
-        queue.enque(15);
+        System.out.println("dequeue: " + queue.dequeue());
         queue.print();
-        queue.enque(14);
+        System.out.println("dequeue: " + queue.dequeue());
+        queue.print();
+        System.out.println("dequeue: " + queue.dequeue());
+        queue.print();
+        System.out.println("dequeue: " + queue.dequeue());
+        queue.print();
+
+        queue.enqueue(15);
+        queue.print();
+        queue.enqueue(14);
         queue.print();
     }
 }
