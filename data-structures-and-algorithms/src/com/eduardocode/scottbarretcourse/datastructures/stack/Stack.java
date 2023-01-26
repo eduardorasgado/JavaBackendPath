@@ -9,7 +9,17 @@ public class Stack {
         ++height;
     }
 
+    public Stack() {}
+
+    public void push(int value) {
+        Node newNode = new Node(value);
+        newNode.next = top;
+        top = newNode;
+        ++height;
+    }
+
     public void printStack() {
+        System.out.println("stack: ");
         Node temp = top;
         while (temp != null) {
             System.out.print(temp.value + " ");
