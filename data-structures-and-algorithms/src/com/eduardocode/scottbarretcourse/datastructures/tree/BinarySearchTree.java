@@ -9,11 +9,12 @@ public class BinarySearchTree {
         root = new Node(value);
     }
 
-    public void insert(int value) {
+    public boolean insert(int value) {
         Node newNode = new Node(value);
 
         if(root == null) {
             root = newNode;
+            return true;
         }
         else {
             Node temp = root;
@@ -25,7 +26,7 @@ public class BinarySearchTree {
                     }
                     else {
                         temp.setLeft(newNode);
-                        break;
+                        return true;
                     }
                 }
                 else if (value > temp.value) {
@@ -34,11 +35,11 @@ public class BinarySearchTree {
                     }
                     else {
                         temp.setRight(newNode);
-                        break;
+                        return true;
                     }
                 }
                 else {
-                    break;
+                    return false;
                 }
             }
         }
