@@ -27,6 +27,7 @@ public class BinarySearchTree {
                         temp.setLeft(newNode);
                         return true;
                     }
+
                     temp = temp.left;
                 }
                 else {
@@ -34,10 +35,36 @@ public class BinarySearchTree {
                         temp.setRight(newNode);
                         return true;
                     }
+
                     temp = temp.right;
                 }
             }
         }
+    }
+
+    public boolean contains(int value) {
+        Node temp = root;
+
+        while (true) {
+            if(temp.value == value) return true;
+
+            if(value < temp.value) {
+                if(temp.left == null) {
+                    break;
+                }
+
+                temp = temp.left;
+            }
+            else {
+                if(temp.right == null) {
+                    break;
+                }
+
+                temp = temp.right;
+            }
+        }
+
+        return false;
     }
 
     public Node getRoot() {
