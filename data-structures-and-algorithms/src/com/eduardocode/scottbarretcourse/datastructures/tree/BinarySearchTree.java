@@ -20,26 +20,21 @@ public class BinarySearchTree {
             Node temp = root;
 
             while (true) {
+                if(value == temp.value) return false;
+
                 if (value < temp.value) {
-                    if(temp.left != null) {
-                        temp = temp.left;
-                    }
-                    else {
+                    if(temp.left == null) {
                         temp.setLeft(newNode);
                         return true;
                     }
+                    temp = temp.left;
                 }
-                else if (value > temp.value) {
-                    if(temp.right != null) {
-                        temp = temp.right;
-                    }
-                    else {
+                else {
+                    if(temp.right == null) {
                         temp.setRight(newNode);
                         return true;
                     }
-                }
-                else {
-                    return false;
+                    temp = temp.right;
                 }
             }
         }
