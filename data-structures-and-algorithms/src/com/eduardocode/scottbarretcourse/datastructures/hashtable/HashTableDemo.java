@@ -6,6 +6,20 @@ public class HashTableDemo {
         set();
     }
 
+    private static void setStringHashTable() {
+        HashTable<String> hts = new HashTable<>();
+
+        hts.set("hello", "happiness");
+        hts.set("hallo", "sadness");
+        hts.set("my", "gaming");
+        hts.set("thy", "delivering");
+        hts.set("m", "java is great");
+        hts.set("class", "this is a value");
+        hts.set("java", "another value");
+
+        hts.print();
+    }
+
     private static void set() {
         ht.set("nails", 1000);
         ht.set("nuts", 1999);
