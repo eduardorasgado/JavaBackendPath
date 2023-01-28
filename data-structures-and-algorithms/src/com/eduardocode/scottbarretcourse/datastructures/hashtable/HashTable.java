@@ -2,6 +2,8 @@ package com.eduardocode.scottbarretcourse.datastructures.hashtable;
 
 public class HashTable<T> {
 
+    // prime number to size attribute since it helps to reduce
+    // the chance to get a collision at set method.
     private int size = 7;
     private final Node<T>[] dataMap;
 
@@ -9,6 +11,13 @@ public class HashTable<T> {
         dataMap = new Node[size];
     }
 
+    /*
+    * multiplying every key chair ascii value by 23
+    * and then dividing by size. Both are prime numbers
+    * and this is not coincidence, prime numbers will help
+    * to reduce collisions on assigning every key value pair
+    * to specific slot in the Node array.
+     */
     private int hash(String key) {
         int hash = 0;
         char[] keyChars = key.toCharArray();
@@ -20,17 +29,26 @@ public class HashTable<T> {
         return hash;
     }
 
+    /*
+    * I am using chaining method to resolve key collisions
+    * by storing the key value pair in a linked list for every
+    * space in the Node array
+     */
     public void set(String key, T value) {
         int index = hash(key);
 
         Node<T> newNode = new Node<>(key, value);
-        Node<T> currNode = dataMap[index];
 
-        if(currNode != null) {
-            currNode.next = newNode;
+        if(dataMap[index] == null) {
+            dataMap[index] = newNode;
         }
         else {
-            dataMap[index] = newNode;
+            Node<T> temp = dataMap[index];
+
+            while(temp.next != null) {
+                temp = temp.next;
+            }
+            temp.next = newNode;
         }
     }
 

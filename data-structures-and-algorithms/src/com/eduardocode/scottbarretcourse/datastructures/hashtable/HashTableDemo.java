@@ -28,6 +28,13 @@ public class HashTableDemo {
         ht.set("iron", 1111);
         ht.set("eduardo", 1200);
         ht.set("hat", 0);
+        ht.set("hello", 1);
+        ht.set("hallo", 2);
+        ht.set("my", 3);
+        ht.set("thy", 4);
+        ht.set("m", 5);
+        ht.set("class", 6);
+        ht.set("java", 7);
 
         ht.print();
     }
