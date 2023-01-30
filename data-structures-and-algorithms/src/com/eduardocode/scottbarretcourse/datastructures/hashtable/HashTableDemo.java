@@ -17,20 +17,6 @@ public class HashTableDemo {
         System.out.println(ht.get("void"));
     }
 
-    private static void setStringHashTable() {
-        System.out.println("---Storing objects---");
-
-        hts.set("hello", "happiness");
-        hts.set("hallo", "sadness");
-        hts.set("my", "gaming");
-        hts.set("thy", "delivering");
-        hts.set("m", "java is great");
-        hts.set("class", "this is a value");
-        hts.set("java", "another value");
-
-        hts.print();
-    }
-
     private static void set() {
         ht.set("nails", 1000);
         ht.set("nuts", 1999);
@@ -43,11 +29,27 @@ public class HashTableDemo {
         ht.set("hallo", 2);
         ht.set("my", 3);
         ht.set("thy", 4);
+        ht.set("thy", 3);
         ht.set("m", 5);
         ht.set("class", 6);
         ht.set("java", 7);
+        ht.set("nuts", 7654);
 
         ht.print();
+    }
+
+    private static void setStringHashTable() {
+        System.out.println("---Storing objects---");
+
+        hts.set("hello", "happiness");
+        hts.set("hallo", "sadness");
+        hts.set("my", "gaming");
+        hts.set("thy", "delivering");
+        hts.set("m", "java is great");
+        hts.set("class", "this is a value");
+        hts.set("java", "another value");
+
+        hts.print();
     }
 
     private static void hashMethod() {

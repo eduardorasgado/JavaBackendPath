@@ -44,11 +44,24 @@ public class HashTable<T> {
         }
         else {
             Node<T> temp = dataMap[index];
+            boolean nodeExists = false;
 
-            while(temp.next != null) {
+            while(true) {
+                if(temp.key.equals(key)) {
+                    temp.value = value;
+                    nodeExists = true;
+                }
+
+                if(temp.next == null || nodeExists) {
+                    break;
+                }
+
                 temp = temp.next;
             }
-            temp.next = newNode;
+
+            if(!nodeExists) {
+                temp.next = newNode;
+            }
         }
     }
 
