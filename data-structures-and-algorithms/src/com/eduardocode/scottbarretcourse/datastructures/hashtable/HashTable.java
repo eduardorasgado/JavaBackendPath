@@ -52,6 +52,25 @@ public class HashTable<T> {
         }
     }
 
+    public T get(String key) {
+        int index = hash(key);
+
+        T toReturn = null;
+        if(dataMap[index] != null) {
+            Node<T> temp = dataMap[index];
+
+            while (temp != null) {
+                if(temp.key.equals(key)) {
+                    toReturn = temp.value;
+                    break;
+                }
+                temp = temp.next;
+            }
+        }
+        return toReturn;
+    }
+
+
     public void print() {
         System.out.println("Hash table: ");
 

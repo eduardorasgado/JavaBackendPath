@@ -2,12 +2,23 @@ package com.eduardocode.scottbarretcourse.datastructures.hashtable;
 
 public class HashTableDemo {
     private static HashTable<Integer> ht = new HashTable<>();
+    private static HashTable<String> hts = new HashTable<>();
+
     public static void main(String[] args) {
         set();
+        get();
+    }
+
+    private static void get() {
+        System.out.println("---Getting values---");
+        System.out.println(ht.get("thy"));
+        System.out.println(ht.get("java"));
+        System.out.println(ht.get("nuts"));
+        System.out.println(ht.get("void"));
     }
 
     private static void setStringHashTable() {
-        HashTable<String> hts = new HashTable<>();
+        System.out.println("---Storing objects---");
 
         hts.set("hello", "happiness");
         hts.set("hallo", "sadness");
