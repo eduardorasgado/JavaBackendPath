@@ -69,17 +69,17 @@ public class HashTable<T> {
         int index = hash(key);
 
         T toReturn = null;
-        if(dataMap[index] != null) {
-            Node<T> temp = dataMap[index];
+        Node<T> temp = dataMap[index];
 
-            while (temp != null) {
-                if(temp.key.equals(key)) {
-                    toReturn = temp.value;
-                    break;
-                }
-                temp = temp.next;
+        while (temp != null) {
+            if(temp.key.equals(key)) {
+                toReturn = temp.value;
+                break;
             }
+
+            temp = temp.next;
         }
+
         return toReturn;
     }
 
