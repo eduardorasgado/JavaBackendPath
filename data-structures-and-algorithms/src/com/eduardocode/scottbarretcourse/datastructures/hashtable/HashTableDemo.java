@@ -6,11 +6,16 @@ public class HashTableDemo {
 
     public static void main(String[] args) {
         set();
-        get();
+        getKeys();
+    }
+
+    private static void getKeys() {
+        System.out.println("------ Getting keys with keys()");
+        System.out.println(ht.keys());
     }
 
     private static void get() {
-        System.out.println("---Getting values---");
+        System.out.println("---Getting values with get(key)---");
         System.out.println(ht.get("thy"));
         System.out.println(ht.get("java"));
         System.out.println(ht.get("nuts"));

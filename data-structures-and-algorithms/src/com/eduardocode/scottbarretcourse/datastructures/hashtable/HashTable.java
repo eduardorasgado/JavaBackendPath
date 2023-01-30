@@ -1,5 +1,8 @@
 package com.eduardocode.scottbarretcourse.datastructures.hashtable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HashTable<T> {
 
     // prime number to size attribute since it helps to reduce
@@ -83,6 +86,18 @@ public class HashTable<T> {
         return toReturn;
     }
 
+    public ArrayList<String> keys() {
+        ArrayList<String> allKeys = new ArrayList<>();
+
+        for (Node<T> node : dataMap) {
+            while(node != null) {
+                allKeys.add(node.key);
+                node = node.next;
+            }
+        }
+
+        return allKeys;
+    }
 
     public void print() {
         System.out.println("Hash table: ");
