@@ -6,6 +6,12 @@ public class GraphDemo {
         constructor();
         addEdge();
         removeEdge();
+        removeVertex();
+    }
+
+    private static void removeVertex() {
+        System.out.println("Remove vertex: " + graph.removeVertex("A"));
+        graph.print();
     }
 
     private static void removeEdge() {
@@ -21,6 +27,7 @@ public class GraphDemo {
         System.out.println("Adding edge A and B: " + graph.addEdge("A", "B"));
         System.out.println("Adding edge A and C: " + graph.addEdge("A", "C"));
         System.out.println("Adding edge A and C: " + graph.addEdge("A", "C"));
+        System.out.println("Adding edge A and C: " + graph.addEdge("B", "D"));
         graph.print();
     }
 
@@ -28,6 +35,7 @@ public class GraphDemo {
         System.out.println("Adding vertex A: " + graph.addVertex("A"));
         System.out.println("Adding vertex B: " + graph.addVertex("B"));
         System.out.println("Adding vertex C: " + graph.addVertex("C"));
+        System.out.println("Adding vertex D: " + graph.addVertex("D"));
         graph.print();
     }
 }

@@ -43,6 +43,20 @@ public class Graph {
         return false;
     }
 
+    public boolean removeVertex(String vertex) {
+        if(adjacencyList.containsKey(vertex)) {
+            ArrayList<String> edges = adjacencyList.get(vertex);
+
+            for(String edge : edges) {
+                adjacencyList.get(edge).remove(vertex);
+            }
+
+            adjacencyList.remove(vertex);
+        }
+
+        return false;
+    }
+
     private boolean containsVertexPair(String vertex1, String vertex2) {
         return adjacencyList.containsKey(vertex1) && adjacencyList.containsKey(vertex2);
     }
