@@ -12,49 +12,48 @@ public class Graph {
     }
 
     public boolean addVertex(String vertex) {
-        if(!adjacencyList.containsKey(vertex)) {
-            adjacencyList.put(vertex, new ArrayList<>());
-
-            return true;
+        if(adjacencyList.containsKey(vertex)) {
+            return false;
         }
 
-        return false;
+        adjacencyList.put(vertex, new ArrayList<>());
+        return true;
     }
 
     public boolean addEdge(String vertex1, String vertex2) {
-        if(containsVertexPair(vertex1, vertex2) && !containsEdge(vertex1, vertex2)) {
-            adjacencyList.get(vertex1).add(vertex2);
-            adjacencyList.get(vertex2).add(vertex1);
-
-            return true;
+        if(!containsVertexPair(vertex1, vertex2) || containsEdge(vertex1, vertex2)) {
+            return false;
         }
+        adjacencyList.get(vertex1).add(vertex2);
+        adjacencyList.get(vertex2).add(vertex1);
 
-        return false;
+        return true;
     }
 
     public boolean removeEdge(String vertex1, String vertex2) {
-        if(containsVertexPair(vertex1, vertex2) && containsEdge(vertex1, vertex2)) {
-            adjacencyList.get(vertex1).remove(vertex2);
-            adjacencyList.get(vertex2).remove(vertex1);
-
-            return true;
+        if(!containsVertexPair(vertex1, vertex2) || !containsEdge(vertex1, vertex2)) {
+            return false;
         }
 
-        return false;
+        adjacencyList.get(vertex1).remove(vertex2);
+        adjacencyList.get(vertex2).remove(vertex1);
+
+        return true;
     }
 
     public boolean removeVertex(String vertex) {
-        if(adjacencyList.containsKey(vertex)) {
-            ArrayList<String> edges = adjacencyList.get(vertex);
-
-            for(String edge : edges) {
-                adjacencyList.get(edge).remove(vertex);
-            }
-
-            adjacencyList.remove(vertex);
+        if(!adjacencyList.containsKey(vertex)) {
+            return false;
         }
 
-        return false;
+        ArrayList<String> edges = adjacencyList.get(vertex);
+
+        for(String edge : edges) {
+            adjacencyList.get(edge).remove(vertex);
+        }
+
+        adjacencyList.remove(vertex);
+        return true;
     }
 
     private boolean containsVertexPair(String vertex1, String vertex2) {
