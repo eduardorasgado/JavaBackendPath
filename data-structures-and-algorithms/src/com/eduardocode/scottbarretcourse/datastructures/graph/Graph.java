@@ -5,15 +5,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Graph {
-    private HashMap<String, ArrayList<String>> adjancencyList;
+    private final HashMap<String, ArrayList<String>> adjacencyList;
 
     public Graph() {
-        adjancencyList = new HashMap<>();
+        adjacencyList = new HashMap<>();
     }
 
     public boolean addVertex(String vertex) {
-        if(!adjancencyList.containsKey(vertex)) {
-            adjancencyList.put(vertex, new ArrayList<>());
+        if(!adjacencyList.containsKey(vertex)) {
+            adjacencyList.put(vertex, new ArrayList<>());
 
             return true;
         }
@@ -22,18 +22,39 @@ public class Graph {
     }
 
     public boolean addEdge(String vertex1, String vertex2) {
-        if(adjancencyList.containsKey(vertex1) && adjancencyList.containsKey(vertex2)) {
-            adjancencyList.get(vertex1).add(vertex2);
-            adjancencyList.get(vertex2).add(vertex1);
+        if(containsVertexPair(vertex1, vertex2) && !containsEdge(vertex1, vertex2)) {
+            adjacencyList.get(vertex1).add(vertex2);
+            adjacencyList.get(vertex2).add(vertex1);
 
             return true;
         }
+
         return false;
+    }
+
+    public boolean removeEdge(String vertex1, String vertex2) {
+        if(containsVertexPair(vertex1, vertex2) && containsEdge(vertex1, vertex2)) {
+            adjacencyList.get(vertex1).remove(vertex2);
+            adjacencyList.get(vertex2).remove(vertex1);
+
+            return true;
+        }
+
+        return false;
+    }
+
+    private boolean containsVertexPair(String vertex1, String vertex2) {
+        return adjacencyList.containsKey(vertex1) && adjacencyList.containsKey(vertex2);
+    }
+
+    private boolean containsEdge(String vertex1, String vertex2) {
+        return adjacencyList.get(vertex1).contains(vertex2) && adjacencyList.get(vertex2).contains(vertex1);
     }
 
     public void print() {
         System.out.println("{");
-        for (Map.Entry<String, ArrayList<String>> vertex : adjancencyList.entrySet()) {
+
+        for (Map.Entry<String, ArrayList<String>> vertex : adjacencyList.entrySet()) {
             System.out.println(vertex.getKey() + ": " + vertex.getValue());
         }
 

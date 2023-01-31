@@ -5,18 +5,29 @@ public class GraphDemo {
     public static void main(String[] args) {
         constructor();
         addEdge();
+        removeEdge();
+    }
+
+    private static void removeEdge() {
+        System.out.println("Adding edge B and C: " + graph.addEdge("B", "C"));
+        graph.print();
+        System.out.println("Removing edge B and C: " + graph.removeEdge("C", "B"));
+        graph.print();
+        System.out.println("Removing edge B and C: " + graph.removeEdge("C", "B"));
+        graph.print();
     }
 
     private static void addEdge() {
-        System.out.println(graph.addEdge("A", "B"));
-        System.out.println(graph.addEdge("A", "C"));
+        System.out.println("Adding edge A and B: " + graph.addEdge("A", "B"));
+        System.out.println("Adding edge A and C: " + graph.addEdge("A", "C"));
+        System.out.println("Adding edge A and C: " + graph.addEdge("A", "C"));
         graph.print();
     }
 
     private static void constructor() {
-        graph.addVertex("A");
-        graph.addVertex("B");
-        graph.addVertex("C");
+        System.out.println("Adding vertex A: " + graph.addVertex("A"));
+        System.out.println("Adding vertex B: " + graph.addVertex("B"));
+        System.out.println("Adding vertex C: " + graph.addVertex("C"));
         graph.print();
     }
 }
