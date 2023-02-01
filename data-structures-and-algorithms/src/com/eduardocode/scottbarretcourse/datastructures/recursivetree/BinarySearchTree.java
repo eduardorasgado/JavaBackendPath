@@ -8,7 +8,17 @@ public class BinarySearchTree {
     }
 
     private boolean contains(Node currentNode, int value) {
-        return true;
+        if(currentNode == null) return false;
+
+        if(currentNode.value == value) {
+            return true;
+        }
+        else if(value < currentNode.value) {
+            return contains(currentNode.left, value);
+        }
+        else {
+            return contains(currentNode.right, value);
+        }
     }
 
     public boolean insert(int value) {
