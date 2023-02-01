@@ -6,9 +6,8 @@ public class RecursiveBinarySearchTreeDemo {
 
     public static void main(String[] args) {
         constructor();
-        tree.contains(5);
-        //insert();
-        //contains();
+        insert();
+        contains();
     }
 
     private static void contains() {

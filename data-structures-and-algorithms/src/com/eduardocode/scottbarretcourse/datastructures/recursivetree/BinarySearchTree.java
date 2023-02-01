@@ -3,6 +3,39 @@ package com.eduardocode.scottbarretcourse.datastructures.recursivetree;
 public class BinarySearchTree {
     private Node root;
 
+    public boolean insert(int value) {
+        if(root == null) {
+            root = new Node(value);
+            return true;
+        }
+
+        return insert(root, value);
+    }
+
+    private boolean insert(Node currentNode, int value) {
+        if(value == currentNode.value) {
+            return false;
+        }
+        else if(value < currentNode.value) {
+            if(currentNode.left == null) {
+                currentNode.setLeft(new Node(value));
+
+                return true;
+            }
+
+            return insert(currentNode.left, value);
+        }
+        else {
+            if(currentNode.right == null) {
+                currentNode.setRight(new Node(value));
+
+                return true;
+            }
+
+            return insert(currentNode.right, value);
+        }
+    }
+
     public boolean contains(int value) {
         return contains(root, value);
     }
@@ -19,10 +52,6 @@ public class BinarySearchTree {
         else {
             return contains(currentNode.right, value);
         }
-    }
-
-    public boolean insert(int value) {
-        return true;
     }
 
     public Node getRoot() {
