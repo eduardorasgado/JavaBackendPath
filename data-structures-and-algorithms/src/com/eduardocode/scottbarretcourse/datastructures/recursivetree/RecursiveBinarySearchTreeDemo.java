@@ -31,7 +31,7 @@ public class RecursiveBinarySearchTreeDemo {
         System.out.println("inserting 81: " + tree.insert(81));
         System.out.println("inserting 81: " + tree.insert(81));
         System.out.println("inserting 3: "  + tree.insert(2));
-        System.out.println("inserting 77: "  + tree.insert(77));
+        System.out.println("inserting 77: " + tree.insert(77));
 
         System.out.println(tree.getRoot());
     }

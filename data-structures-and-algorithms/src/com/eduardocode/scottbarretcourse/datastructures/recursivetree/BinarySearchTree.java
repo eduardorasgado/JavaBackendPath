@@ -12,6 +12,14 @@ public class BinarySearchTree {
         return insert(root, value);
     }
 
+    public void insertV2(int value) {
+        if(root == null) {
+            root = new Node(value);
+        } else {
+            insertV2(root, value);
+        }
+    }
+
     private boolean insert(Node currentNode, int value) {
         if(value == currentNode.value) {
             return false;
@@ -32,6 +40,19 @@ public class BinarySearchTree {
         }
 
         return true;
+    }
+
+    private Node insertV2(Node currentNode, int value) {
+        if(currentNode == null) return new Node(value);
+
+        if(value < currentNode.value) {
+            currentNode.setLeft(insertV2(currentNode.left, value));
+        }
+        else if(value > currentNode.value) {
+            currentNode.setRight(insertV2(currentNode.right, value));
+        }
+
+        return currentNode;
     }
 
     public boolean contains(int value) {
