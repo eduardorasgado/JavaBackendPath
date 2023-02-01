@@ -16,24 +16,22 @@ public class BinarySearchTree {
         if(value == currentNode.value) {
             return false;
         }
-        else if(value < currentNode.value) {
-            if(currentNode.left == null) {
-                currentNode.setLeft(new Node(value));
 
-                return true;
-            }
-
+        if(value < currentNode.value && currentNode.left != null) {
             return insert(currentNode.left, value);
         }
-        else {
-            if(currentNode.right == null) {
-                currentNode.setRight(new Node(value));
-
-                return true;
-            }
-
+        if(value > currentNode.value && currentNode.right != null) {
             return insert(currentNode.right, value);
         }
+
+        if(value < currentNode.value) {
+            currentNode.setLeft(new Node(value));
+        }
+        else {
+            currentNode.setRight(new Node(value));
+        }
+
+        return true;
     }
 
     public boolean contains(int value) {
