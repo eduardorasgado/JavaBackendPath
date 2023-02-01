@@ -46,9 +46,7 @@ public class Graph {
             return false;
         }
 
-        ArrayList<String> edges = adjacencyList.get(vertex);
-
-        for(String edge : edges) {
+        for(String edge : adjacencyList.get(vertex)) {
             adjacencyList.get(edge).remove(vertex);
         }
 
