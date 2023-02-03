@@ -56,9 +56,7 @@ public class BinarySearchTree {
     }
 
     public void deleteNode(int value) {
-        if(root != null) {
-            deleteNode(root, value);
-        }
+        deleteNode(root, value);
     }
 
     private Node deleteNode(Node currentNode, int value) {
@@ -81,15 +79,22 @@ public class BinarySearchTree {
                 currentNode = currentNode.left;
             }
             else {
-                currentNode = minimumValue(currentNode.right, currentNode.value);
+                int subTreeMin = minimumValue(currentNode.right);
+
+                currentNode.value = subTreeMin;
+                currentNode.setRight(deleteNode(currentNode.right, subTreeMin));
             }
         }
 
         return currentNode;
     }
 
-    private Node minimumValue(Node currentNode, int value) {
-        return null;
+    private int minimumValue(Node currentNode) {
+        while(currentNode.left != null) {
+            currentNode = currentNode.left;
+        }
+
+        return currentNode.value;
     }
 
     public boolean contains(int value) {
@@ -140,12 +145,12 @@ public class BinarySearchTree {
         }
 
         public void setLeft(Node newNode) {
-            newNode.setDepth(getDepth());
+            if(newNode != null) newNode.setDepth(getDepth());
             left = newNode;
         }
 
         public void setRight(Node newNode) {
-            newNode.setDepth(getDepth());
+            if(newNode != null) newNode.setDepth(getDepth());
             right = newNode;
         }
     }

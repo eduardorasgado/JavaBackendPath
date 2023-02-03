@@ -8,6 +8,13 @@ public class RecursiveBinarySearchTreeDemo {
         constructor();
         insert();
         contains();
+        delete();
+    }
+
+    private static void delete() {
+        System.out.println("-----------deleting node in tree--------");
+        tree.deleteNode(30);
+        System.out.println(tree.getRoot());
     }
 
     private static void contains() {
@@ -32,6 +39,10 @@ public class RecursiveBinarySearchTreeDemo {
         System.out.println("inserting 81: " + tree.insert(81));
         System.out.println("inserting 3: "  + tree.insert(2));
         System.out.println("inserting 77: " + tree.insert(77));
+        System.out.println("inserting 32: " + tree.insert(32));
+        System.out.println("inserting 33: " + tree.insert(33));
+        System.out.println("inserting 40: " + tree.insert(40));
+        System.out.println("inserting 45: " + tree.insert(45));
 
         System.out.println(tree.getRoot());
     }
