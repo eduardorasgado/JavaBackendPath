@@ -1,24 +1,23 @@
 package com.eduardocode.scottbarretcourse.algorithms.sorting.selectionsort;
 
-import com.eduardocode.scottbarretcourse.algorithms.sorting.ArrayAlgorithm;
 
-public class SelectionSortDemo extends ArrayAlgorithm {
+import com.eduardocode.scottbarretcourse.algorithms.sorting.ArraySortingAlgorithm;
+
+public class SelectionSort extends ArraySortingAlgorithm {
 
     public static void main(String[] args) {
-        int[] arr = {4, 2, 6, 5, 1, 3};
+        SelectionSort app = new SelectionSort();
 
-        printArr(arr);
-        selectionSort(arr);
-        printArr(arr);
+        int[] arr = {4, 2, 6, 5, 1, 3};
+        app.runTest(arr);
 
         int[] arr2 = {4};
+        app.runTest(arr2);
 
-        printArr(arr2);
-        selectionSort(arr2);
-        printArr(arr2);
     }
 
-    private static void selectionSort(int[] arr) {
+    @Override
+    protected void sort(int[] arr) {
         int minValIndex = 0;
 
         for (int i = 0; i < arr.length; i++) {

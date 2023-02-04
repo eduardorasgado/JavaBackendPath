@@ -1,8 +1,8 @@
 package com.eduardocode.scottbarretcourse.algorithms.sorting;
 
-public class ArrayAlgorithm {
+public class ArrayPrinter {
 
-    protected static void printArr(int[] arr) {
+    protected void printArr(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             System.out.print( arr[i] + " ");
         }
