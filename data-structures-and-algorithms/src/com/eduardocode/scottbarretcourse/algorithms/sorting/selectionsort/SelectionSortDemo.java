@@ -19,24 +19,22 @@ public class SelectionSortDemo extends ArrayAlgorithm {
     }
 
     private static void selectionSort(int[] arr) {
-        if(arr.length > 1) {
-            int minValIndex = 0;
+        int minValIndex = 0;
 
-            for (int i = 0; i < arr.length; i++) {
-                minValIndex = i;
+        for (int i = 0; i < arr.length; i++) {
+            minValIndex = i;
 
-                for (int j = minValIndex + 1; j < arr.length; j++) {
-                    if(arr[j] < arr[minValIndex]) {
-                        minValIndex = j;
-                    }
+            for (int j = minValIndex + 1; j < arr.length; j++) {
+                if(arr[j] < arr[minValIndex]) {
+                    minValIndex = j;
                 }
+            }
 
-                if(minValIndex != i) {
-                    int temp = arr[i];
+            if(minValIndex != i) {
+                int temp = arr[i];
 
-                    arr[i] = arr[minValIndex];
-                    arr[minValIndex] = temp;
-                }
+                arr[i] = arr[minValIndex];
+                arr[minValIndex] = temp;
             }
         }
     }
