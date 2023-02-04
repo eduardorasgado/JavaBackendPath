@@ -1,9 +1,12 @@
 package com.eduardocode.scottbarretcourse.algorithms.sorting.bubblesort;
 
-public class BubbleSortDemo {
+import com.eduardocode.scottbarretcourse.algorithms.sorting.ArrayAlgorithm;
+
+public class BubbleSortDemo extends ArrayAlgorithm {
 
     public static void main(String[] args) {
         int[] arr = {4, 2, 6, 5, 1, 3};
+
         printArr(arr);
         bubbleSort(arr);
         printArr(arr);
@@ -19,12 +22,5 @@ public class BubbleSortDemo {
                 }
             }
         }
-    }
-
-    private static void printArr(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            System.out.print( arr[i] + " ");
-        }
-        System.out.println();
     }
 }
