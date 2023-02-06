@@ -10,6 +10,7 @@ public abstract class DivConqSortingAlgorithm {
     protected void runTest(int[] arr) {
         arrayPrinter.printArr(arr);
         arrayPrinter.printArr(sort(arr));
+        System.out.println();
     }
 
     protected abstract int[] sort(int[] arr);

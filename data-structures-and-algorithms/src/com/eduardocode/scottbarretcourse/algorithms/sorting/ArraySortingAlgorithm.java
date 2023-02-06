@@ -11,6 +11,7 @@ public abstract class ArraySortingAlgorithm {
         arrayPrinter.printArr(arr);
         sort(arr);
         arrayPrinter.printArr(arr);
+        System.out.println();
     }
 
     protected abstract void sort(int[] arr);

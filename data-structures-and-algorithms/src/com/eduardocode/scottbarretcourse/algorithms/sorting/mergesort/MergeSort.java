@@ -1,24 +1,19 @@
 package com.eduardocode.scottbarretcourse.algorithms.sorting.mergesort;
 
-import com.eduardocode.scottbarretcourse.algorithms.sorting.ArraySortingAlgorithm;
 import com.eduardocode.scottbarretcourse.algorithms.sorting.DivConqSortingAlgorithm;
 
-/*
-    Repeated number inside arrays are not supported for this implementation.
- */
 public class MergeSort extends DivConqSortingAlgorithm {
 
     public static void main(String[] args) {
         MergeSort app = new MergeSort();
 
-        int[] arr = {5, 4, 7, 1, 3, 2, 8, 6};
-        app.runTest(arr);
+        app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6});
 
-        int[] arr2 = {4};
-        app.runTest(arr2);
+        app.runTest(new int[]{4});
 
-        int[] arr3 = {14, 2, 60, 15, 10, 23, 0};
-        app.runTest(arr3);
+        app.runTest(new int[]{14, 2, 60, 15, 10, 23, 0});
+
+        app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6, 7, 3});
     }
 
     @Override
@@ -45,12 +40,12 @@ public class MergeSort extends DivConqSortingAlgorithm {
         int leftSize = left.length;
         int rightSize = right.length;
         int[] newArr = new int[leftSize + rightSize];
-
         int i = 0, j = 0, k = 0;
+
         while (i < leftSize && j < rightSize) {
             if(left[i] < right[j]) {
                 newArr[k++] = left[i++];
-            } else if(left[i] > right[j]) {
+            } else {
                 newArr[k++] = right[j++];
             }
         }
