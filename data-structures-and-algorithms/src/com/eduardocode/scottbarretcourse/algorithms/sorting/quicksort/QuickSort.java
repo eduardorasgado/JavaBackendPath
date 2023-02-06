@@ -48,28 +48,21 @@ public class QuickSort extends DivConqSortingAlgorithm {
 
     private int getPivot(int[] arr) {
         int pivotIdx = 0;
-        int firstGreaterThanPivot = 1;
-        int currIdx = 1;
+        int swap = 0;
 
-        while (currIdx < arr.length) {
-
+        for (int currIdx = 1; currIdx < arr.length; currIdx++) {
             if(arr[currIdx] < arr[pivotIdx]) {
-                if(currIdx != firstGreaterThanPivot) {
-                    swap(arr, firstGreaterThanPivot, currIdx);
-                }
+                ++swap;
 
-                ++firstGreaterThanPivot;
+                swap(arr, swap, currIdx);
             }
-
-            ++currIdx;
         }
 
-        int newPivot = firstGreaterThanPivot - 1;
-        if(pivotIdx != newPivot) {
-            swap(arr, newPivot, pivotIdx);
+        if(pivotIdx != swap) {
+            swap(arr, swap, pivotIdx);
         }
 
-        return newPivot;
+        return swap;
     }
 
     private void swap(int[] arr, int index1, int index2) {
