@@ -6,6 +6,18 @@ import java.util.Arrays;
 
 public class QuickSort extends DivConqSortingAlgorithm {
 
+    public static void main(String[] args) {
+        QuickSort app = new QuickSort();
+
+        app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6});
+
+        app.runTest(new int[]{4});
+
+        app.runTest(new int[]{14, 2, 60, 15, 10, 23, 0});
+
+        app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6, 7, 3});
+    }
+
     @Override
     protected int[] sort(int[] arr) {
         return quickSort(arr);
@@ -28,7 +40,7 @@ public class QuickSort extends DivConqSortingAlgorithm {
         result[pivotIdx] = arr[pivotIdx];
 
         for (int i = 0; i < right.length; i++) {
-            result[i] = right[i];
+            result[pivotIdx + i + 1] = right[i];
         }
 
         return result;
@@ -65,17 +77,5 @@ public class QuickSort extends DivConqSortingAlgorithm {
 
         arr[index1] = arr[index2];
         arr[index2] = temp;
-    }
-
-    public static void main(String[] args) {
-        QuickSort app = new QuickSort();
-
-        app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6});
-
-        //app.runTest(new int[]{4});
-
-        //app.runTest(new int[]{14, 2, 60, 15, 10, 23, 0});
-
-        //app.runTest(new int[]{5, 4, 7, 1, 3, 2, 8, 6, 7, 3});
     }
 }
