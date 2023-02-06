@@ -1,10 +1,10 @@
 package com.eduardocode.scottbarretcourse.algorithms.sorting.quicksort;
 
-import com.eduardocode.scottbarretcourse.algorithms.sorting.DivConqSortingAlgorithm;
+import com.eduardocode.scottbarretcourse.algorithms.sorting.ArraySortingAlgorithm;
 
 import java.util.Arrays;
 
-public class QuickSort extends DivConqSortingAlgorithm {
+public class QuickSort extends ArraySortingAlgorithm {
 
     public static void main(String[] args) {
         QuickSort app = new QuickSort();
@@ -19,38 +19,27 @@ public class QuickSort extends DivConqSortingAlgorithm {
     }
 
     @Override
-    protected int[] sort(int[] arr) {
-        return quickSort(arr);
+    protected void sort(int[] arr) {
+        quickSort(arr);
     }
 
-    private int[] quickSort(int[] arr) {
-        if(arr.length <= 1) return arr;
-
-        int pivotIdx = getPivot(arr);
-
-        int[] left = quickSort(Arrays.copyOfRange(arr, 0, pivotIdx));
-        int[] right = quickSort(Arrays.copyOfRange(arr, pivotIdx + 1, arr.length));
-
-        int[] result = new int[left.length + right.length + 1];
-
-        for (int i = 0; i < left.length; i++) {
-            result[i] = left[i];
-        }
-
-        result[pivotIdx] = arr[pivotIdx];
-
-        for (int i = 0; i < right.length; i++) {
-            result[pivotIdx + i + 1] = right[i];
-        }
-
-        return result;
+    private void quickSort(int[] arr) {
+        quickSort(arr, 0, arr.length);
     }
 
-    private int getPivot(int[] arr) {
-        int pivotIdx = 0;
-        int swap = 0;
+    private void quickSort(int[] arr, int fromIdx, int toIdx) {
+        if(toIdx - fromIdx > 1) {
+            int pivotIdx = getPivot(arr, fromIdx, toIdx);
 
-        for (int currIdx = 1; currIdx < arr.length; currIdx++) {
+            quickSort(arr, fromIdx, pivotIdx);
+            quickSort(arr, pivotIdx + 1, toIdx);
+        }
+    }
+
+    private int getPivot(int[] arr, int pivotIdx, int endIdx) {
+        int swap = pivotIdx;
+
+        for (int currIdx = pivotIdx + 1; currIdx < endIdx; currIdx++) {
             if(arr[currIdx] < arr[pivotIdx]) {
                 ++swap;
 
