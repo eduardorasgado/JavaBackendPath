@@ -28,6 +28,7 @@ public class QuickSort extends ArraySortingAlgorithm {
     }
 
     private void quickSort(int[] arr, int fromIdx, int toIdx) {
+        // left < right
         if(toIdx - fromIdx > 1) {
             int pivotIdx = getPivot(arr, fromIdx, toIdx);
 

@@ -1,5 +1,7 @@
 package com.eduardocode.scottbarretcourse.datastructures.recursivetree;
 
+import java.util.Arrays;
+
 public class RecursiveBinarySearchTreeDemo {
 
     private static BinarySearchTree tree;
@@ -9,11 +11,17 @@ public class RecursiveBinarySearchTreeDemo {
         insert();
         contains();
         delete();
+        bfs();
+    }
+
+    private static void bfs() {
+        System.out.println(Arrays.toString(tree.breadthFirstSearch()));
     }
 
     private static void delete() {
         System.out.println("-----------deleting node in tree--------");
-        tree.deleteNode(30);
+        System.out.println("value 30 deleted: " + tree.deleteNode(30));
+        System.out.println("value 1000 deleted: " + tree.deleteNode(1000));
         System.out.println(tree.getRoot());
     }
 

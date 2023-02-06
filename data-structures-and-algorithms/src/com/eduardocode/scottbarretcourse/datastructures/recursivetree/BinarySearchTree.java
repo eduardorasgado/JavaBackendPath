@@ -1,18 +1,35 @@
 package com.eduardocode.scottbarretcourse.datastructures.recursivetree;
 
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 public class BinarySearchTree {
     private Node root;
+    private int size;
+
+    public BinarySearchTree() {
+        root = null;
+        size = 0;
+    }
 
     public boolean insert(int value) {
         if(root == null) {
             root = new Node(value);
+            ++size;
             return true;
         }
 
-        return insert(root, value);
+        if(!insert(root, value)){
+            return false;
+        }
+
+        ++size;
+        return true;
     }
 
     public void insertV2(int value) {
+        // refactor to update tree size
         if(root == null) {
             root = new Node(value);
         } else {
@@ -55,20 +72,30 @@ public class BinarySearchTree {
         return currentNode;
     }
 
-    public void deleteNode(int value) {
-        deleteNode(root, value);
+    public boolean deleteNode(int value) {
+        AtomicBoolean deleted = new AtomicBoolean(false);
+        deleteNode(root, value, deleted);
+
+        if(!deleted.get()) {
+            return false;
+        }
+
+        --size;
+        return true;
     }
 
-    private Node deleteNode(Node currentNode, int value) {
+    private Node deleteNode(Node currentNode, int value, AtomicBoolean deleted) {
         if(currentNode == null) return null;
 
         if(value < currentNode.value) {
-            currentNode.setLeft(deleteNode(currentNode.left, value));
+            currentNode.setLeft(deleteNode(currentNode.left, value, deleted));
         }
         else if(value > currentNode.value) {
-            currentNode.setRight(deleteNode(currentNode.right, value));
+            currentNode.setRight(deleteNode(currentNode.right, value, deleted));
         }
         else {
+            deleted.set(true);
+
             if(currentNode.left == null && currentNode.right == null) {
                 currentNode = null;
             }
@@ -82,7 +109,7 @@ public class BinarySearchTree {
                 int subTreeMin = minimumValue(currentNode.right);
 
                 currentNode.value = subTreeMin;
-                currentNode.setRight(deleteNode(currentNode.right, subTreeMin));
+                currentNode.setRight(deleteNode(currentNode.right, subTreeMin, deleted));
             }
         }
 
@@ -113,6 +140,28 @@ public class BinarySearchTree {
         else {
             return contains(currentNode.right, value);
         }
+    }
+
+    public int[] breadthFirstSearch() {
+        int[] resultList = new int[size];
+        Queue<Node> queue = new LinkedList<>();
+
+        queue.add(getRoot());
+        int i = 0;
+
+        while (!queue.isEmpty() && i < size) {
+            Node temp = queue.poll();
+            resultList[i++] = temp.value;
+
+            if(temp.left != null) {
+                queue.add(temp.left);
+            }
+            if(temp.right != null) {
+                queue.add(temp.right);
+            }
+        }
+
+        return resultList;
     }
 
     public Node getRoot() {
