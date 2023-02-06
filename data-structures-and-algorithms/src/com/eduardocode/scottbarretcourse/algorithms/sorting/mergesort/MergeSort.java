@@ -2,6 +2,8 @@ package com.eduardocode.scottbarretcourse.algorithms.sorting.mergesort;
 
 import com.eduardocode.scottbarretcourse.algorithms.sorting.DivConqSortingAlgorithm;
 
+import java.util.Arrays;
+
 public class MergeSort extends DivConqSortingAlgorithm {
 
     public static void main(String[] args) {
@@ -19,19 +21,35 @@ public class MergeSort extends DivConqSortingAlgorithm {
     @Override
     protected int[] sort(int[] arr) {
         return mergeSort(arr);
+        //return mergeSortV2(arr);
     }
 
     private int[] mergeSort(int[] arr) {
-        return mergeSort(arr, 0, arr.length);
+        if(arr.length == 1) return arr;
+
+        int mid =  arr.length / 2;
+
+        int[] left = mergeSort(Arrays.copyOfRange(arr, 0, mid));
+        int[] right = mergeSort(Arrays.copyOfRange(arr, mid, arr.length));
+
+        return merge(left, right);
     }
 
-    private int[] mergeSort(int[] arr, int fromIdx, int toIdx) {
+    private int[] mergeSortV2(int[] arr) {
+        return mergeSortV2(arr, 0, arr.length);
+    }
+
+    /**
+     * This version does not create copies while splitting to get the array of 1 element
+     * It only creates arrays when it reaches the array of 1 element
+     */
+    private int[] mergeSortV2(int[] arr, int fromIdx, int toIdx) {
         if(toIdx - fromIdx == 1) return new int[]{arr[fromIdx]};
 
         int mid =  ((toIdx - fromIdx) / 2) + fromIdx;
 
-        int[] left = mergeSort(arr, fromIdx, mid);
-        int[] right = mergeSort(arr, mid, toIdx);
+        int[] left = mergeSortV2(arr, fromIdx, mid);
+        int[] right = mergeSortV2(arr, mid, toIdx);
 
         return merge(left, right);
     }
