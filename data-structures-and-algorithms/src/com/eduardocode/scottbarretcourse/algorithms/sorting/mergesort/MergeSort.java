@@ -35,10 +35,10 @@ public class MergeSort extends DivConqSortingAlgorithm {
 
         int mid =  ((toIdx - fromIdx) / 2) + fromIdx;
 
-        int[] firstHalf = mergeSort(arr, fromIdx, mid);
-        int[] secondHalf = mergeSort(arr, mid, toIdx);
+        int[] left = mergeSort(arr, fromIdx, mid);
+        int[] right = mergeSort(arr, mid, toIdx);
 
-        return merge(firstHalf, secondHalf);
+        return merge(left, right);
     }
 
     private int[] merge(int[] left, int[] right) {
@@ -49,23 +49,18 @@ public class MergeSort extends DivConqSortingAlgorithm {
         int i = 0, j = 0, k = 0;
         while (i < leftSize && j < rightSize) {
             if(left[i] < right[j]) {
-                newArr[k] = left[i];
-                ++i;
+                newArr[k++] = left[i++];
             } else if(left[i] > right[j]) {
-                newArr[k] = right[j];
-                ++j;
+                newArr[k++] = right[j++];
             }
-            ++k;
         }
 
         for(; i < leftSize; i++) {
-            newArr[k] = left[i];
-            ++k;
+            newArr[k++] = left[i];
         }
 
         for(; j < rightSize; j++) {
-            newArr[k] = right[j];
-            ++k;
+            newArr[k++] = right[j];
         }
 
         return newArr;
