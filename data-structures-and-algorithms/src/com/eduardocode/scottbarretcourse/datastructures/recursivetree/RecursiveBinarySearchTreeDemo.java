@@ -8,14 +8,20 @@ public class RecursiveBinarySearchTreeDemo {
 
     public static void main(String[] args) {
         constructor();
-        //insert();
-        insert2();
+        insert();
+        //insert2();
         //contains();
-        //delete();
-        System.out.println(tree.getRoot());
+        delete();
+        //System.out.println(tree.getRoot());
         bfs();
         preOrderDFS();
         postOrderDFS();
+        inOrderDFS();
+    }
+
+    private static void inOrderDFS() {
+        System.out.println("---------- DFS: In Order ----------");
+        System.out.println(tree.inOrderDFS());
     }
 
     private static void postOrderDFS() {
