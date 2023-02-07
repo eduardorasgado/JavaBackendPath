@@ -8,11 +8,19 @@ public class RecursiveBinarySearchTreeDemo {
 
     public static void main(String[] args) {
         constructor();
-        insert();
-        contains();
-        delete();
+        //insert();
+        insert2();
+        //contains();
+        //delete();
+        System.out.println(tree.getRoot());
         bfs();
         preOrderDFS();
+        postOrderDFS();
+    }
+
+    private static void postOrderDFS() {
+        System.out.println("---------- DFS: Post Order ----------");
+        System.out.println(tree.postOrderDFS());
     }
 
     private static void preOrderDFS() {
@@ -60,6 +68,21 @@ public class RecursiveBinarySearchTreeDemo {
         System.out.println("inserting 45: " + tree.insert(45));
 
         System.out.println(tree.getRoot());
+    }
+
+    private static void insert2() {
+        tree.insert(20);
+        tree.insert(16);
+        tree.insert(25);
+        tree.insert(6);
+        tree.insert(17);
+        tree.insert(0);
+        tree.insert(7);
+        tree.insert(21);
+        tree.insert(29);
+        tree.insert(28);
+        tree.insert(51);
+        tree.insert(46);
     }
 
     private static void constructor() {

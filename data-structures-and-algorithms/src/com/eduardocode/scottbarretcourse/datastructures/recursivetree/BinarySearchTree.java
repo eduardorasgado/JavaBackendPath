@@ -183,6 +183,21 @@ public class BinarySearchTree {
         }
     }
 
+    public ArrayList<Integer> postOrderDFS() {
+        ArrayList<Integer> resultList = new ArrayList<>();
+        postOrderDFS(getRoot(), resultList);
+
+        return resultList;
+    }
+
+    private void postOrderDFS(Node currNode, List<Integer> resultList) {
+        if(currNode != null) {
+            postOrderDFS(currNode.left, resultList);
+            postOrderDFS(currNode.right, resultList);
+            resultList.add(currNode.value);
+        }
+    }
+
     public Node getRoot() {
         return root;
     }
