@@ -1,6 +1,8 @@
 package com.eduardocode.scottbarretcourse.datastructures.recursivetree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -145,12 +147,13 @@ public class BinarySearchTree {
     public int[] breadthFirstSearch() {
         int[] resultList = new int[size];
         Queue<Node> queue = new LinkedList<>();
+        Node temp = getRoot();
 
-        queue.add(getRoot());
+        queue.add(temp);
         int i = 0;
 
         while (!queue.isEmpty() && i < size) {
-            Node temp = queue.poll();
+            temp = queue.remove();
             resultList[i++] = temp.value;
 
             if(temp.left != null) {
@@ -162,6 +165,22 @@ public class BinarySearchTree {
         }
 
         return resultList;
+    }
+
+    public ArrayList<Integer> preOrderDFS() {
+        ArrayList<Integer> resultList = new ArrayList<>();
+        preOrderDFS(getRoot(), resultList);
+
+        return resultList;
+    }
+
+    private void preOrderDFS(Node currNode, List<Integer> resultList) {
+        if(currNode != null) {
+            resultList.add(currNode.value);
+
+            preOrderDFS(currNode.left, resultList);
+            preOrderDFS(currNode.right, resultList);
+        }
     }
 
     public Node getRoot() {

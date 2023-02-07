@@ -12,9 +12,16 @@ public class RecursiveBinarySearchTreeDemo {
         contains();
         delete();
         bfs();
+        preOrderDFS();
+    }
+
+    private static void preOrderDFS() {
+        System.out.println("---------- DFS: Pre Order ----------");
+        System.out.println(tree.preOrderDFS());
     }
 
     private static void bfs() {
+        System.out.println("---------- BFS ----------");
         System.out.println(Arrays.toString(tree.breadthFirstSearch()));
     }
 
