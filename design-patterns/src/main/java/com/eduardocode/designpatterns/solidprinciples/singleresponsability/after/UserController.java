@@ -10,15 +10,16 @@ public class UserController {
 
     private final UserPersistence persistence;
     private final UserValidator validator;
+    private final JsonMapper mapper;
 
     public UserController() {
         validator = new UserValidator();
         persistence = new UserPersistence();
+        mapper = new JsonMapper();
     }
 
     public String createUser(String userJson) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        User user = mapper.readValue(userJson, User.class);
+        User user = mapper.map(userJson);
 
         if(!validator.validateUser(user)) {
             return "ERROR";
