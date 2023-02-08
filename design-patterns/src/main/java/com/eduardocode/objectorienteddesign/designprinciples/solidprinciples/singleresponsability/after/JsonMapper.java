@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.solidprinciples.singleresponsability.after;
+package com.eduardocode.objectorienteddesign.designprinciples.solidprinciples.singleresponsability.after;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

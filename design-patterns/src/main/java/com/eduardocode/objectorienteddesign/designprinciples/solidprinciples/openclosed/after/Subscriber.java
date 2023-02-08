@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.solidprinciples.openclosed.after;
+package com.eduardocode.objectorienteddesign.designprinciples.solidprinciples.openclosed.after;
 
 /**
  * This class is now closed for modification

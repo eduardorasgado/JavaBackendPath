@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.solidprinciples.singleresponsability.before;
+package com.eduardocode.objectorienteddesign.designprinciples.solidprinciples.singleresponsability.before;
 
 import java.util.HashMap;
 import java.util.Map;

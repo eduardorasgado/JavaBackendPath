@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.solidprinciples.singleresponsability.after;
+package com.eduardocode.objectorienteddesign.designprinciples.solidprinciples.singleresponsability.after;
 
 public class UserPersistence {
 

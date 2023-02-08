@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.solidprinciples.openclosed.after;
+package com.eduardocode.objectorienteddesign.designprinciples.solidprinciples.openclosed.before;
 
 
 import java.time.LocalDateTime;
