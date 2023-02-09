@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
-public class Main {
+public class Main extends MetadataExtracter {
 
     private static final Logger logger = LoggerFactory.getLogger(Main.class);
 
@@ -19,7 +19,7 @@ public class Main {
 
         String msgPath = System.getProperty("user.dir")
                 + File.separator
-                + "\\src\\main\\java\\com\\eduardocode\\objectorienteddesign\\designprinciples\\solidprinciples\\dependencyinversion"
+                + getCurrPackagePath()
                 + File.separator
                 + "test_msg.txt";
 
