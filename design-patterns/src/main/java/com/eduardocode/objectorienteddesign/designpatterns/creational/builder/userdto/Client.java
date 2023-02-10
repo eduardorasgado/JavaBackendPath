@@ -6,7 +6,15 @@ import java.time.LocalDate;
 public class Client {
 
     public static void main(String[] args) {
+        User newUser = createUser();
+        UserDtoBuilder builder = new UserWebDtoBuilder(new AddressStringFormatter())
+                .withFirstName(newUser.getFirstName())
+                .withLastName(newUser.getLastName())
+                .withBirthday(newUser.getBirthday())
+                .withAddress(newUser.getAddress());
 
+        UserDto userDto = builder.build();
+        System.out.println(userDto.toString());
     }
 
     public static User createUser() {
