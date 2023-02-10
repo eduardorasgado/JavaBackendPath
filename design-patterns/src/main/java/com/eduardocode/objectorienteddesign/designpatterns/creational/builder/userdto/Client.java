@@ -7,14 +7,18 @@ public class Client {
 
     public static void main(String[] args) {
         User newUser = createUser();
-        UserDtoBuilder builder = new UserWebDtoBuilder(new AddressStringFormatter())
-                .withFirstName(newUser.getFirstName())
-                .withLastName(newUser.getLastName())
-                .withBirthday(newUser.getBirthday())
-                .withAddress(newUser.getAddress());
+        UserDtoBuilder builder = new UserWebDtoBuilder(new AddressStringFormatter());
 
-        UserDto userDto = builder.build();
+        UserDto userDto = directBuild(builder, newUser);
         System.out.println(userDto.toString());
+    }
+
+    private static UserDto directBuild(UserDtoBuilder builder, User user) {
+        return builder.withFirstName(user.getFirstName())
+                .withLastName(user.getLastName())
+                .withBirthday(user.getBirthday())
+                .withAddress(user.getAddress())
+                .build();
     }
 
     public static User createUser() {
