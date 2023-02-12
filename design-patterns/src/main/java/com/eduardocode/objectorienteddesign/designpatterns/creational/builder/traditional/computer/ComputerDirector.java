@@ -15,7 +15,7 @@ public class ComputerDirector {
 
     public void buildComputer() {
         computerBuilder.createNewComputer();
-        
+
         computerBuilder.buildSystemBlock();
         computerBuilder.buildDisplay();
         computerBuilder.buildManiputators();
