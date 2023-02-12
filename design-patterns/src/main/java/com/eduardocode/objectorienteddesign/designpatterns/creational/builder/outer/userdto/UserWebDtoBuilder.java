@@ -1,12 +1,10 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.builder.userdto;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.builder.outer.userdto;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 //The concrete builder for UserWebDto
 public class UserWebDtoBuilder implements UserDtoBuilder {

@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.builder.userdto;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.builder.outer.userdto;
 
 //A product in builder pattern
 public class UserWebDto implements UserDto {
