@@ -7,6 +7,7 @@ public class Circle extends BaseShape {
 
     public Circle(int x, int y, int radius, Color color) {
         super(x, y, color);
+        this.radius = radius;
     }
 
     @Override

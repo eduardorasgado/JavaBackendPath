@@ -8,9 +8,11 @@ import java.util.List;
 public class CompoundShape extends BaseShape {
     protected List<Shape> children;
 
-    public CompoundShape(Shape... shapes) {
+    public CompoundShape(Shape... components) {
         super(0, 0, Color.BLACK);
+        
         children = new ArrayList<>();
+        add(components);
     }
 
     public void add(Shape component) {
