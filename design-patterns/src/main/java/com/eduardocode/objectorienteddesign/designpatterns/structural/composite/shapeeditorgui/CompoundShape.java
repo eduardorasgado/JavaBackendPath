@@ -10,7 +10,7 @@ public class CompoundShape extends BaseShape {
 
     public CompoundShape(Shape... components) {
         super(0, 0, Color.BLACK);
-        
+
         children = new ArrayList<>();
         add(components);
     }
