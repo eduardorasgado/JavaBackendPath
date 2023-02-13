@@ -8,7 +8,7 @@ public class MessageDemo {
     }
 
     public static void printMessage(MessageCreator creator) {
-        Message message = creator.createMessage();
+        Message message = creator.getMessage();
 
         System.out.println(message.getClass().getSimpleName());
         System.out.println(message.getContent());
