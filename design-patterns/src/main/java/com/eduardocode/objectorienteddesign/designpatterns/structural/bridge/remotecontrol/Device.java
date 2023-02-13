@@ -2,6 +2,19 @@ package com.eduardocode.objectorienteddesign.designpatterns.structural.bridge.re
 
 public interface Device {
     boolean isEnabled();
-    void turnOn();
-    void turnOff();
+
+    public void enable();
+
+    public void disable();
+
+    public int getVolume();
+
+    public void setVolume(int percent);
+
+    public int getChannel();
+
+    public void setChannel(int channel);
+
+    public void printStatus();
+
 }
