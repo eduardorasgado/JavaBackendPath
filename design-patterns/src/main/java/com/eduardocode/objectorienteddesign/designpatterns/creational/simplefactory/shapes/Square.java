@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.factorymethod.shapes;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.simplefactory.shapes;
 
 public class Square implements Shape {
 

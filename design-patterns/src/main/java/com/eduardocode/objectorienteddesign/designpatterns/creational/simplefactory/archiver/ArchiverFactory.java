@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.factorymethod.archiver;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.simplefactory.archiver;
 
 import java.util.HashMap;
 import java.util.Map;

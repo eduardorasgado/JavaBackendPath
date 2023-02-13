@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.factorymethod.shapes;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.simplefactory.shapes;
 
 import java.util.HashMap;
 import java.util.Map;

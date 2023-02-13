@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.factorymethod.animals;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.simplefactory.animals;
 
 import java.util.HashMap;
 import java.util.Map;

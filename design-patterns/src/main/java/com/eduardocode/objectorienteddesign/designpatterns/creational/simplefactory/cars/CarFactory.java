@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.factorymethod.cars;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.simplefactory.cars;
 
 import java.util.HashMap;
 import java.util.Map;
