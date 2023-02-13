@@ -10,5 +10,7 @@ public class ArchiverDemo {
 
         zipArchiver.archive(new File(""));
         rarArchiver.archive(new File(""));
+
+        System.out.println(zipArchiver == ArchiverFactory.getPrototypeForType(ArchiveType.ZIP));
     }
 }
