@@ -19,4 +19,13 @@ public class SportsCar extends Car {
     public void honk() {
         System.out.println("Beep beep! Watch out, Im driving my " + color + " " + model + " sports car.");
     }
+
+    @Override
+    public String toString() {
+        return "SportsCar{" +
+                "model='" + model + '\'' +
+                ", year=" + year +
+                ", color='" + color + '\'' +
+                '}';
+    }
 }

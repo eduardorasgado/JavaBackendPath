@@ -15,4 +15,13 @@ public class SedanCar extends Car {
     public void honk() {
         System.out.println("Honk honk! Making my way in my " + color + " " + model + " sedan.");
     }
+
+    @Override
+    public String toString() {
+        return "SedanCar{" +
+                "model='" + model + '\'' +
+                ", year=" + year +
+                ", color='" + color + '\'' +
+                '}';
+    }
 }
