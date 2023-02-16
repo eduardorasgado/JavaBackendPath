@@ -20,7 +20,7 @@ public class Dollar10Dispenser implements ATMDispenser {
             }
         }
         else {
-            System.out.println("Amount should be in multiple of 10s");
+            System.out.println("Amount should be in multiple of 10s and greater than 10");
         }
     }
 }
