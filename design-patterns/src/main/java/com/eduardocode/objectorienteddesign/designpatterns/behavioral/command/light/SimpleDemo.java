@@ -19,10 +19,9 @@ public class SimpleDemo {
         Command goingDownIntensity = new LowerIntensityCommand(light);
 
         remoteControl.setCommand(goingDownIntensity);
-        remoteControl.pressButton();
-        remoteControl.pressButton();
-        remoteControl.pressButton();
-        remoteControl.pressButton();
+        for (int i = 0; i < 11; i++) {
+            remoteControl.pressButton();
+        }
 
         remoteControl.setCommand(goingUpIntensity);
         remoteControl.pressButton();

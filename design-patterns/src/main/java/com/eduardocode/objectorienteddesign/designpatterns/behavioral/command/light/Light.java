@@ -15,7 +15,7 @@ public class Light {
 
         intensityActionMap = new HashMap<>();
         intensityActionMap.put(IntensityAction.RAISE, () -> Math.min(intensity + 10, maxIntensity + 1));
-        intensityActionMap.put(IntensityAction.LOWER, () -> Math.max(intensity - 10, -1));
+        intensityActionMap.put(IntensityAction.LOWER, () -> Math.max(intensity - 10, 0));
     }
 
     public enum IntensityAction {
