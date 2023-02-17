@@ -11,4 +11,11 @@ public class NameExpression implements Expression {
     public boolean interpret(Employee employee) {
         return value.equalsIgnoreCase(employee.getName());
     }
+
+    @Override
+    public String toString() {
+        return "NameExpression{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

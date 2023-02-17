@@ -35,4 +35,11 @@ public class SalaryExpression implements Expression {
                 return false;
         }
     }
+
+    @Override
+    public String toString() {
+        return "SalaryExpression{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

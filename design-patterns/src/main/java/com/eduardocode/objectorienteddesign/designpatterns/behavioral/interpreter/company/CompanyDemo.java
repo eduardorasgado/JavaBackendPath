@@ -31,11 +31,22 @@ public class CompanyDemo {
 
         String contextString = "Position:manager, Deptt:engineering, Manages:Mario, Salary:>89000";
         Expression expression =  ExpressionParser.parseExpression(contextString);
-
         System.out.println("Context String= " + contextString);
+
         System.out.println();
+
         System.out.println(brenda);
         System.out.printf("For '%s', %s: %s.\n", brenda.getName(), expression, expression.interpret(brenda));
 
+        System.out.println();
+
+        contextString = "Position:QA Engineer, salary: <90000";
+        expression = ExpressionParser.parseExpression(contextString);
+        System.out.println("ContexString= " + contextString);
+
+        System.out.println();
+
+        System.out.println(lucas);
+        System.out.printf("For '%s', %s: %s.\n", lucas.getName(), expression, expression.interpret(lucas));
     }
 }

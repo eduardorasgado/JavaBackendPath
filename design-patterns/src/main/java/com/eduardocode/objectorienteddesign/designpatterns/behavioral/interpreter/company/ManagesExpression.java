@@ -18,4 +18,11 @@ public class ManagesExpression implements Expression {
         return Arrays.stream(employee.teamNames().split(","))
                 .anyMatch(target -> target.trim().equalsIgnoreCase(value));
     }
+
+    @Override
+    public String toString() {
+        return "ManagesExpression{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }

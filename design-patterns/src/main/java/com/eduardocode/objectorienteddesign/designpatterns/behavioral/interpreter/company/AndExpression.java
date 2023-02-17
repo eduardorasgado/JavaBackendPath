@@ -13,4 +13,12 @@ public class AndExpression implements Expression {
     public boolean interpret(Employee employee) {
         return left.interpret(employee) && right.interpret(employee);
     }
+
+    @Override
+    public String toString() {
+        return "AndExpression{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
+    }
 }

@@ -11,4 +11,11 @@ public class PositionExpression implements Expression {
     public boolean interpret(Employee employee) {
         return employee.getPosition().equalsIgnoreCase(value);
     }
+
+    @Override
+    public String toString() {
+        return "PositionExpression{" +
+                "value='" + value + '\'' +
+                '}';
+    }
 }
