@@ -43,7 +43,7 @@ public class BuildInIteratorDemo {
             System.out.println(iterator2.next());
         }
         System.out.println();
-        
+
         while(iterator3.hasNext()) {
             System.out.println(iterator3.next());
         }
