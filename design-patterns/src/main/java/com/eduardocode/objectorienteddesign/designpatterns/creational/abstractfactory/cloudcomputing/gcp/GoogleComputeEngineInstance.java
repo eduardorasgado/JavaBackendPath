@@ -7,7 +7,7 @@ import java.sql.SQLOutput;
 
 public class GoogleComputeEngineInstance implements Instance {
 
-    public GoogleComputeEngineInstance() {
+    public GoogleComputeEngineInstance(Capacity capacity) {
         System.out.println("Created Google Compute Engine instance");
     }
 

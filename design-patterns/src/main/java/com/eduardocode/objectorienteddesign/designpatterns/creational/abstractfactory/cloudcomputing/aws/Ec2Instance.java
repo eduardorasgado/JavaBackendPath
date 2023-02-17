@@ -5,7 +5,7 @@ import com.eduardocode.objectorienteddesign.designpatterns.creational.abstractfa
 
 public class Ec2Instance implements Instance {
 
-    public Ec2Instance() {
+    public Ec2Instance(Capacity capacity) {
         System.out.println("EC2 instance created");
     }
 
