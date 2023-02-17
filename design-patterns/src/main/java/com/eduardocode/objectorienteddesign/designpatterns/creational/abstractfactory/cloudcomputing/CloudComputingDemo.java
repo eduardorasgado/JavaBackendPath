@@ -25,9 +25,15 @@ public class CloudComputingDemo {
 
         System.out.println(server);
 
+        server.start();
+        server.stop();
+
         app = new CloudComputingDemo(new GoogleResourceFactory());
         server = app.createServer(Instance.Capacity.MICRO, 1024);
 
         System.out.println(server);
+
+        server.start();
+        server.stop();
     }
 }
