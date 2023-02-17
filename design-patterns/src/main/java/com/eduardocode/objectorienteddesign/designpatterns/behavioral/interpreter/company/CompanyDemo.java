@@ -26,7 +26,16 @@ public class CompanyDemo {
         isis.manages(brenda);
         isis.manages(rodolfo);
 
-        System.out.println(isis.teamNames());
-        System.out.println(rodolfo.teamNames());
+        //System.out.println(isis.teamNames());
+        //System.out.println(rodolfo.teamNames());
+
+        String contextString = "Position:manager, Deptt:engineering, Manages:Mario, Salary:>89000";
+        Expression expression =  ExpressionParser.parseExpression(contextString);
+
+        System.out.println("Context String= " + contextString);
+        System.out.println();
+        System.out.println(brenda);
+        System.out.printf("For '%s', %s: %s.\n", brenda.getName(), expression, expression.interpret(brenda));
+
     }
 }
