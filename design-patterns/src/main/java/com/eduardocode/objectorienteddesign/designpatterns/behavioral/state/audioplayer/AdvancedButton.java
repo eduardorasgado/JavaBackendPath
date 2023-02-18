@@ -11,7 +11,7 @@ public class AdvancedButton extends BasicButton {
     }
 
     public void onClick(Consumer<ButtonAction> consumer) {
-        onClickRunnable = () -> consumer.accept(ButtonAction.CLICK);
+        onClick(() -> consumer.accept(ButtonAction.CLICK));
     }
 
     public void onDoubleClick(Consumer<ButtonAction> consumer) {
