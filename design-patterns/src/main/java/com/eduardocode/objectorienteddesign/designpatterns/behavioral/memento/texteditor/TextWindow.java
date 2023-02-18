@@ -27,7 +27,7 @@ public class TextWindow {
         private final StringBuilder text;
 
         private TextEditorState(StringBuilder text) {
-            this.text = text;
+            this.text = new StringBuilder(text.toString());
         }
 
         @Override

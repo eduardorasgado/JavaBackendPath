@@ -7,6 +7,7 @@ public class TextEditorDemo {
         TextWindow textWindow = new TextWindow();
 
         textWindow.write("This is the lesson about memento pattern" + System.lineSeparator());
+        textEditor.save(textWindow);
         textWindow.write("Memento is a behavioral GoF pattern." + System.lineSeparator());
 
         textEditor.save(textWindow);
