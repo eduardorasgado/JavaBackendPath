@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.singleton.lazy;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.singleton.threadsafe.lazy.doublecheckedlocking;
 
 import static java.util.Objects.isNull;
 

@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.creational.singleton.eager;
+package com.eduardocode.objectorienteddesign.designpatterns.creational.singleton.nonthreadsafe.eager;
 
 public class EagerRegistry {
 
