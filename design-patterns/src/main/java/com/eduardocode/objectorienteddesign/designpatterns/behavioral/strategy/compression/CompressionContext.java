@@ -8,9 +8,9 @@ public class CompressionContext {
     public void compressFile(String filename) throws IllegalStateException {
         if(isNull(strategy)) {
             throw new IllegalStateException();
-        } else {
-            strategy.compress(filename);
         }
+
+        strategy.compress(filename);
     }
 
     public void setStrategy(CompressionStrategy strategy) {
