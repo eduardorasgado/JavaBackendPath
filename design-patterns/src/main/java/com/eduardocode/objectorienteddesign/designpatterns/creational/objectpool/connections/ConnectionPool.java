@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConnectionPool {
-    private List<Connection> availableConnections;
-    private List<Connection> inUseConnections;
-    private int maxSize;
+    private final List<Connection> availableConnections;
+    private final List<Connection> inUseConnections;
 
     public ConnectionPool(int maxSize) {
-        this.maxSize = maxSize;
 
         availableConnections = new ArrayList<>();
         inUseConnections = new ArrayList<>();
