@@ -1,10 +1,12 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.classadapter.employee;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.employee;
 
 public class EmployeeDemo {
 
     public static void main(String[] args) {
-        EmployeeClassAdapter employeeAdapter = new EmployeeClassAdapter();
-        populateEmployeeData(employeeAdapter);
+        Employee employee = new Employee();
+        populateEmployeeData(employee);
+
+        EmployeeObjectAdapter employeeAdapter = new EmployeeObjectAdapter(employee);
 
         BusinessCardDesigner cardDesigner = new BusinessCardDesigner();
         System.out.println(cardDesigner.designCard(employeeAdapter));
