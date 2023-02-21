@@ -3,7 +3,12 @@ package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.c
 public class EmployeeDemo {
 
     public static void main(String[] args) {
+        BusinessCardDesigner cardDesigner = new BusinessCardDesigner();
 
+        EmployeeClassAdapter employeeAdapter = new EmployeeClassAdapter();
+        populateEmployeeData(employeeAdapter);
+
+        System.out.println(cardDesigner.designCard(employeeAdapter));
     }
 
     private static void populateEmployeeData(Employee employee) {
