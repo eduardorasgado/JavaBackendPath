@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.mediaplayer;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.mediaplayer;
 
 // audio player is the client that uses the target interface
 public class AudioPlayer implements MediaPlayer {

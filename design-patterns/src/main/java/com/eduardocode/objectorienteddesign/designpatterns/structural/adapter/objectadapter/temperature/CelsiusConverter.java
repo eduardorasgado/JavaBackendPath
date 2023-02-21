@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.temperature;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.temperature;
 
 public class CelsiusConverter implements TemperatureConverter {
     @Override

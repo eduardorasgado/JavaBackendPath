@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.sorting;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.sorting;
 
 import java.util.Arrays;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.mediaplayer;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.mediaplayer;
 
 /*
 * MediaAdapter is the adapter that is used to play mp4 and vlc media types(incompatible interfaces)

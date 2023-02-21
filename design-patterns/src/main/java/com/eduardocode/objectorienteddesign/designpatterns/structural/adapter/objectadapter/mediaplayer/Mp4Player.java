@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.mediaplayer;
+package com.eduardocode.objectorienteddesign.designpatterns.structural.adapter.objectadapter.mediaplayer;
 
 public class Mp4Player implements AdvancedMediaPlayer {
     @Override
