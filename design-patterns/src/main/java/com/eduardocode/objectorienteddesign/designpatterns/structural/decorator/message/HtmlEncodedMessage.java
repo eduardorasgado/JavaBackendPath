@@ -1,5 +1,7 @@
 package com.eduardocode.objectorienteddesign.designpatterns.structural.decorator.message;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 public class HtmlEncodedMessage extends Message {
 
     public HtmlEncodedMessage(IMessage message) {
@@ -8,6 +10,6 @@ public class HtmlEncodedMessage extends Message {
 
     @Override
     public String getContent() {
-        return "<div>" + super.getContent() + "<div>";
+        return StringEscapeUtils.escapeHtml4(super.getContent());
     }
 }
