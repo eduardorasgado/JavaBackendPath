@@ -15,11 +15,4 @@ public abstract class File {
         this.name = name;
     }
 
-    public abstract void ls();
-
-    public abstract void addFile(File file);
-
-    public abstract File[] getFiles();
-
-    public abstract boolean removeFile(File file);
 }
