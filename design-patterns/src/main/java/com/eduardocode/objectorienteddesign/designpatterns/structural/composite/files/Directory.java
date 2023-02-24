@@ -5,11 +5,34 @@ public class Directory extends File {
     private int nextFileIdx;
     private final File[] files;
 
+    private String permissions;
+
     public Directory(String name) {
         super(name);
 
         files = new File[9999];
         nextFileIdx = 0;
+        permissions = "+w+r+x";
+    }
+
+    @Override
+    public void getPermissions() {
+        System.out.println("Folder " + getName() + ", permissions: " + permissions);
+
+        for (int i = 0; i < nextFileIdx; i++) {
+            files[i].getPermissions();
+        }
+
+        System.out.println("---");
+    }
+
+    @Override
+    public void setPermissions(String permissions) {
+        this.permissions = permissions;
+
+        for (int i = 0; i < nextFileIdx; i++) {
+            files[i].setPermissions(permissions);
+        }
     }
 
     public void addFile(File file) {

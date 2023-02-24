@@ -15,4 +15,6 @@ public abstract class File {
         this.name = name;
     }
 
+    public abstract void getPermissions();
+    public abstract void setPermissions(String permissions);
 }
