@@ -40,8 +40,7 @@ public class ImageInvocationHandler implements InvocationHandler {
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-        handlerMap.get(method).handle(args);
-        return null;
+        return handlerMap.get(method).handle(args);
     }
 
     public void setHandlerMap(Map<Method, ImageMethodHandler> handlerMap) {
