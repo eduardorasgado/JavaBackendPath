@@ -22,6 +22,8 @@ public class MailTaskRunner implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Thread run method started...");
+
         while (true) {
             Command cmd = null;
 
@@ -44,9 +46,9 @@ public class MailTaskRunner implements Runnable {
 
             if (cmd == null)
                 return;
-            //cmd.execute();
-        }
 
+            cmd.execute();
+        }
     }
 
     public void addCommand(Command command) {
@@ -56,7 +58,7 @@ public class MailTaskRunner implements Runnable {
         }
     }
     public void shutdown() {
-        this.stop = true;
-        this.runnerThread.interrupt();
+        stop = true;
+        runnerThread.interrupt();
     }
 }
