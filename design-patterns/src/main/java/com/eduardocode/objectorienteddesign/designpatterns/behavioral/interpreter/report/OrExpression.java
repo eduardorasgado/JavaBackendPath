@@ -15,8 +15,17 @@ public class OrExpression implements PermissionExpression {
         return false;
     }
 
+//    @Override
+//    public String toString() {
+//        return left + " OR " + right;
+//    }
+
+
     @Override
     public String toString() {
-        return left + " OR " + right;
+        return "OrExpression{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
     }
 }

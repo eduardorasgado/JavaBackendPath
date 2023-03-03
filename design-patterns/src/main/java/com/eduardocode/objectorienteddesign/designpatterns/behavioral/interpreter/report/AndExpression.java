@@ -14,8 +14,17 @@ public class AndExpression implements PermissionExpression {
         return left.interpret(user) && right.interpret(user);
     }
 
+//    @Override
+//    public String toString() {
+//        return left + " AND " + right;
+//    }
+
+
     @Override
     public String toString() {
-        return left + " AND" + right;
+        return "AndExpression{" +
+                "left=" + left +
+                ", right=" + right +
+                '}';
     }
 }

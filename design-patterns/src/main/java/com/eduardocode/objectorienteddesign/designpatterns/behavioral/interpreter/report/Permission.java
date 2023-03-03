@@ -11,4 +11,9 @@ public class Permission implements PermissionExpression {
     public boolean interpret(User user) {
         return user.hasPermission(permission);
     }
+
+    @Override
+    public String toString() {
+        return permission;
+    }
 }

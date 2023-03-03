@@ -12,8 +12,16 @@ public class NotExpression implements PermissionExpression {
         return !expression.interpret(user);
     }
 
+//    @Override
+//    public String toString() {
+//        return "NOT " + expression;
+//    }
+
+
     @Override
     public String toString() {
-        return "NOT " + expression;
+        return "NotExpression{" +
+                "expression=" + expression +
+                '}';
     }
 }
