@@ -1,7 +1,7 @@
 package com.eduardocode.objectorienteddesign.designpatterns.behavioral.interpreter.report;
 
 public class Permission implements PermissionExpression {
-    private String permission;
+    private final String permission;
 
     public Permission(String permission) {
         this.permission = permission;

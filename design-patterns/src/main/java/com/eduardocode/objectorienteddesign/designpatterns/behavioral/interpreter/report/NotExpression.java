@@ -1,7 +1,7 @@
 package com.eduardocode.objectorienteddesign.designpatterns.behavioral.interpreter.report;
 
 public class NotExpression implements PermissionExpression {
-    private PermissionExpression expression;
+    private final PermissionExpression expression;
 
     public NotExpression(PermissionExpression expression) {
         this.expression = expression;

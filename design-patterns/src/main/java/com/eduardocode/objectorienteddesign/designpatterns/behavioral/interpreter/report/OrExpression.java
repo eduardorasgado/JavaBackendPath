@@ -1,8 +1,8 @@
 package com.eduardocode.objectorienteddesign.designpatterns.behavioral.interpreter.report;
 
 public class OrExpression implements PermissionExpression {
-    private PermissionExpression left;
-    private PermissionExpression right;
+    private final PermissionExpression left;
+    private final PermissionExpression right;
 
     public OrExpression(PermissionExpression left, PermissionExpression right) {
         this.left = left;
@@ -12,7 +12,7 @@ public class OrExpression implements PermissionExpression {
 
     @Override
     public boolean interpret(User user) {
-        return false;
+        return left.interpret(user) || right.interpret(user);
     }
 
 //    @Override

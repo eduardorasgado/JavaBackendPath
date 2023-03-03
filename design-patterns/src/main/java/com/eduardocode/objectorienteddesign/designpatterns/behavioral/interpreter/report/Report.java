@@ -1,9 +1,9 @@
 package com.eduardocode.objectorienteddesign.designpatterns.behavioral.interpreter.report;
 
 public class Report {
-    private String name;
+    private final String name;
     //"NOT ADMIN", "FINANCE_USER AND ADMIN"
-    private String permission;
+    private final String permission;
 
     public Report(String name, String permissions) {
         this.name = name;
