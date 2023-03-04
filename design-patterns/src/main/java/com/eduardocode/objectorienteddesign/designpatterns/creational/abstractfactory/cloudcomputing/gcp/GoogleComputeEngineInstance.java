@@ -3,8 +3,6 @@ package com.eduardocode.objectorienteddesign.designpatterns.creational.abstractf
 import com.eduardocode.objectorienteddesign.designpatterns.creational.abstractfactory.cloudcomputing.Instance;
 import com.eduardocode.objectorienteddesign.designpatterns.creational.abstractfactory.cloudcomputing.Storage;
 
-import java.sql.SQLOutput;
-
 public class GoogleComputeEngineInstance implements Instance {
 
     public GoogleComputeEngineInstance(Capacity capacity) {

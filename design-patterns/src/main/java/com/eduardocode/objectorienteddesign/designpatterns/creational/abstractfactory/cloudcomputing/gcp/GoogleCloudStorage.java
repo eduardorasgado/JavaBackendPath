@@ -2,7 +2,6 @@ package com.eduardocode.objectorienteddesign.designpatterns.creational.abstractf
 
 import com.eduardocode.objectorienteddesign.designpatterns.creational.abstractfactory.cloudcomputing.Storage;
 
-import java.sql.SQLOutput;
 
 public class GoogleCloudStorage implements Storage {
 
