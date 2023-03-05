@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 
 /*
 	All the classes of this package have to be copied and pasted on a java fx generated project
-	in order to run the project as a whole
+	in order to run the current project
  */
 public class Ui2Demo extends Application {
 

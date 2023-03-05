@@ -30,10 +30,7 @@ public class NameRepository implements Container {
 
         @Override
         public boolean hasNext() {
-            if(index < getIterableSize()) {
-                return true;
-            }
-            return false;
+            return index < getIterableSize();
         }
 
         @Override
