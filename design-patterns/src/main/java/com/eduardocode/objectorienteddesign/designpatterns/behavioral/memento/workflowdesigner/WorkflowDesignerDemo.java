@@ -1,59 +1,48 @@
 package com.eduardocode.objectorienteddesign.designpatterns.behavioral.memento.workflowdesigner;
 
-import java.util.LinkedList;
-
 public class WorkflowDesignerDemo {
 
     public static void main(String[] args) {
         WorkflowDesigner designer = new WorkflowDesigner();
-        LinkedList<WorkflowCommand> commands = runCommands(designer);
+        WorkflowUndoManager undoManager = new WorkflowUndoManager();
+
+        System.out.println("Running commands...");
+        runCommands(designer, undoManager);
+        System.out.println();
+
+        System.out.println("Undoing commands...");
+        undoManager.undoCommand();
         designer.print();
         System.out.println();
 
-        undoLastCommand(commands);
+        undoManager.undoCommand();
         designer.print();
         System.out.println();
 
-        undoLastCommand(commands);
+        undoManager.undoCommand();
         designer.print();
         System.out.println();
 
-        undoLastCommand(commands);
+        undoManager.undoCommand();
         designer.print();
         System.out.println();
 
-        undoLastCommand(commands);
-        designer.print();
-        System.out.println();
-
-        undoLastCommand(commands);
+        undoManager.undoCommand();
         designer.print();
     }
 
-    private static void undoLastCommand(LinkedList<WorkflowCommand> commands) {
-        if(!commands.isEmpty())
-            commands.removeLast().undo();
-    }
+    private static void runCommands(WorkflowDesigner designer, WorkflowUndoManager undoManager) {
 
-    private static LinkedList<WorkflowCommand> runCommands(WorkflowDesigner designer) {
-        LinkedList<WorkflowCommand> commands = new LinkedList<>();
+        undoManager.addCommand(new CreateCommand(designer,"Leave Workflow"));
+        designer.print();
 
-        WorkflowCommand cmd = new CreateCommand(designer,"Leave Workflow");
-        commands.addLast(cmd);
-        cmd.execute();
+        undoManager.addCommand(new AddStepCommand(designer,"Create Leave Application"));
+        designer.print();
 
-        cmd = new AddStepCommand(designer,"Create Leave Application");
-        commands.addLast(cmd);
-        cmd.execute();
+        undoManager.addCommand(new AddStepCommand(designer,"Submit Application"));
+        designer.print();
 
-        cmd = new AddStepCommand(designer,"Submit Application");
-        commands.addLast(cmd);
-        cmd.execute();
-
-        cmd = new AddStepCommand(designer,"Application Approved");
-        commands.addLast(cmd);
-        cmd.execute();
-
-        return commands;
+        undoManager.addCommand(new AddStepCommand(designer,"Application Approved"));
+        designer.print();
     }
 }

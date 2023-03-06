@@ -9,15 +9,15 @@ public abstract class AbstractWorkflowCommand implements WorkflowCommand{
         this.workflowDesigner = workflowDesigner;
     }
 
-    protected WorkflowDesigner.Memento getMemento() {
+    protected final WorkflowDesigner.Memento getMemento() {
         return memento;
     }
 
-    protected void setMemento(WorkflowDesigner.Memento memento) {
+    protected final void setMemento(WorkflowDesigner.Memento memento) {
         this.memento = memento;
     }
 
-    protected WorkflowDesigner getWorkflowDesigner() {
+    protected final WorkflowDesigner getWorkflowDesigner() {
         return workflowDesigner;
     }
 
