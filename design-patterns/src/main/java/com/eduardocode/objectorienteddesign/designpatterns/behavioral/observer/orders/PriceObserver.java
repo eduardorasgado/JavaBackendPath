@@ -2,6 +2,10 @@ package com.eduardocode.objectorienteddesign.designpatterns.behavioral.observer.
 
 public class PriceObserver implements OrderObserver {
 
+    public PriceObserver(Order order) {
+        order.attach(this);
+    }
+
     @Override
     public void update(Order order) {
         double itemsCost = order.getItemCost();

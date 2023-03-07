@@ -2,6 +2,10 @@ package com.eduardocode.objectorienteddesign.designpatterns.behavioral.observer.
 
 public class QuantityObserver implements OrderObserver {
 
+    public QuantityObserver(Order order) {
+        order.attach(this);
+    }
+
     @Override
     public void update(Order order) {
         int itemCount = order.getCount();
