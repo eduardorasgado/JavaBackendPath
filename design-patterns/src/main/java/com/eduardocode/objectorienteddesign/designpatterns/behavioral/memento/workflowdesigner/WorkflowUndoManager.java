@@ -18,12 +18,16 @@ public class WorkflowUndoManager {
     }
 
     public WorkflowCommand undoCommand() {
-        if(commands.isEmpty()) {
+        if(!canUndo()) {
            return null;
         }
 
         WorkflowCommand command = commands.removeLast();
         command.undo();
         return command;
+    }
+
+    private boolean canUndo() {
+        return !commands.isEmpty();
     }
 }
