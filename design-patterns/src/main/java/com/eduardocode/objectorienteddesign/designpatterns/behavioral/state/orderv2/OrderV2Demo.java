@@ -9,5 +9,6 @@ public class OrderV2Demo {
         order.delivered();
 
         order.cancel();
+        //order.cancel();
     }
 }

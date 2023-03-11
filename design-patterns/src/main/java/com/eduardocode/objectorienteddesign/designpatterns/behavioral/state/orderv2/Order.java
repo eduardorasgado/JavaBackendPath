@@ -5,7 +5,7 @@ public class Order {
     private OrderState currentState;
 
     public Order() {
-        currentState = new NewOrder();
+        setCurrentState(new NewOrder(this));
     }
 
     public double cancel() {
@@ -13,14 +13,18 @@ public class Order {
     }
 
     public void paymentSuccessful() {
-        currentState = new PaidOrder();
+        setCurrentState(new PaidOrder(this));
     }
 
     public void dispatched() {
-        currentState = new InTransitOrder();
+        setCurrentState(new InTransitOrder(this));
     }
 
     public void delivered() {
-        currentState = new DeliveredOrder();
+        setCurrentState(new DeliveredOrder(this));
+    }
+
+    public void setCurrentState(OrderState currentState) {
+        this.currentState = currentState;
     }
 }
