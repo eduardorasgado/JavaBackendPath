@@ -4,12 +4,14 @@ import java.util.LinkedList;
 
 public class PrinterDemo {
 
-    private static LinkedList<Order> orders = new LinkedList<>();
+    private final static LinkedList<Order> orders = new LinkedList<>();
 
     public static void main(String[] args) {
         createOrders();
 
-        PrintService service = new PrintService();
+        //OrderPrinter orderPrinter = new SummaryPrinter();
+        OrderPrinter orderPrinter = new DetailPrinter();
+        PrintService service = new PrintService(orderPrinter);
         service.printOrders(orders);
     }
 
