@@ -5,23 +5,20 @@ public class Order {
     private OrderState currentState;
 
     public Order() {
-        setCurrentState(new NewOrder(this));
+        new NewOrder(this);
     }
 
     public double cancel() {
         return currentState.handleCancellation();
     }
 
-    public void paymentSuccessful() {
-        setCurrentState(new PaidOrder(this));
-    }
-
-    public void dispatched() {
-        setCurrentState(new InTransitOrder(this));
-    }
-
-    public void delivered() {
-        setCurrentState(new DeliveredOrder(this));
+    public void process() {
+        try {
+            currentState.next();
+        } catch (UnsupportedOperationException exception) {
+            System.out.println("LOGGER: " + exception.getMessage());
+            throw new IllegalStateException();
+        }
     }
 
     public void setCurrentState(OrderState currentState) {

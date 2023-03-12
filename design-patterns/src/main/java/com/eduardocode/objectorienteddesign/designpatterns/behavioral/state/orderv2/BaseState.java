@@ -5,13 +5,20 @@ public abstract class BaseState implements OrderState {
 
     public BaseState(Order context) {
         this.context = context;
+        setContextState(this);
+    }
+
+    @Override
+    public double handleCancellation() {
+        setContextState(new CancelledOrder());
+        return 0;
     }
 
     protected Order getContext() {
         return context;
     }
 
-    protected void updateContextStateToCancelled() {
-        getContext().setCurrentState(new CancelledOrder());
+    protected void setContextState(OrderState orderState) {
+        getContext().setCurrentState(orderState);
     }
 }

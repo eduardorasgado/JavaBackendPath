@@ -8,9 +8,15 @@ public class PaidOrder extends BaseState {
 
     @Override
     public double handleCancellation() {
-        System.out.println("Contacting payment gateway to rollback transaction...");
+        super.handleCancellation();
 
-        updateContextStateToCancelled();
+        System.out.println("Contacting payment gateway to rollback transaction...");
         return 67.5;
+    }
+
+    @Override
+    public void next() {
+        System.out.println("Your paid order has been processed and it is in transit");
+        setContextState(new InTransitOrder(getContext()));
     }
 }
