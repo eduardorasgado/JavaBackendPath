@@ -8,28 +8,36 @@ public class PrintVisitor implements Visitor {
     @Override
     public void visit(Programmer programmer) {
         System.out.println(
-                "Programmer name: " + programmer.getName() + ", programming language: " + programmer.getProgrammingLanguage());
+                "Id: " + programmer.getEmployeeId()
+                + ", Programmer name: " + programmer.getName()
+                + ", programming language: " + programmer.getProgrammingLanguage());
     }
 
     @Override
     public void visit(Manager manager) {
-        System.out.println("Manager name: " + manager.getName() + ", works with: "
-                + getNamesSeparatedByCommas(manager.getDirectReports()));
+        System.out.println(
+                "Id: " + manager.getEmployeeId()
+                + ", Manager name: " + manager.getName()
+                + ", works with: " + getNamesSeparatedByCommas(manager.getDirectReports()));
     }
 
     @Override
     public void visit(ProjectLead projectLead) {
-        System.out.println("Project lead name: " + projectLead.getName() + " lead project with "
-                + getNamesSeparatedByCommas(projectLead.getDirectReports()));
+        System.out.println(
+                "Id: " + projectLead.getEmployeeId()
+                + ", Project lead name: " + projectLead.getName()
+                + " lead project with " + getNamesSeparatedByCommas(projectLead.getDirectReports()));
     }
 
     @Override
     public void visit(VicePresident vicePresident) {
-        System.out.println("VicePresident name: " + vicePresident.getName() + ", leads a company and leads to "
-                + getNamesSeparatedByCommas(vicePresident.getDirectReports()));
+        System.out.println(
+                "Id: " + vicePresident.getEmployeeId()
+                + ", VicePresident name: " + vicePresident.getName()
+                + ", leads a company and leads to " + getNamesSeparatedByCommas(vicePresident.getDirectReports()));
     }
 
-    private String getNamesSeparatedByCommas(Collection<Employee> employees) {
+    private String getNamesSeparatedByCommas  (Collection<Employee> employees) {
         return String.join(", ", getEmployeeNames(employees));
     }
 
