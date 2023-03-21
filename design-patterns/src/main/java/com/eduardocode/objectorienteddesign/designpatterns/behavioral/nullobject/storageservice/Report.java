@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.behavioral.nullobject.storage;
+package com.eduardocode.objectorienteddesign.designpatterns.behavioral.nullobject.storageservice;
 
 public class Report {
     private String name;

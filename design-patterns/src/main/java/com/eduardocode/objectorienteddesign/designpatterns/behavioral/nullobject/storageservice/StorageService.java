@@ -1,4 +1,4 @@
-package com.eduardocode.objectorienteddesign.designpatterns.behavioral.nullobject.storage;
+package com.eduardocode.objectorienteddesign.designpatterns.behavioral.nullobject.storageservice;
 
 import java.io.IOException;
 import java.io.PrintWriter;
