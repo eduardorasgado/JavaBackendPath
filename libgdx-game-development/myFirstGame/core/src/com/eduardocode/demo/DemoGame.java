@@ -1,31 +1,27 @@
 package com.eduardocode.demo;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.ScreenUtils;
 
 public class DemoGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
-		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
-	}
+
+	private Texture dropImage;
+	private Texture buckedImage;
+	private Sound dropSound;
+	private Music rainMusic;
 
 	@Override
-	public void render () {
-		ScreenUtils.clear(1, 0, 0, 1);
-		batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-	}
-	
-	@Override
-	public void dispose () {
-		batch.dispose();
-		img.dispose();
+	public void create() {
+		dropImage = new Texture(Gdx.files.internal("sprite/drop.png"));
+		buckedImage = new Texture(Gdx.files.internal("sprite/bucket.png"));
+
+		dropSound = Gdx.audio.newSound(Gdx.files.internal("sound/drop.wav"));
+		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
+
+		rainMusic.setLooping(true);
+		rainMusic.play();
 	}
 }
