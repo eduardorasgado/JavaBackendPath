@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Bucket implements BatchDrawable
+public class Bucket implements BatchDrawable, Controllable
 {
     private final Rectangle bucket;
 
@@ -32,20 +32,25 @@ public class Bucket implements BatchDrawable
         batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
     }
 
+    @Override
     public void moveTo(float newPosition)
     {
         bucket.x = newPosition - 64 / 2;
         sanitizeNewPosition();
     }
 
+    @Override
     public void moveLeft(float pixelsToMove)
     {
         bucket.x -= pixelsToMove;
+        sanitizeNewPosition();
     }
 
+    @Override
     public void moveRight(float pixelsToMove)
     {
         bucket.x += pixelsToMove;
+        sanitizeNewPosition();
     }
 
     private void sanitizeNewPosition()

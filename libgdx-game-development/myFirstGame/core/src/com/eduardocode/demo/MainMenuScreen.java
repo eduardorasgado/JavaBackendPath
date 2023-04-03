@@ -13,6 +13,12 @@ public class MainMenuScreen implements Screen
 
     private final GameSettings gameSettings;
 
+    private final ScreenText welcomeText;
+
+    private final ScreenText tapText;
+
+    private final MenuControl menuControl;
+
     public MainMenuScreen(final Drop game, GameSettings gameSettings)
     {
         this.game = game;
@@ -20,30 +26,31 @@ public class MainMenuScreen implements Screen
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, gameSettings.getWidth(), gameSettings.getHeight());
+
+        welcomeText = new ScreenText("Welcome to Drop!!! ", 100, 150);
+        game.assignFont(welcomeText);
+        tapText = new ScreenText("Tap anywhere to begin!", 100, 100);
+        game.assignFont(tapText);
+
+        menuControl = new MenuControl(game, this, gameSettings);
     }
 
     @Override
-    public void show() {
-
+    public void show()
+    {
     }
 
     @Override
-    public void render(float delta) {
+    public void render(float delta)
+    {
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         game.setBatchProjectionMatrix(camera);
 
-        game.drawInBatch(() ->
-        {
-            game.font.draw(game.batch, "Welcome to Drop!!! ", 100, 150);
-            game.font.draw(game.batch, "Tap anywhere to begin!", 100, 100);
-        });
+        game.drawInBatch(welcomeText, tapText);
 
-        if(Gdx.input.isTouched())
-        {
-            game.setScreen(new GameScreen(game, gameSettings));
-            dispose();
-        }
+        menuControl.control();
+
     }
 
     @Override

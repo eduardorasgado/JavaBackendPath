@@ -10,25 +10,24 @@ import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen
 {
-
 	private Drop game;
-	private GameSettings gameSettings;
 	private final OrthographicCamera camera;
 
 	private final Bucket bucket;
+
 	private final Rain rain;
 
 	private final Music rainMusic;
 
-	// we dont want to create this object everytime render runs
-	private Vector3 touchPos;
+	private final GameControl gameControl;
 
 	private int dropsGathered;
+
+	private final ScreenText scoreText;
 
 	public GameScreen(final Drop game, GameSettings gameSettings)
 	{
 		this.game = game;
-		this.gameSettings = gameSettings;
 
 		bucket = new Bucket(gameSettings);
 		// 1 000 000 000
@@ -40,6 +39,14 @@ public class GameScreen implements Screen
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, gameSettings.getWidth(), gameSettings.getHeight());
+
+		scoreText = new ScreenText();
+		scoreText.setxPosition(gameSettings.getOriginWidth());
+		scoreText.setyPosition(gameSettings.getHeight());
+
+		game.assignFont(scoreText);
+
+		gameControl = new GameControl(bucket, gameSettings, camera);
 	}
 
 	@Override
@@ -50,30 +57,10 @@ public class GameScreen implements Screen
 
 		game.setBatchProjectionMatrix(camera);
 
-		game.drawInBatch(() ->
-		{
-			game.font.draw(game.batch,
-					"Drops Collected: " + dropsGathered, gameSettings.getOriginWidth(), gameSettings.getHeight());
-			bucket.draw(game.batch);
-			rain.draw(game.batch);
-		});
+		scoreText.setText("Drops Collected: " + dropsGathered);
+		game.drawInBatch(scoreText, bucket, rain);
 
-		if(Gdx.input.isTouched())
-		{
-			touchPos = new Vector3();
-			touchPos.set(Gdx.input.getX(), gameSettings.getOriginHeight(), gameSettings.getOriginDepth());
-
-			touchPos = camera.unproject(touchPos);
-
-			bucket.moveTo(touchPos.x);
-		}
-
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-			bucket.moveLeft(400 * Gdx.graphics.getDeltaTime());
-
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-			bucket.moveRight(400 * Gdx.graphics.getDeltaTime());
-
+		gameControl.control();
 
 		if (rain.canSpawnRaindrop())
 			rain.spawnRaindrop();

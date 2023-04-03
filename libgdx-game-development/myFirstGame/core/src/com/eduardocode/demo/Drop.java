@@ -1,13 +1,9 @@
 package com.eduardocode.demo;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
-import java.util.List;
-import java.util.function.Consumer;
 
 public class Drop extends Game
 {
@@ -51,13 +47,16 @@ public class Drop extends Game
         batch.setProjectionMatrix(camera.combined);
     }
 
-    void drawInBatch(Runnable runnable)
+    void drawInBatch(BatchDrawable... drawableList)
     {
         batch.begin();
-//        for (BatchDrawable drawable : drawableList) {
-//            drawable.draw(batch);
-//        }
-        runnable.run();
+        for (BatchDrawable drawable : drawableList) {
+            drawable.draw(batch);
+        }
         batch.end();
+    }
+
+    public void assignFont(FontAssignable fontAssignable) {
+        fontAssignable.setFont(font);
     }
 }
