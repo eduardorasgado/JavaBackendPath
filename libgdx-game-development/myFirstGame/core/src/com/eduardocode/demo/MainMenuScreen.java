@@ -11,7 +11,7 @@ public class MainMenuScreen implements Screen
 
     private final Drop game;
 
-    private OrthographicCamera camera;
+    private final OrthographicCamera camera;
 
     public MainMenuScreen(Drop game)
     {

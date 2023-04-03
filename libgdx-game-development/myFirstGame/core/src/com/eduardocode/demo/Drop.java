@@ -10,11 +10,20 @@ public class Drop extends Game
     public SpriteBatch batch;
     public BitmapFont font;
 
+    private final GameSettings gameSettings;
+
+
+    public Drop(GameSettings gameSettings) {
+        this.gameSettings = gameSettings;
+    }
+
     @Override
     public void create()
     {
-        batch = new SpriteBatch(100);
+        int spriteBatchSize = 100;
+        batch = new SpriteBatch(spriteBatchSize);
         font = new BitmapFont();
+
         setScreen(new MainMenuScreen(this));
     }
 
