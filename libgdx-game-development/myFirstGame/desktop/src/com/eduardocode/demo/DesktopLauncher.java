@@ -16,7 +16,7 @@ public class DesktopLauncher
 
 	private void start()
 	{
-		DesktopSettings settings = new DesktopSettings("Drops", 800, 480, 60, true);
+		DesktopSettings settings = new DesktopSettings("Drops", 480, 800, 60, true);
 		new Lwjgl3Application(new Drop(settings), getConfiguration(settings));
 	}
 

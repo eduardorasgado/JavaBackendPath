@@ -40,6 +40,21 @@ public class DesktopSettings implements GameSettings
         return width;
     }
 
+    @Override
+    public int getOriginHeight() {
+        return 0;
+    }
+
+    @Override
+    public int getOriginWidth() {
+        return 0;
+    }
+
+    @Override
+    public int getOriginDepth() {
+        return 0;
+    }
+
     private int getFps()
     {
         return fps;
@@ -53,7 +68,7 @@ public class DesktopSettings implements GameSettings
     public void configure(Lwjgl3ApplicationConfiguration config)
     {
         config.setTitle(getTitle());
-        config.setWindowedMode(getHeight(), getWidth());
+        config.setWindowedMode(getWidth(), getHeight());
         config.useVsync(isVsyncActive());
         config.setForegroundFPS(getFps());
     }
