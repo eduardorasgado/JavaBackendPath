@@ -22,9 +22,8 @@ public class GameScreen implements Screen
 
 	private final GameControl gameControl;
 
-	private int dropsGathered;
+	private final GameScore score;
 
-	private final ScreenText scoreText;
 
 	public GameScreen(final Drop game, ApplicationSettings applicationSettings, GameSettings gameSettings)
 	{
@@ -36,19 +35,14 @@ public class GameScreen implements Screen
 		rain = new Rain(applicationSettings, 1000000000, gameSettings);
 
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.RAIN_MUSIC)));
-
 		rainMusic.setLooping(true);
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
-		scoreText = new ScreenText();
-		scoreText.setxPosition(applicationSettings.getOriginWidth());
-		scoreText.setyPosition(applicationSettings.getHeight());
-
-		game.assignFont(scoreText);
-
 		gameControl = new GameControl(bucket, applicationSettings, camera);
+
+		score = new GameScore(game, applicationSettings, gameSettings, new RainGatheredChecker(gameSettings));
 	}
 
 	@Override
@@ -59,8 +53,7 @@ public class GameScreen implements Screen
 
 		game.setBatchProjectionMatrix(camera);
 
-		scoreText.setText(gameSettings.getAsset(GameSettings.TextPlaceholder.DROPS_COLLECTED) + dropsGathered);
-		game.drawInBatch(scoreText, bucket, rain);
+		game.drawInBatch(score.getScoreText(), bucket, rain);
 
 		gameControl.control();
 
@@ -68,11 +61,12 @@ public class GameScreen implements Screen
 			rain.spawnRaindrop();
 
 		rain.moveDown(200 * Gdx.graphics.getDeltaTime());
-		dropsGathered += rain.gatherRaindrops(bucket);
+		score.updateNewScore(rain, bucket);
 	}
 
 	@Override
-	public void show() {
+	public void show()
+	{
 		rainMusic.play();
 	}
 
@@ -102,5 +96,6 @@ public class GameScreen implements Screen
 		bucket.dispose();
 		rain.dispose();
 		rainMusic.dispose();
+		score.dispose();
 	}
 }

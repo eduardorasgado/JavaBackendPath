@@ -15,8 +15,6 @@ public class Rain implements BatchDrawable
 {
     private final Texture dropImage;
 
-    private final Sound dropSound;
-
     private final Array<Rectangle> raindrops;
 
     private long lastDropTime;
@@ -35,7 +33,6 @@ public class Rain implements BatchDrawable
 
         raindrops = new Array<>();
         dropImage = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.DROP)));
-        dropSound = Gdx.audio.newSound(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.DROP)));
 
         spawnRaindrop();
     }
@@ -83,25 +80,12 @@ public class Rain implements BatchDrawable
         }
     }
 
-    public int gatherRaindrops(Bucket bucket) {
-        int dropsGathered = 0;
-        for (Iterator<Rectangle> iterator = raindrops.iterator(); iterator.hasNext(); )
-        {
-            Rectangle raindrop = iterator.next();
-            if(raindrop.overlaps(bucket.getBucket()))
-            {
-                dropSound.play();
-                iterator.remove();
-                ++dropsGathered;
-            }
-        }
-
-        return dropsGathered;
+    public Array<Rectangle> getRaindrops() {
+        return raindrops;
     }
 
     public void dispose()
     {
         dropImage.dispose();
-        dropSound.dispose();
     }
 }
