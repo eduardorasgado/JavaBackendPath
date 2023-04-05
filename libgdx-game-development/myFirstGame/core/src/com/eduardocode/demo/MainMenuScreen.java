@@ -1,6 +1,5 @@
 package com.eduardocode.demo;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -11,28 +10,25 @@ public class MainMenuScreen implements Screen
     private final Drop game;
     private final OrthographicCamera camera;
 
-    private final GameSettings gameSettings;
-
     private final ScreenText welcomeText;
 
     private final ScreenText tapText;
 
     private final MenuControl menuControl;
 
-    public MainMenuScreen(final Drop game, GameSettings gameSettings)
+    public MainMenuScreen(final Drop game, ApplicationSettings applicationSettings, GameSettings gameSettings)
     {
         this.game = game;
-        this.gameSettings = gameSettings;
 
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, gameSettings.getWidth(), gameSettings.getHeight());
+        camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
         welcomeText = new ScreenText("Welcome to Drop!!! ", 100, 150);
         game.assignFont(welcomeText);
         tapText = new ScreenText("Tap anywhere to begin!", 100, 100);
         game.assignFont(tapText);
 
-        menuControl = new MenuControl(game, this, gameSettings);
+        menuControl = new MenuControl(game, this, applicationSettings, gameSettings);
     }
 
     @Override

@@ -2,13 +2,29 @@ package com.eduardocode.demo;
 
 public interface GameSettings
 {
-    int getHeight();
+    enum SpriteAsset
+    {
+        BUCKET, DROP
+    }
 
-    int getWidth();
+    enum SoundAsset
+    {
+        DROP,
+        RAIN_MUSIC;
+    }
 
-    int getOriginHeight();
+    enum TextPlaceholder
+    {
+        ITEMS_COLLECTED;
+    }
 
-    int getOriginWidth();
+    String getAsset(SpriteAsset assetType);
+    void setAsset(SpriteAsset assetType, String path);
 
-    int getOriginDepth();
+    String getAsset(SoundAsset assetType);
+
+    void setAsset(SoundAsset assetType, String path);
+
+    String getAsset(TextPlaceholder textPlaceholderType);
+    void setAsset(TextPlaceholder textPlaceholderType, String text);
 }

@@ -21,18 +21,21 @@ public class Rain implements BatchDrawable
 
     private long lastDropTime;
 
-    private long maxTimeInNanos;
+    private final long maxTimeInNanos;
+
+    private final ApplicationSettings applicationSettings;
 
     private final GameSettings gameSettings;
 
-    public Rain(GameSettings gameSettings, long maxTimeInNanos)
+    public Rain(ApplicationSettings applicationSettings, long maxTimeInNanos, GameSettings gameSettings)
     {
-        this.gameSettings = gameSettings;
+        this.applicationSettings = applicationSettings;
         this.maxTimeInNanos = maxTimeInNanos;
+        this.gameSettings = gameSettings;
 
         raindrops = new Array<>();
-        dropImage = new Texture(Gdx.files.internal("sprite/drop.png"));
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("sound/drop.wav"));
+        dropImage = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.DROP)));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.DROP)));
 
         spawnRaindrop();
     }
@@ -41,8 +44,8 @@ public class Rain implements BatchDrawable
     {
         Rectangle raindrop = new Rectangle();
 
-        raindrop.x = MathUtils.random(gameSettings.getOriginWidth(), gameSettings.getWidth() - 64);
-        raindrop.y = gameSettings.getHeight();
+        raindrop.x = MathUtils.random(applicationSettings.getOriginWidth(), applicationSettings.getWidth() - 64);
+        raindrop.y = applicationSettings.getHeight();
         raindrop.width = 64;
         raindrop.height = 64;
         raindrops.add(raindrop);
@@ -76,7 +79,7 @@ public class Rain implements BatchDrawable
         for (Iterator<Rectangle> iterator = raindrops.iterator(); iterator.hasNext(); )
         {
             Rectangle raindrop = iterator.next();
-            if (raindrop.y + 64 < gameSettings.getOriginHeight()) iterator.remove();
+            if (raindrop.y + 64 < applicationSettings.getOriginHeight()) iterator.remove();
         }
     }
 

@@ -9,12 +9,15 @@ public class MenuControl
     private final Drop game;
     private final Screen screen;
 
+    private final ApplicationSettings applicationSettings;
+
     private final GameSettings gameSettings;
 
-    public MenuControl(Drop game, Screen screen, GameSettings gameSettings)
+    public MenuControl(Drop game, Screen screen, ApplicationSettings applicationSettings, GameSettings gameSettings)
     {
         this.game = game;
         this.screen = screen;
+        this.applicationSettings = applicationSettings;
         this.gameSettings = gameSettings;
     }
 
@@ -22,7 +25,7 @@ public class MenuControl
     {
         if(Gdx.input.isTouched())
         {
-            game.setScreen(new GameScreen(game, gameSettings));
+            game.setScreen(new GameScreen(game, applicationSettings, gameSettings));
             screen.dispose();
         }
     }

@@ -11,16 +11,16 @@ public class Bucket implements BatchDrawable, Controllable
 
     private final Texture bucketImage;
 
-    private GameSettings gameSettings;
+    private ApplicationSettings applicationSettings;
 
-    public Bucket(GameSettings gameSettings)
+    public Bucket(ApplicationSettings applicationSettings, GameSettings gameSettings)
     {
-        this.gameSettings = gameSettings;
+        this.applicationSettings = applicationSettings;
 
-        bucketImage = new Texture(Gdx.files.internal("sprite/bucket.png"));
+        bucketImage = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.BUCKET)));
 
         bucket = new Rectangle();
-        bucket.x = gameSettings.getWidth() / 2 - 64 / 2;
+        bucket.x = applicationSettings.getWidth() / 2 - 64 / 2;
         bucket.y = 20;
         bucket.width = 64;
         bucket.height = 64;
@@ -55,11 +55,11 @@ public class Bucket implements BatchDrawable, Controllable
 
     private void sanitizeNewPosition()
     {
-        if(bucket.x < gameSettings.getOriginWidth())
-            bucket.x = gameSettings.getOriginWidth();
+        if(bucket.x < applicationSettings.getOriginWidth())
+            bucket.x = applicationSettings.getOriginWidth();
 
-        if(bucket.x + 64 > gameSettings.getWidth())
-            bucket.x = gameSettings.getWidth() - 64;
+        if(bucket.x + 64 > applicationSettings.getWidth())
+            bucket.x = applicationSettings.getWidth() - 64;
     }
 
     public Rectangle getBucket()

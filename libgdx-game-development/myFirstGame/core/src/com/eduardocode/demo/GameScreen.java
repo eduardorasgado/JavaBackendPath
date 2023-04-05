@@ -1,16 +1,17 @@
 package com.eduardocode.demo;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen
 {
-	private Drop game;
+	private final Drop game;
+
+	private final GameSettings gameSettings;
+
 	private final OrthographicCamera camera;
 
 	private final Bucket bucket;
@@ -25,28 +26,29 @@ public class GameScreen implements Screen
 
 	private final ScreenText scoreText;
 
-	public GameScreen(final Drop game, GameSettings gameSettings)
+	public GameScreen(final Drop game, ApplicationSettings applicationSettings, GameSettings gameSettings)
 	{
 		this.game = game;
+		this.gameSettings = gameSettings;
 
-		bucket = new Bucket(gameSettings);
+		bucket = new Bucket(applicationSettings, gameSettings);
 		// 1 000 000 000
-		rain = new Rain(gameSettings, 1000000000);
+		rain = new Rain(applicationSettings, 1000000000, gameSettings);
 
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal("sound/rain.mp3"));
+		rainMusic = Gdx.audio.newMusic(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.RAIN_MUSIC)));
 
 		rainMusic.setLooping(true);
 
 		camera = new OrthographicCamera();
-		camera.setToOrtho(false, gameSettings.getWidth(), gameSettings.getHeight());
+		camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
 		scoreText = new ScreenText();
-		scoreText.setxPosition(gameSettings.getOriginWidth());
-		scoreText.setyPosition(gameSettings.getHeight());
+		scoreText.setxPosition(applicationSettings.getOriginWidth());
+		scoreText.setyPosition(applicationSettings.getHeight());
 
 		game.assignFont(scoreText);
 
-		gameControl = new GameControl(bucket, gameSettings, camera);
+		gameControl = new GameControl(bucket, applicationSettings, camera);
 	}
 
 	@Override
@@ -57,7 +59,7 @@ public class GameScreen implements Screen
 
 		game.setBatchProjectionMatrix(camera);
 
-		scoreText.setText("Drops Collected: " + dropsGathered);
+		scoreText.setText(gameSettings.getAsset(GameSettings.TextPlaceholder.ITEMS_COLLECTED) + dropsGathered);
 		game.drawInBatch(scoreText, bucket, rain);
 
 		gameControl.control();

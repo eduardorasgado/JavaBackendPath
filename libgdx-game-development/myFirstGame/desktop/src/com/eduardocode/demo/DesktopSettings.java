@@ -2,7 +2,7 @@ package com.eduardocode.demo;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 
-public class DesktopSettings implements GameSettings
+public class DesktopSettings implements ApplicationSettings
 {
     private final String title;
 
@@ -41,17 +41,20 @@ public class DesktopSettings implements GameSettings
     }
 
     @Override
-    public int getOriginHeight() {
+    public int getOriginHeight()
+    {
         return 0;
     }
 
     @Override
-    public int getOriginWidth() {
+    public int getOriginWidth()
+    {
         return 0;
     }
 
     @Override
-    public int getOriginDepth() {
+    public int getOriginDepth()
+    {
         return 0;
     }
 

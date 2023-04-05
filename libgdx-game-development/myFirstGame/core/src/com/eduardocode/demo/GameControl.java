@@ -8,17 +8,17 @@ import com.badlogic.gdx.math.Vector3;
 public class GameControl {
     private final Controllable controllable;
 
-    private final GameSettings gameSettings;
+    private final ApplicationSettings applicationSettings;
 
     private final OrthographicCamera camera;
 
     // we dont want to create this object everytime render runs
     private Vector3 touchPos;
 
-    public GameControl(Controllable controllable, GameSettings gameSettings, OrthographicCamera camera)
+    public GameControl(Controllable controllable, ApplicationSettings applicationSettings, OrthographicCamera camera)
     {
         this.controllable = controllable;
-        this.gameSettings = gameSettings;
+        this.applicationSettings = applicationSettings;
         this.camera = camera;
     }
 
@@ -33,7 +33,7 @@ public class GameControl {
         if(Gdx.input.isTouched())
         {
             touchPos = new Vector3();
-            touchPos.set(Gdx.input.getX(), gameSettings.getOriginHeight(), gameSettings.getOriginDepth());
+            touchPos.set(Gdx.input.getX(), applicationSettings.getOriginHeight(), applicationSettings.getOriginDepth());
 
             touchPos = camera.unproject(touchPos);
 
