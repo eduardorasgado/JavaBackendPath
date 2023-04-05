@@ -59,7 +59,7 @@ public class GameScreen implements Screen
 
 		game.setBatchProjectionMatrix(camera);
 
-		scoreText.setText(gameSettings.getAsset(GameSettings.TextPlaceholder.ITEMS_COLLECTED) + dropsGathered);
+		scoreText.setText(gameSettings.getAsset(GameSettings.TextPlaceholder.DROPS_COLLECTED) + dropsGathered);
 		game.drawInBatch(scoreText, bucket, rain);
 
 		gameControl.control();

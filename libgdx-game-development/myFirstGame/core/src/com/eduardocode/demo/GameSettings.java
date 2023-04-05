@@ -15,7 +15,7 @@ public interface GameSettings
 
     enum TextPlaceholder
     {
-        ITEMS_COLLECTED;
+        DROPS_COLLECTED, WELCOME_TO_DROP, TAP_ANYWHERE_TO_BEGIN;
     }
 
     String getAsset(SpriteAsset assetType);

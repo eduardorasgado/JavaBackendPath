@@ -23,12 +23,13 @@ public class MainMenuScreen implements Screen
         camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
-        welcomeText = new ScreenText("Welcome to Drop!!! ", 100, 150);
+        welcomeText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholder.WELCOME_TO_DROP), 100, 150);
         game.assignFont(welcomeText);
-        tapText = new ScreenText("Tap anywhere to begin!", 100, 100);
+        tapText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholder.TAP_ANYWHERE_TO_BEGIN), 100, 100);
         game.assignFont(tapText);
 
-        menuControl = new MenuControl(game, this, applicationSettings, gameSettings);
+
+        menuControl = new MenuControl(game, this, new GameScreen(game, applicationSettings, gameSettings));
     }
 
     @Override
@@ -42,7 +43,6 @@ public class MainMenuScreen implements Screen
         ScreenUtils.clear(0, 0, 0.2f, 1);
 
         game.setBatchProjectionMatrix(camera);
-
         game.drawInBatch(welcomeText, tapText);
 
         menuControl.control();

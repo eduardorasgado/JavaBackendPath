@@ -43,7 +43,9 @@ public class DesktopLauncher
 		desktopGameAsset.setAsset(GameSettings.SoundAsset.DROP, "sound/drop.wav");
 		desktopGameAsset.setAsset(GameSettings.SoundAsset.RAIN_MUSIC, "sound/rain.mp3");
 
-		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.ITEMS_COLLECTED, "Drops Collected: ");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.DROPS_COLLECTED, "Drops Collected: ");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.WELCOME_TO_DROP, "Welcome to Drop!!! ");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.TAP_ANYWHERE_TO_BEGIN, "Tap anywhere to begin!");
 
 		return desktopGameAsset;
 	}
