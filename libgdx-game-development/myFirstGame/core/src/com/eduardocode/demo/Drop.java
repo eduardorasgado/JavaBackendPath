@@ -48,10 +48,10 @@ public class Drop extends Game
         batch.setProjectionMatrix(camera.combined);
     }
 
-    void drawInBatch(BatchDrawable... drawableList)
+    void drawInBatch(Drawable... drawableList)
     {
         batch.begin();
-        for (BatchDrawable drawable : drawableList) {
+        for (Drawable drawable : drawableList) {
             drawable.draw(batch);
         }
         batch.end();

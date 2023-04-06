@@ -16,9 +16,12 @@ public class MainMenuScreen implements Screen
 
     private final MenuControl menuControl;
 
+    private final GameSettings gameSettings;
+
     public MainMenuScreen(final Drop game, ApplicationSettings applicationSettings, GameSettings gameSettings)
     {
         this.game = game;
+        this.gameSettings = gameSettings;
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
@@ -40,7 +43,11 @@ public class MainMenuScreen implements Screen
     @Override
     public void render(float delta)
     {
-        ScreenUtils.clear(0, 0, 0.2f, 1);
+        ScreenUtils.clear(
+                gameSettings.getBackground(GameSettings.BackgroundItem.RED),
+                gameSettings.getBackground(GameSettings.BackgroundItem.GREEN),
+                gameSettings.getBackground(GameSettings.BackgroundItem.BLUE),
+                gameSettings.getBackground(GameSettings.BackgroundItem.ALPHA));
 
         game.setBatchProjectionMatrix(camera);
         game.drawInBatch(welcomeText, tapText);

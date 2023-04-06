@@ -47,6 +47,9 @@ public class DesktopLauncher
 		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.WELCOME_TO_DROP, "Welcome to Drop!!! ");
 		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.TAP_ANYWHERE_TO_BEGIN, "Tap anywhere to begin!");
 
+		desktopGameAsset.setBackground(0, 0, 0.2f, 1);
+		desktopGameAsset.setRainTimeInterval(1000000000);
+
 		return desktopGameAsset;
 	}
 }

@@ -31,8 +31,7 @@ public class GameScreen implements Screen
 		this.gameSettings = gameSettings;
 
 		bucket = new Bucket(applicationSettings, gameSettings);
-		// 1 000 000 000
-		rain = new Rain(applicationSettings, 1000000000, gameSettings);
+		rain = new Rain(applicationSettings, gameSettings.getRainTimeInterval(), gameSettings);
 
 		rainMusic = Gdx.audio.newMusic(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.RAIN_MUSIC)));
 		rainMusic.setLooping(true);
@@ -40,7 +39,7 @@ public class GameScreen implements Screen
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
-		gameControl = new GameControl(bucket, applicationSettings, camera);
+		gameControl = new GameControl(bucket.getControls(), applicationSettings, camera);
 
 		score = new GameScore(game, applicationSettings, gameSettings, new RainGatheredChecker(gameSettings));
 	}
@@ -48,12 +47,17 @@ public class GameScreen implements Screen
 	@Override
 	public void render(float delta)
 	{
-		ScreenUtils.clear(0, 0, 0.2f, 1);
+		ScreenUtils.clear(
+				gameSettings.getBackground(GameSettings.BackgroundItem.RED),
+				gameSettings.getBackground(GameSettings.BackgroundItem.GREEN),
+				gameSettings.getBackground(GameSettings.BackgroundItem.BLUE),
+				gameSettings.getBackground(GameSettings.BackgroundItem.ALPHA));
+
 		camera.update();
 
 		game.setBatchProjectionMatrix(camera);
 
-		game.drawInBatch(score.getScoreText(), bucket, rain);
+		game.drawInBatch(score, bucket, rain);
 
 		gameControl.control();
 

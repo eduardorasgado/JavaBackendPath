@@ -3,7 +3,7 @@ package com.eduardocode.demo;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class ScreenText implements BatchDrawable, FontAssignable
+public class ScreenText implements Drawable, FontAssignable
 {
     private BitmapFont font;
 
@@ -19,11 +19,6 @@ public class ScreenText implements BatchDrawable, FontAssignable
         this.text = text;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
-    }
-
-    public BitmapFont getFont()
-    {
-        return font;
     }
 
     @Override
@@ -66,5 +61,10 @@ public class ScreenText implements BatchDrawable, FontAssignable
     public void draw(SpriteBatch batch)
     {
         font.draw(batch, getText(), getxPosition(), getyPosition());
+    }
+
+    @Override
+    public void dispose() {
+        font.dispose();
     }
 }

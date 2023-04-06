@@ -1,6 +1,8 @@
 package com.eduardocode.demo;
 
-public class GameScore
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+public class GameScore implements Drawable
 {
 
     private int dropsGathered;
@@ -44,8 +46,14 @@ public class GameScore
         scoreText.setText(templateText + dropsGathered);
     }
 
+    @Override
+    public void draw(SpriteBatch batch) {
+        scoreText.draw(batch);
+    }
+
     public void dispose()
     {
         rainGatheredChecker.dispose();
+
     }
 }

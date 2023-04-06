@@ -2,6 +2,9 @@ package com.eduardocode.demo;
 
 public interface GameSettings
 {
+    void setRainTimeInterval(long time);
+    long getRainTimeInterval();
+
     enum SpriteAsset
     {
         BUCKET, DROP
@@ -18,6 +21,11 @@ public interface GameSettings
         DROPS_COLLECTED, WELCOME_TO_DROP, TAP_ANYWHERE_TO_BEGIN;
     }
 
+    enum BackgroundItem
+    {
+        RED, GREEN, BLUE, ALPHA;
+    }
+
     String getAsset(SpriteAsset assetType);
     void setAsset(SpriteAsset assetType, String path);
 
@@ -27,4 +35,7 @@ public interface GameSettings
 
     String getAsset(TextPlaceholder textPlaceholderType);
     void setAsset(TextPlaceholder textPlaceholderType, String text);
+
+    void setBackground(float red, float green, float blue, float alpha);
+    float getBackground(BackgroundItem backgroundItemType);
 }

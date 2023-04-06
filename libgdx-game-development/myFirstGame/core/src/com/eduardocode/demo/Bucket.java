@@ -5,61 +5,32 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Bucket implements BatchDrawable, Controllable
+public class Bucket implements Drawable
 {
     private final Rectangle bucket;
+    private final Drawable graphics;
 
-    private final Texture bucketImage;
+    private final Controllable controls;
 
-    private ApplicationSettings applicationSettings;
 
     public Bucket(ApplicationSettings applicationSettings, GameSettings gameSettings)
     {
-        this.applicationSettings = applicationSettings;
-
-        bucketImage = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.BUCKET)));
-
         bucket = new Rectangle();
         bucket.x = applicationSettings.getWidth() / 2 - 64 / 2;
         bucket.y = 20;
         bucket.width = 64;
         bucket.height = 64;
+
+        Texture texture = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.BUCKET)));
+        graphics = new BucketGraphic(bucket, texture);
+
+        controls = new BucketControl(bucket, applicationSettings);
     }
 
     @Override
     public void draw(SpriteBatch batch)
     {
-        batch.draw(bucketImage, bucket.x, bucket.y, bucket.width, bucket.height);
-    }
-
-    @Override
-    public void moveTo(float newPosition)
-    {
-        bucket.x = newPosition - 64 / 2;
-        sanitizeNewPosition();
-    }
-
-    @Override
-    public void moveLeft(float pixelsToMove)
-    {
-        bucket.x -= pixelsToMove;
-        sanitizeNewPosition();
-    }
-
-    @Override
-    public void moveRight(float pixelsToMove)
-    {
-        bucket.x += pixelsToMove;
-        sanitizeNewPosition();
-    }
-
-    private void sanitizeNewPosition()
-    {
-        if(bucket.x < applicationSettings.getOriginWidth())
-            bucket.x = applicationSettings.getOriginWidth();
-
-        if(bucket.x + 64 > applicationSettings.getWidth())
-            bucket.x = applicationSettings.getWidth() - 64;
+        graphics.draw(batch);
     }
 
     public Rectangle getBucket()
@@ -67,9 +38,12 @@ public class Bucket implements BatchDrawable, Controllable
         return bucket;
     }
 
-    public void dispose()
-    {
-        bucketImage.dispose();
+    public Controllable getControls() {
+        return controls;
     }
 
+    public void dispose()
+    {
+        graphics.dispose();
+    }
 }

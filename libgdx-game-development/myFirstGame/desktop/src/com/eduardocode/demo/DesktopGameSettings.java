@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 
 
-public class DesktopGameSettings implements GameSettings
+public class DesktopGameSettings extends CommonGameSettings
 {
     private final Asset<SpriteAsset> spriteAsset;
 
