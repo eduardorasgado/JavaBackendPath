@@ -10,7 +10,7 @@ public class Bucket implements Drawable
     private final Rectangle bucket;
     private final Drawable graphics;
 
-    private final Controllable controls;
+    private final Movabable controls;
 
 
     public Bucket(ApplicationSettings applicationSettings, GameSettings gameSettings)
@@ -38,8 +38,8 @@ public class Bucket implements Drawable
         return bucket;
     }
 
-    public Controllable getControls() {
-        return controls;
+    public void control(Controllable controllable) {
+        controllable.control(controls);
     }
 
     public void dispose()

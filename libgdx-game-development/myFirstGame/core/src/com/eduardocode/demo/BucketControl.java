@@ -2,7 +2,7 @@ package com.eduardocode.demo;
 
 import com.badlogic.gdx.math.Rectangle;
 
-public class BucketControl implements Controllable {
+public class BucketControl implements Movabable {
 
     private final Rectangle bucket;
 

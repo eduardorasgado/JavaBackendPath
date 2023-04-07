@@ -5,8 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 
-public class GameControl {
-    private final Controllable controllable;
+public class GameControl implements Controllable
+{
 
     private final ApplicationSettings applicationSettings;
 
@@ -15,20 +15,19 @@ public class GameControl {
     // we dont want to create this object everytime render runs
     private Vector3 touchPos;
 
-    public GameControl(Controllable controllable, ApplicationSettings applicationSettings, OrthographicCamera camera)
+    public GameControl(ApplicationSettings applicationSettings, OrthographicCamera camera)
     {
-        this.controllable = controllable;
         this.applicationSettings = applicationSettings;
         this.camera = camera;
     }
 
-    public void control()
+    public void control(Movabable movabable)
     {
-        touchControl();
-        keyControl();
+        touchControl(movabable);
+        keyControl(movabable);
     }
 
-    public void touchControl()
+    public void touchControl(Movabable movabable)
     {
         if(Gdx.input.isTouched())
         {
@@ -37,16 +36,16 @@ public class GameControl {
 
             touchPos = camera.unproject(touchPos);
 
-            controllable.moveTo(touchPos.x);
+            movabable.moveTo(touchPos.x);
         }
     }
 
-    public void keyControl()
+    public void keyControl(Movabable movabable)
     {
         if(Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            controllable.moveLeft(400 * Gdx.graphics.getDeltaTime());
+            movabable.moveLeft(400 * Gdx.graphics.getDeltaTime());
 
         if(Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            controllable.moveRight(400 * Gdx.graphics.getDeltaTime());
+            movabable.moveRight(400 * Gdx.graphics.getDeltaTime());
     }
 }

@@ -39,8 +39,7 @@ public class GameScreen implements Screen
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
-		gameControl = new GameControl(bucket.getControls(), applicationSettings, camera);
-
+		gameControl = new GameControl(applicationSettings, camera);
 		score = new GameScore(game, applicationSettings, gameSettings, new RainGatheredChecker(gameSettings));
 	}
 
@@ -56,10 +55,9 @@ public class GameScreen implements Screen
 		camera.update();
 
 		game.setBatchProjectionMatrix(camera);
-
 		game.drawInBatch(score, bucket, rain);
 
-		gameControl.control();
+		bucket.control(gameControl);
 
 		if (rain.canSpawnRaindrop())
 			rain.spawnRaindrop();

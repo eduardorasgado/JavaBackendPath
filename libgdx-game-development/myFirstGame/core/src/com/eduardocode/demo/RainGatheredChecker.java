@@ -8,7 +8,7 @@ import java.util.Iterator;
 
 public class RainGatheredChecker
 {
-    private RainPlayer sounds;
+    private final RainPlayer sounds;
 
     public RainGatheredChecker(GameSettings gameSettings)
     {

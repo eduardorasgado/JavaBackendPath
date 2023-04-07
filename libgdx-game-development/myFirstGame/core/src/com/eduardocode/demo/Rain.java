@@ -12,9 +12,11 @@ import java.util.Iterator;
 
 public class Rain implements Drawable
 {
-    private final Texture dropImage;
+    private Drawable graphics;
 
     private final Array<Rectangle> raindrops;
+
+    private RainControl rainControl;
 
     private long lastDropTime;
 
@@ -31,7 +33,9 @@ public class Rain implements Drawable
         this.gameSettings = gameSettings;
 
         raindrops = new Array<>();
-        dropImage = new Texture(Gdx.files.internal(gameSettings.getAsset(GameSettings.SpriteAsset.DROP)));
+
+        graphics = new RainGraphic(raindrops, gameSettings);
+        rainControl = new RainControl(raindrops, applicationSettings);
 
         spawnRaindrop();
     }
@@ -52,8 +56,7 @@ public class Rain implements Drawable
     @Override
     public void draw(SpriteBatch batch)
     {
-        for (Rectangle raindrop : raindrops)
-            batch.draw(dropImage, raindrop.x, raindrop.y, raindrop.width, raindrop.height);
+        graphics.draw(batch);
     }
 
     public boolean canSpawnRaindrop()
@@ -63,20 +66,7 @@ public class Rain implements Drawable
 
     public void moveDown(float pixelsToMove)
     {
-        for (Iterator<Rectangle> iterator = raindrops.iterator(); iterator.hasNext(); )
-        {
-            Rectangle raindrop = iterator.next();
-            raindrop.y -= pixelsToMove;
-        }
-        sanitizeRaindrops();
-    }
-
-    private void sanitizeRaindrops() {
-        for (Iterator<Rectangle> iterator = raindrops.iterator(); iterator.hasNext(); )
-        {
-            Rectangle raindrop = iterator.next();
-            if (raindrop.y + 64 < applicationSettings.getOriginHeight()) iterator.remove();
-        }
+        rainControl.moveDown(pixelsToMove);
     }
 
     public Array<Rectangle> getRaindrops() {
@@ -85,6 +75,6 @@ public class Rain implements Drawable
 
     public void dispose()
     {
-        dropImage.dispose();
+        graphics.dispose();
     }
 }
