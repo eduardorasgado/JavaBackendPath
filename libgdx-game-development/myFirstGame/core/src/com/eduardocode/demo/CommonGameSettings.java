@@ -15,14 +15,14 @@ public abstract class CommonGameSettings implements GameSettings
     @Override
     public void setBackground(float red, float green, float blue, float alpha)
     {
-        backgroundItems[BackgroundItem.RED.ordinal()] = red;
-        backgroundItems[BackgroundItem.GREEN.ordinal()] = green;
-        backgroundItems[BackgroundItem.BLUE.ordinal()] = blue;
-        backgroundItems[BackgroundItem.ALPHA.ordinal()] = alpha;
+        backgroundItems[BackgroundItemType.RED.ordinal()] = red;
+        backgroundItems[BackgroundItemType.GREEN.ordinal()] = green;
+        backgroundItems[BackgroundItemType.BLUE.ordinal()] = blue;
+        backgroundItems[BackgroundItemType.ALPHA.ordinal()] = alpha;
     }
 
     @Override
-    public float getBackground(BackgroundItem backgroundItemType)
+    public float getBackground(BackgroundItemType backgroundItemType)
     {
         return backgroundItems[backgroundItemType.ordinal()];
     }

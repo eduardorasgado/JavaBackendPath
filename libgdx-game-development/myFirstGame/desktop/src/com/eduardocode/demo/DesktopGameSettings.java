@@ -6,82 +6,83 @@ import java.util.NoSuchElementException;
 
 public class DesktopGameSettings extends CommonGameSettings
 {
-    private final Asset<SpriteAsset> spriteAsset;
+    private final Asset<SpriteAssetType, SpriteAsset> spriteAsset;
 
-    private final Asset<SoundAsset> soundAsset;
+    private final Asset<SoundAssetType, String> soundAsset;
 
-    private final Asset<TextPlaceholder> textPlacehoder;
+    private final Asset<TextPlaceholderType, String> textPlacehoder;
 
-    public DesktopGameSettings(Map<SpriteAsset, String> spriteAssets,
-                               Map<SoundAsset, String> soundAssets,
-                               Map<TextPlaceholder, String> textPlaceholderStringMap) {
+    public DesktopGameSettings(Map<SpriteAssetType, SpriteAsset> spriteAssets,
+                               Map<SoundAssetType, String> soundAssets,
+                               Map<TextPlaceholderType, String> textPlaceholderStringMap) {
         spriteAsset = new Asset<>(spriteAssets);
         soundAsset = new Asset<>(soundAssets);
         textPlacehoder = new Asset<>(textPlaceholderStringMap);
     }
 
     @Override
-    public String getAsset(SpriteAsset assetType) {
+    public SpriteAsset getAsset(SpriteAssetType assetType) {
         assert(assetType != null);
 
         return spriteAsset.getAsset(assetType);
     }
 
     @Override
-    public void setAsset(SpriteAsset assetType, String path) {
-        assert(assetType != null && path != null);
+    public void setAsset(SpriteAssetType assetType, SpriteAsset asset) {
+        assert(assetType != null && asset != null);
 
-        spriteAsset.setAsset(assetType, path);
+        spriteAsset.setAsset(assetType, asset);
     }
 
     @Override
-    public String getAsset(SoundAsset assetType) {
+    public String getAsset(SoundAssetType assetType) {
         assert(assetType != null);
 
         return soundAsset.getAsset(assetType);
     }
 
     @Override
-    public void setAsset(SoundAsset assetType, String path) {
+    public void setAsset(SoundAssetType assetType, String path) {
         assert(assetType != null && path != null);
 
         soundAsset.setAsset(assetType, path);
     }
 
     @Override
-    public void setAsset(TextPlaceholder textPlaceholderType, String text) {
+    public void setAsset(TextPlaceholderType textPlaceholderType, String text) {
         assert(textPlaceholderType != null && text != null);
 
         textPlacehoder.setAsset(textPlaceholderType, text);
     }
 
     @Override
-    public String getAsset(TextPlaceholder textPlaceholderType) {
+    public String getAsset(TextPlaceholderType textPlaceholderType) {
         assert(textPlaceholderType != null);
 
         return textPlacehoder.getAsset(textPlaceholderType);
     }
 
-    private record Asset<T>(Map<T, String> spriteAssets) {
+    private record Asset<K, V>(Map<K, V> assets)
+    {
 
-        public void setAsset(T assetType, String path) {
-                assert (assetType != null && path != null);
+        public void setAsset(K assetType, V asset) {
+            assert (assetType != null && asset != null);
 
-                if (spriteAssets.containsKey(assetType)) {
-                    spriteAssets.replace(assetType, path);
-                } else {
-                    spriteAssets.put(assetType, path);
-                }
-            }
-
-            public String getAsset(T assetType) {
-                assert (assetType != null);
-
-                if (!spriteAssets.containsKey(assetType)) {
-                    throw new NoSuchElementException();
-                }
-
-                return spriteAssets.get(assetType);
+            if (assets.containsKey(assetType)) {
+                assets.replace(assetType, asset);
+            } else {
+                assets.put(assetType, asset);
             }
         }
+
+        public V getAsset(K assetType) {
+            assert (assetType != null);
+
+            if (!assets.containsKey(assetType)) {
+                throw new NoSuchElementException();
+            }
+
+            return assets.get(assetType);
+        }
+    }
 }

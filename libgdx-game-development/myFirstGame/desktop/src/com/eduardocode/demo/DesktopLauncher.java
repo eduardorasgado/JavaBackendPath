@@ -37,15 +37,15 @@ public class DesktopLauncher
 
 		DesktopGameSettings desktopGameAsset = new DesktopGameSettings(new HashMap<>(), new HashMap<>(), new HashMap<>());
 
-		desktopGameAsset.setAsset(GameSettings.SpriteAsset.BUCKET, "sprite/bucket.png");
-		desktopGameAsset.setAsset(GameSettings.SpriteAsset.DROP, "sprite/drop.png");
+		desktopGameAsset.setAsset(GameSettings.SpriteAssetType.BUCKET, new SpriteAsset("sprite/bucket.png", 64, 64));
+		desktopGameAsset.setAsset(GameSettings.SpriteAssetType.DROP, new SpriteAsset("sprite/drop.png", 64, 64));
 
-		desktopGameAsset.setAsset(GameSettings.SoundAsset.DROP, "sound/drop.wav");
-		desktopGameAsset.setAsset(GameSettings.SoundAsset.RAIN_MUSIC, "sound/rain.mp3");
+		desktopGameAsset.setAsset(GameSettings.SoundAssetType.DROP, "sound/drop.wav");
+		desktopGameAsset.setAsset(GameSettings.SoundAssetType.RAIN_MUSIC, "sound/rain.mp3");
 
-		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.DROPS_COLLECTED, "Drops Collected: ");
-		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.WELCOME_TO_DROP, "Welcome to Drop!!! ");
-		desktopGameAsset.setAsset(GameSettings.TextPlaceholder.TAP_ANYWHERE_TO_BEGIN, "Tap anywhere to begin!");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholderType.DROPS_COLLECTED, "Drops Collected: ");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholderType.WELCOME_TO_DROP, "Welcome to Drop!!! ");
+		desktopGameAsset.setAsset(GameSettings.TextPlaceholderType.TAP_ANYWHERE_TO_BEGIN, "Tap anywhere to begin!");
 
 		desktopGameAsset.setBackground(0, 0, 0.2f, 1);
 		desktopGameAsset.setRainTimeInterval(1000000000);

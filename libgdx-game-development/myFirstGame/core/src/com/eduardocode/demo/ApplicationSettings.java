@@ -2,6 +2,7 @@ package com.eduardocode.demo;
 
 public interface ApplicationSettings
 {
+
     int getHeight();
 
     int getWidth();
@@ -11,4 +12,9 @@ public interface ApplicationSettings
     int getOriginWidth();
 
     int getOriginDepth();
+
+    default float centerByWidth(int objectWidthToCenter, int containerWidth)
+    {
+        return containerWidth / 2 - objectWidthToCenter / 2;
+    }
 }

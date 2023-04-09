@@ -25,7 +25,7 @@ public class GameScore implements Drawable
 
         game.assignFont(scoreText);
 
-        templateText = gameSettings.getAsset(GameSettings.TextPlaceholder.DROPS_COLLECTED);
+        templateText = gameSettings.getAsset(GameSettings.TextPlaceholderType.DROPS_COLLECTED);
         updateScoreText();
     }
 

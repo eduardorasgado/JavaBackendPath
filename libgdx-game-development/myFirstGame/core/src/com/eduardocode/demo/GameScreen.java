@@ -33,7 +33,7 @@ public class GameScreen implements Screen
 		bucket = new Bucket(applicationSettings, gameSettings);
 		rain = new Rain(applicationSettings, gameSettings.getRainTimeInterval(), gameSettings);
 
-		rainMusic = Gdx.audio.newMusic(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.RAIN_MUSIC)));
+		rainMusic = Gdx.audio.newMusic(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAssetType.RAIN_MUSIC)));
 		rainMusic.setLooping(true);
 
 		camera = new OrthographicCamera();
@@ -47,10 +47,10 @@ public class GameScreen implements Screen
 	public void render(float delta)
 	{
 		ScreenUtils.clear(
-				gameSettings.getBackground(GameSettings.BackgroundItem.RED),
-				gameSettings.getBackground(GameSettings.BackgroundItem.GREEN),
-				gameSettings.getBackground(GameSettings.BackgroundItem.BLUE),
-				gameSettings.getBackground(GameSettings.BackgroundItem.ALPHA));
+				gameSettings.getBackground(GameSettings.BackgroundItemType.RED),
+				gameSettings.getBackground(GameSettings.BackgroundItemType.GREEN),
+				gameSettings.getBackground(GameSettings.BackgroundItemType.BLUE),
+				gameSettings.getBackground(GameSettings.BackgroundItemType.ALPHA));
 
 		camera.update();
 

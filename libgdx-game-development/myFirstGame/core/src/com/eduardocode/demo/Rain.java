@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class Rain implements Drawable
 {
-    private Drawable graphics;
+    private final RectangleDrawable graphics;
 
     private final Array<Rectangle> raindrops;
 
@@ -22,19 +22,14 @@ public class Rain implements Drawable
 
     private final long maxTimeInNanos;
 
-    private final ApplicationSettings applicationSettings;
-
-    private final GameSettings gameSettings;
-
     public Rain(ApplicationSettings applicationSettings, long maxTimeInNanos, GameSettings gameSettings)
     {
-        this.applicationSettings = applicationSettings;
         this.maxTimeInNanos = maxTimeInNanos;
-        this.gameSettings = gameSettings;
 
         raindrops = new Array<>();
 
-        graphics = new RainGraphic(raindrops, gameSettings);
+        SpriteAsset rainAsset = gameSettings.getAsset(GameSettings.SpriteAssetType.DROP);
+        graphics = new RainGraphic(raindrops, applicationSettings, rainAsset);
         rainControl = new RainControl(raindrops, applicationSettings);
 
         spawnRaindrop();
@@ -42,12 +37,7 @@ public class Rain implements Drawable
 
     public void spawnRaindrop()
     {
-        Rectangle raindrop = new Rectangle();
-
-        raindrop.x = MathUtils.random(applicationSettings.getOriginWidth(), applicationSettings.getWidth() - 64);
-        raindrop.y = applicationSettings.getHeight();
-        raindrop.width = 64;
-        raindrop.height = 64;
+        Rectangle raindrop = graphics.create();
         raindrops.add(raindrop);
 
         lastDropTime = TimeUtils.nanoTime();

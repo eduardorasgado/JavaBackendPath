@@ -26,9 +26,9 @@ public class MainMenuScreen implements Screen
         camera = new OrthographicCamera();
         camera.setToOrtho(false, applicationSettings.getWidth(), applicationSettings.getHeight());
 
-        welcomeText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholder.WELCOME_TO_DROP), 100, 150);
+        welcomeText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholderType.WELCOME_TO_DROP), 100, 150);
         game.assignFont(welcomeText);
-        tapText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholder.TAP_ANYWHERE_TO_BEGIN), 100, 100);
+        tapText = new ScreenText(gameSettings.getAsset(GameSettings.TextPlaceholderType.TAP_ANYWHERE_TO_BEGIN), 100, 100);
         game.assignFont(tapText);
 
 
@@ -44,10 +44,10 @@ public class MainMenuScreen implements Screen
     public void render(float delta)
     {
         ScreenUtils.clear(
-                gameSettings.getBackground(GameSettings.BackgroundItem.RED),
-                gameSettings.getBackground(GameSettings.BackgroundItem.GREEN),
-                gameSettings.getBackground(GameSettings.BackgroundItem.BLUE),
-                gameSettings.getBackground(GameSettings.BackgroundItem.ALPHA));
+                gameSettings.getBackground(GameSettings.BackgroundItemType.RED),
+                gameSettings.getBackground(GameSettings.BackgroundItemType.GREEN),
+                gameSettings.getBackground(GameSettings.BackgroundItemType.BLUE),
+                gameSettings.getBackground(GameSettings.BackgroundItemType.ALPHA));
 
         game.setBatchProjectionMatrix(camera);
         game.drawInBatch(welcomeText, tapText);

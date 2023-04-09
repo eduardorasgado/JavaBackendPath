@@ -9,7 +9,7 @@ public class RainPlayer
 
     public RainPlayer(GameSettings gameSettings)
     {
-        this.dropSound = Gdx.audio.newSound(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAsset.DROP)));
+        this.dropSound = Gdx.audio.newSound(Gdx.files.internal(gameSettings.getAsset(GameSettings.SoundAssetType.DROP)));
     }
 
     public void triggerDropSound(int times)

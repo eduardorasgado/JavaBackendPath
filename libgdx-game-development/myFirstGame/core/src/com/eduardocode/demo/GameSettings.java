@@ -5,37 +5,37 @@ public interface GameSettings
     void setRainTimeInterval(long time);
     long getRainTimeInterval();
 
-    enum SpriteAsset
+    enum SpriteAssetType
     {
         BUCKET, DROP
     }
 
-    enum SoundAsset
+    enum SoundAssetType
     {
         DROP,
         RAIN_MUSIC;
     }
 
-    enum TextPlaceholder
+    enum TextPlaceholderType
     {
         DROPS_COLLECTED, WELCOME_TO_DROP, TAP_ANYWHERE_TO_BEGIN;
     }
 
-    enum BackgroundItem
+    enum BackgroundItemType
     {
         RED, GREEN, BLUE, ALPHA;
     }
 
-    String getAsset(SpriteAsset assetType);
-    void setAsset(SpriteAsset assetType, String path);
+    SpriteAsset getAsset(SpriteAssetType assetType);
+    void setAsset(SpriteAssetType assetType, SpriteAsset asset);
 
-    String getAsset(SoundAsset assetType);
+    String getAsset(SoundAssetType assetType);
 
-    void setAsset(SoundAsset assetType, String path);
+    void setAsset(SoundAssetType assetType, String path);
 
-    String getAsset(TextPlaceholder textPlaceholderType);
-    void setAsset(TextPlaceholder textPlaceholderType, String text);
+    String getAsset(TextPlaceholderType textPlaceholderType);
+    void setAsset(TextPlaceholderType textPlaceholderType, String text);
 
     void setBackground(float red, float green, float blue, float alpha);
-    float getBackground(BackgroundItem backgroundItemType);
+    float getBackground(BackgroundItemType backgroundItemType);
 }
